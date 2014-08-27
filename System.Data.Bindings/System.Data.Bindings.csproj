@@ -1,10 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{54F958F5-7E58-4C89-9A04-8835E63B97C3}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>System.Data.Bindings</RootNamespace>
@@ -18,11 +16,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <GenerateDocumentation>true</GenerateDocumentation>
     <ConsolePause>false</ConsolePause>
     <Execution>
       <Execution clr-version="Net_2_0" />
     </Execution>
+    <DocumentationFile>bin\Debug\System.Data.Bindings.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -31,11 +29,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <GenerateDocumentation>true</GenerateDocumentation>
     <ConsolePause>false</ConsolePause>
     <Execution>
       <Execution clr-version="Net_2_0" />
     </Execution>
+    <DocumentationFile>bin\Release\System.Data.Bindings.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
@@ -199,9 +197,4 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties InternalTargetFrameworkVersion="3.5" />
-    </MonoDevelop>
-  </ProjectExtensions>
 </Project>
