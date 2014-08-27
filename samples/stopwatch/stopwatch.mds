@@ -1,0 +1,24 @@
+<Combine fileversion="2.0" name="stopwatch">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="stopwatch" configuration="Debug" />
+      <Entry build="True" name="gtk-databind-lib" configuration="Debug" />
+      <Entry build="True" name="System.Data.Bindings" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="stopwatch" configuration="Release" />
+      <Entry build="True" name="gtk-databind-lib" configuration="Release" />
+      <Entry build="True" name="System.Data.Bindings" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="stopwatch" single="True">
+    <Execute type="None" entry="stopwatch" />
+    <Execute type="None" entry="gtk-databind-lib" />
+    <Execute type="None" entry="System.Data.Bindings" />
+  </StartMode>
+  <Entries>
+    <Entry filename="stopwatch/stopwatch.mdp" />
+    <Entry filename="../../gtk-databind-lib.csproj" />
+    <Entry filename="../../System.Data.Bindings/System.Data.Bindings.csproj" />
+  </Entries>
+</Combine>

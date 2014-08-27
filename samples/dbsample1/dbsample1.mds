@@ -1,0 +1,32 @@
+<Combine fileversion="2.0" name="dbsample1">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="dbsample1" configuration="Debug" />
+      <Entry build="True" name="dbsample1Translation" configuration="Debug" />
+      <Entry build="True" name="Packages" configuration="Debug" />
+      <Entry build="True" name="System.Data.Bindings" configuration="Debug" />
+      <Entry build="True" name="gtk-databind-lib" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="dbsample1" configuration="Release" />
+      <Entry build="True" name="dbsample1Translation" configuration="Release" />
+      <Entry build="True" name="Packages" configuration="Release" />
+      <Entry build="True" name="System.Data.Bindings" configuration="Release" />
+      <Entry build="True" name="gtk-databind-lib" configuration="Release" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="dbsample1" single="True">
+    <Execute type="None" entry="dbsample1" />
+    <Execute type="None" entry="dbsample1Translation" />
+    <Execute type="None" entry="Packages" />
+    <Execute type="None" entry="System.Data.Bindings" />
+    <Execute type="None" entry="gtk-databind-lib" />
+  </StartMode>
+  <Entries>
+    <Entry filename="dbsample1.mdp" />
+    <Entry filename="dbsample1Translation/dbsample1Translation.mdse" />
+    <Entry filename="Packages.mdse" />
+    <Entry filename="../../System.Data.Bindings/System.Data.Bindings.csproj" />
+    <Entry filename="../../gtk-databind-lib.csproj" />
+  </Entries>
+</Combine>

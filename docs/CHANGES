@@ -1,0 +1,144 @@
+12.2.2008
+Had carcrash meanwhile and when I get baack project stepped on silent run.
+First actual update is complete release 0.98
+
+14.11.2006
+- Removed odt from svn version and added README which provides link for it,
+  this way all binary blobs are removed from svn
+- Created and published simple web page
+- Added first starts of layouting
+- Specified milestone 0.6 in TODO
+- Added start of AutoConnect() routine to adaptors
+
+13.11.2006 (18+, R rated)
+- Initial posting to svn, afer no change and my dissapearance from irc (and whole 
+  net as a matter of fact, if that explains it better, if not.... all right) without any
+  kind of explanation. Probably not fair of me, but my life went other way from my 
+  expectations. So this should only serve as a pointer what can go wrong simply 
+  because you bought a new fancy computer
+
+- All work was stopped because life turned upside down for me to the
+  level where even "Les Misérables" could be called "The really happy ones". I'm
+  still waiting for Victor Hugo to raise from the dead and rename his work.
+
+  Bad things started with me buying new computer, which led to strange things
+  happening on my coding desktop. Main problem was probably the reason that 
+  machine had too much of ram and so it worked flawlesly for quite a long 
+  time before errors started poping up.
+  That was my last irc session on #mono channel, where I was asking what would some 
+  development error mean. I started getting weird environment problems, compile errors
+  for no reason, without explanation??? I was simply getting messages like 
+  "This should't happen'". Yeah, I like that. WHAT? WHAT SHOULDN'T HAPPEN'?
+
+  Main problem (as I discovered it later when I was doing forensic like recovery) was that 
+  first time errors showed up during my regular update of my system which screwed 
+  complete development environment, but to be even worse they showed during backing up data
+  too. But from here let me just get to the points
+
+  - new machine saw more service than any other machine so far, but nothing 
+    seemed to work, everytime machine got back it just led to errors after 4-8 hours and
+    me bitchin' on service again
+  - my hdd partition got fucked up during fsck
+  - backups done in that time were also fucked up (also corrupted my bread and butter projects)
+    which made impossible to migrate development on other machine. You simply can't migrate if 
+    you don't have anything to migrate
+  - which made me really angry
+  - got a bit drunk and had a little car crash where I hurt my hands for next 3-4 weeks,
+    where I could only type with one finger (and holly shit, yes... it was a thumb) without 
+    feeling pain or which was not bandaged with others (well bandage was firsst few days only,
+    but pain stayed)
+  - machine was finally fixed after 2-3 weeks, trouble seemed to be bad ram, but 
+    service department simply never run complete pass (which can run very long on 8GB of ram)
+    and it was me who discovered this fault.
+    Yep, discovery was made by me and my trusty thumb (still the sole warrior on the hands of mine)
+  - couldn't work and speech-to-text interfaces don't work (believe me). Could go into a lenghty 
+    post about that, but it would more or less written with 18+ words (R rated)
+  - by then I was so much behind my real work I didn't know where to turn first,
+    so this project suffered. With few larger interventions at my customers
+  - I somehow succedded to restore my non-commercial projects during my free time,
+    which was more no time than any, and beside that I had to salvage my bread and butter
+    projects first
+  - slowly restored file by file from my corrupted snapshots started to come alive
+    and if it wasn't my habit to change drive I'm backing on every two months (and 
+    put it in the closet, where current and last were screwed, god forbid, the last backup 
+    I made on that drive before putting it into closet was with my new machine, and it 
+    resulted in completely screwed diff data) I probably still wouldn't restore my data
+
+  So my lessons here are (and they are learned THE hard way):
+  - if you buy new machine, don't replace your trusty desktop for at least one month of 
+    terrile testing. I did that in the same minute, by simply taking my hard drive and
+    putting it into new machine.
+  - run ram test for at least one week before you say it is ok
+  - DO NOT USE NEW MACHINE FOR BACKUP, EVEN IF BACKUP DRIVE IS EXTERNAL DRIVE
+  - do not get drunk out of simple anger, your hands can suffer consequences
+  - forget about speech-to-text, you'll just lose valuable time, nerves and energy.
+    IT DOESN'T WORK!!! No,... on OSX or Windows either. Tried that ones too.
+  - KEEP BACKUP on dedicated and terrile HW checked external server beside the same
+    internal server, with complete snapshots untouched, diffs mean shit when you
+    don't have complete history
+  - do not register sourceforge project the day you changed machine, up until now 
+    the only thing project was doing was waiting for something to be uploaded, and 
+    project just feels as dead one, which it wouldn't be if life would go my way
+  - No, you can't type even 2kps with one single thumb. That is something like getting to
+    lightspeed with your car.
+
+  Good things about this experience?
+  - Well, since I doubt life could go for worster than this, I know now what to expect.
+    "Next time, god, if you're listening... give me cancer like every other normal person and keep
+    your faulty hardware troubles for others"
+  - Perfect hourly/daily/weekly/monthly snapshot backup system, with check methods to see 
+    if data is like it should be (Part of it will be posted as separate project after I find 
+    the time to finish management console and service client status). Code should
+    look like code, not like binary clusterfuck like it looked on my backups. Yep, checking is 
+    done according to mime types
+  - Life is finally resuming its course and one could hardly know how good ordinary office day 
+    can feel until he would went trough what I went
+  - One could say I'm changed, more loosed up and happier with life. It is the same relieve as
+    you feel when dentist appointment is finally over, except mine was lasting for 5 1/2 months
+
+  So what does this means? I still can't dedicate full time to this project, but I can 
+  at least post it on sourceforge and fix problems which might come when using it. This
+  posting just meant I'm finally getting past and present into real time.
+
+  Advances according to my plans will be started in week or two
+
+  p.s. If anyone feels it is not right to use words like "fuck" or "screw" in public project, he can 
+       stick it. I doubt he could go without if he went trough what I went. This changelog is simply
+       R rated for the reason
+
+22.5.2006
+- Added column spec in string resolving
+- Added subobject mapping in spec
+- Updated README with new column mapping definition
+- Added changes in README.
+- Added simplecase of mapping resolving example
+
+20.5.2006
+- Added test for hierarchical notifications
+- Notifications now pose complete path to modified object
+- Observable list has this [int[] a_Idx] implemented
+- Added Path functions to ConnectionProvider
+
+19.5.2006
+- Added multiple parents to IObserveable object
+- Added parent notifications and methods to Observeable
+- Changed ObserveableList to inherit from Observeable
+- Added complete heirarchical notification engine
+- Added caching to the hierarchy resolving
+
+18.5.2006
+- Removed old file ListAdaptor.cs to old remnants
+- Added IListEvents
+- New ListAdaptor implementation started
+- Added IComplexAdaptableControl
+- Changed TreeView to derive from IComplexAdaptableControl
+
+17.5.2006
+- Added DenyParentBoundaries to all controls (updated example in README)
+- Removed old ComboBoxAdaptor, ComboBoxEntryAdaptor and TreeViewAdaptor
+- Implemented the first shell for new TreeViewAdaptor
+- Implemented IObserveableList
+- Implemented ObserveableList with messaging
+- Implemented ObserveableArrayList
+- Implemented ObserveableStringCollection
+- Added CHANGES file (this file)

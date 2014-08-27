@@ -1,0 +1,6 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=config_sample1
+Exec=config_sample1
+Terminal=false

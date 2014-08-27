@@ -1,0 +1,20 @@
+<Combine name="sample1" fileversion="2.0">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="CombineConfiguration">
+      <Entry build="True" name="sample1" configuration="Debug" />
+      <Entry build="True" name="gtk-databind-lib" configuration="Debug" />
+    </Configuration>
+    <Configuration name="Release" ctype="CombineConfiguration">
+      <Entry build="True" name="sample1" configuration="Debug" />
+      <Entry build="True" name="gtk-databind-lib" configuration="Debug" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="sample1" single="True">
+    <Execute type="None" entry="sample1" />
+    <Execute type="None" entry="gtk-databind-lib" />
+  </StartMode>
+  <Entries>
+    <Entry filename="./sample1.mdp" />
+    <Entry filename="../../gtk-databind-lib.mds" />
+  </Entries>
+</Combine>

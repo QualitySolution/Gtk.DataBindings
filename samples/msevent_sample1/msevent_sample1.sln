@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 9.00
+# Visual Studio 2005
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "msevent_sample1", "msevent_sample1\msevent_sample1.csproj", "{58C757A6-5EE5-472D-B37B-4842A7219A6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gtk-databind-lib", "..\..\gtk-databind-lib.csproj", "{162AB5C7-E9D2-49FC-85FD-76BB2E0B8AB6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Data.Bindings", "..\..\System.Data.Bindings\System.Data.Bindings.csproj", "{BADE0781-EED5-4BC6-BE0F-2A619249EFDE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{162AB5C7-E9D2-49FC-85FD-76BB2E0B8AB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162AB5C7-E9D2-49FC-85FD-76BB2E0B8AB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{162AB5C7-E9D2-49FC-85FD-76BB2E0B8AB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162AB5C7-E9D2-49FC-85FD-76BB2E0B8AB6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{58C757A6-5EE5-472D-B37B-4842A7219A6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{58C757A6-5EE5-472D-B37B-4842A7219A6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{58C757A6-5EE5-472D-B37B-4842A7219A6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{58C757A6-5EE5-472D-B37B-4842A7219A6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BADE0781-EED5-4BC6-BE0F-2A619249EFDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BADE0781-EED5-4BC6-BE0F-2A619249EFDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BADE0781-EED5-4BC6-BE0F-2A619249EFDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BADE0781-EED5-4BC6-BE0F-2A619249EFDE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		name = msevent_sample1
+		version = 0.1
+		StartupItem = msevent_sample1\msevent_sample1.csproj
+	EndGlobalSection
+EndGlobal

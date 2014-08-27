@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<stetic-interface>
+  <configuration>
+    <images-root-path>..</images-root-path>
+    <target-gtk-version>2.12</target-gtk-version>
+  </configuration>
+  <import>
+    <widget-library name="glade-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
+    <widget-library name="../../../../../bin/Debug/gtk-databind-lib.dll" />
+    <widget-library name="../bin/Debug/AssemblyInfoAnalyzer.exe" internal="true" />
+  </import>
+  <widget class="Gtk.Window" id="MainWindow" design-size="903 510">
+    <property name="MemberName" />
+    <property name="Title" translatable="yes">MainWindow</property>
+    <property name="WindowPosition">CenterOnParent</property>
+    <signal name="DeleteEvent" handler="OnDeleteEvent" />
+    <child>
+      <widget class="Gtk.VBox" id="vbox1">
+        <property name="MemberName" />
+        <property name="Spacing">6</property>
+        <child>
+          <widget class="Gtk.HBox" id="hbox1">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.Button" id="buttonOpen">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="UseStock">True</property>
+                <property name="Type">StockItem</property>
+                <property name="StockId">gtk-open</property>
+                <signal name="Clicked" handler="OnButtonOpenClicked" />
+                <property name="label">gtk-open</property>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder />
+            </child>
+            <child>
+              <placeholder />
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">0</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+            <property name="Padding">2</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HSeparator" id="hseparator1">
+            <property name="MemberName" />
+          </widget>
+          <packing>
+            <property name="Position">1</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.HBox" id="hbox5">
+            <property name="MemberName" />
+            <property name="Spacing">6</property>
+            <child>
+              <widget class="Gtk.HPaned" id="hpaned1">
+                <property name="MemberName" />
+                <property name="CanFocus">True</property>
+                <property name="Position">378</property>
+                <child>
+                  <widget class="Gtk.HPaned" id="hpaned2">
+                    <property name="MemberName" />
+                    <property name="CanFocus">True</property>
+                    <property name="Position">210</property>
+                    <child>
+                      <widget class="Gtk.VBox" id="vbox3">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Label" id="label1">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Assemblies</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow">
+                            <property name="MemberName" />
+                            <property name="ShadowType">In</property>
+                            <child>
+                              <widget class="Gtk.DataBindings.DataTreeView" id="AssemblyListTree">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="ShowScrollbars">True</property>
+                                <property name="CursorPointsEveryType">False</property>
+                                <property name="InheritedDataSource">False</property>
+                                <property name="InheritedBoundaryDataSource">False</property>
+                                <property name="ColumnMappings">{System.Data.Bindings.AssemblyDescription} Name[Assembly]</property>
+                                <signal name="CursorChanged" handler="OnAssemblyListTreeCursorChanged" />
+                                <signal name="IsVisibleInFilter" handler="OnAssemblyListTreeIsVisibleInFilter" />
+                                <signal name="CellDescription" handler="OnAssemblyListTreeCellDescription" />
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Resize">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.VBox" id="vbox4">
+                        <property name="MemberName" />
+                        <property name="Spacing">6</property>
+                        <child>
+                          <widget class="Gtk.Label" id="label2">
+                            <property name="MemberName" />
+                            <property name="Xalign">0</property>
+                            <property name="LabelProp" translatable="yes">Types</property>
+                          </widget>
+                          <packing>
+                            <property name="Position">0</property>
+                            <property name="AutoSize">True</property>
+                            <property name="Expand">False</property>
+                            <property name="Fill">False</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
+                            <property name="MemberName" />
+                            <property name="ShadowType">In</property>
+                            <child>
+                              <widget class="Gtk.DataBindings.DataTreeView" id="TypeTree">
+                                <property name="MemberName" />
+                                <property name="CanFocus">True</property>
+                                <property name="ShowScrollbars">True</property>
+                                <property name="CursorPointsEveryType">False</property>
+                                <property name="InheritedDataSource">False</property>
+                                <property name="InheritedBoundaryDataSource">False</property>
+                                <property name="ColumnMappings">{System.Data.Bindings.IDevelopmentInformation} Name[Name]</property>
+                                <signal name="CursorChanged" handler="OnTypeTreeCursorChanged" />
+                                <signal name="CellDescription" handler="OnTypeTreeCellDescription" />
+                              </widget>
+                            </child>
+                          </widget>
+                          <packing>
+                            <property name="Position">1</property>
+                            <property name="AutoSize">True</property>
+                          </packing>
+                        </child>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Resize">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.VBox" id="vbox5">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <child>
+                      <widget class="Gtk.Label" id="InfoLabel">
+                        <property name="MemberName" />
+                        <property name="Xalign">0</property>
+                        <property name="LabelProp" translatable="yes">Development informations</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow2">
+                        <property name="MemberName" />
+                        <property name="ShadowType">In</property>
+                        <child>
+                          <widget class="Gtk.DataBindings.DataTreeView" id="InfoTree">
+                            <property name="MemberName" />
+                            <property name="CanFocus">True</property>
+                            <property name="ShowScrollbars">True</property>
+                            <property name="CursorPointsEveryType">False</property>
+                            <property name="InheritedDataSource">False</property>
+                            <property name="InheritedBoundaryDataSource">False</property>
+                            <property name="ColumnMappings">{System.Data.Bindings.DevelopmentInformationItem} Name[Name]</property>
+                            <signal name="CellDescription" handler="OnInfoTreeCellDescription" />
+                            <signal name="CursorChanged" handler="OnInfoTreeCursorChanged" />
+                          </widget>
+                        </child>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">True</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">2</property>
+            <property name="AutoSize">True</property>
+          </packing>
+        </child>
+        <child>
+          <widget class="Gtk.DataBindings.DataVBox" id="DescriptionBox">
+            <property name="MemberName" />
+            <property name="Visible">False</property>
+            <property name="Spacing">6</property>
+            <property name="InheritedDataSource">False</property>
+            <property name="InheritedBoundaryDataSource">False</property>
+            <child>
+              <widget class="Gtk.DataBindings.DataHBox" id="datahbox1">
+                <property name="MemberName" />
+                <property name="Spacing">12</property>
+                <property name="InheritedDataSource">True</property>
+                <property name="InheritedBoundaryDataSource">False</property>
+                <child>
+                  <widget class="Gtk.DataBindings.DataLabel" id="datalabel1">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">datalabel1</property>
+                    <property name="InheritedDataSource">True</property>
+                    <property name="Mappings">Status</property>
+                    <property name="InheritedBoundaryDataSource">False</property>
+                    <property name="Important">False</property>
+                  </widget>
+                  <packing>
+                    <property name="Position">0</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.DataBindings.DataHBox" id="datahbox2">
+                    <property name="MemberName" />
+                    <property name="Spacing">6</property>
+                    <property name="InheritedDataSource">True</property>
+                    <property name="InheritedBoundaryDataSource">False</property>
+                    <child>
+                      <widget class="Gtk.DataBindings.DataImage" id="dataimage1">
+                        <property name="MemberName" />
+                        <property name="InheritedDataSource">True</property>
+                        <property name="Mappings">Status</property>
+                        <property name="InheritedBoundaryDataSource">False</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">0</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="Gtk.DataBindings.DataLabel" id="datalabel2">
+                        <property name="MemberName" />
+                        <property name="LabelProp" translatable="yes">datalabel2</property>
+                        <property name="UseMarkup">True</property>
+                        <property name="InheritedDataSource">True</property>
+                        <property name="Mappings">Name</property>
+                        <property name="InheritedBoundaryDataSource">False</property>
+                        <property name="Important">True</property>
+                      </widget>
+                      <packing>
+                        <property name="Position">1</property>
+                        <property name="AutoSize">True</property>
+                        <property name="Expand">False</property>
+                        <property name="Fill">False</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                    <property name="AutoSize">True</property>
+                    <property name="Expand">False</property>
+                    <property name="Fill">False</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="Position">0</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.HSeparator" id="hseparator2">
+                <property name="MemberName" />
+              </widget>
+              <packing>
+                <property name="Position">1</property>
+                <property name="AutoSize">True</property>
+                <property name="Expand">False</property>
+                <property name="Fill">False</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="Gtk.DataBindings.DataLabel" id="datalabel3">
+                <property name="MemberName" />
+                <property name="Xalign">0</property>
+                <property name="LabelProp" translatable="yes">datalabel3</property>
+                <property name="Wrap">True</property>
+                <property name="Selectable">True</property>
+                <property name="InheritedDataSource">True</property>
+                <property name="Mappings">Description</property>
+                <property name="InheritedBoundaryDataSource">False</property>
+                <property name="Important">False</property>
+              </widget>
+              <packing>
+                <property name="Position">2</property>
+                <property name="AutoSize">False</property>
+              </packing>
+            </child>
+          </widget>
+          <packing>
+            <property name="Position">3</property>
+            <property name="AutoSize">True</property>
+            <property name="Expand">False</property>
+            <property name="Fill">False</property>
+          </packing>
+        </child>
+      </widget>
+    </child>
+  </widget>
+</stetic-interface>

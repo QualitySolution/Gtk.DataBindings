@@ -1,0 +1,54 @@
+Gtk.Databindings v0.98
+======================
+
+DONE
+====
+- All controls mostly done (at least those I've been testing)
+- Moved separation plan initially for 2.0 into this release.
+	- Bindings code is now in System.Data.Bindings and doesn't
+	  depend on Gtk anymore. gtk-databind-lib is now pure example
+	  how to extend any framework with DataBindings. All that is 
+	  needed is subclassing Adaptor and ControlAdaptor and that 
+	  is it.
+- All controls have now:
+	- bool InheritedDataSource
+	- object DataSource
+	- string Mappings
+	- bool InheritedBoundaryDataSource
+	- object BoundaryDataSource
+	- string BoundaryMappings
+- Pointer like Adaptors
+- User data assigning events
+- Using library in stetic
+- Most of the help for Monodoc (have to correct XML errors)
+- Object change notifications
+- 5 samples. More yet to come
+
+NOT YET REALLY TESTED
+=====================
+- Boundary mappings. Should work (or they did before separation). 
+  I just didn't have time to test them after that.
+
+KNOWN BUGS 
+==========
+(happened during cleaning session and Adapter separation):
+- Controls without being on at least one DataXXXXCONTAINER can't resolve value
+  easy fix with putting them on one. 
+	***Will be solved ASAP.
+
+- Containers have one box unusable in stetic. But this is stetic bug, so I can't
+  do a lot about it. Workaround is to skip first dead cell on design and gtk will
+  hide it in runtime anyway because it is empty. 
+	***Solved when stetic corrects it
+
+SHOWSTOPPERS BEFORE 1.0
+=======================
+- Error with non-assigning widgets
+- More bug testing
+- Provide rpm specs
+- Documentation
+
+QUICK PLAN CHANGE for 1.2
+=========================
+- Speed up notifications with skipping and better caching if possible
+
