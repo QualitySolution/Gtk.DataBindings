@@ -746,7 +746,8 @@ namespace System.Data.Bindings.Cached
 		/// </summary>
 		public void Dispose()
 		{
-			Finalize();
+			//Finalize();
+			Disconnect();
 			System.GC.SuppressFinalize (this);
 		}
 		
