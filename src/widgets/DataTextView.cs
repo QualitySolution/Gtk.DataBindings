@@ -209,7 +209,9 @@ namespace Gtk.DataBindings
 		{
 			//base.OnChanged();
 			//Console.WriteLine("hejjjj\n{0}\n{1}", adaptor.Value as string, base.Buffer.Text);
-			if ((adaptor.Value as string).CompareTo(base.Buffer.Text) == 0) 
+			if (adaptor.Value != null && (adaptor.Value as string).CompareTo(base.Buffer.Text) == 0) 
+				return;
+			if (adaptor.Value == null && base.Buffer.Text == String.Empty)
 				return;
 			if (ignore == true)
 				return;
