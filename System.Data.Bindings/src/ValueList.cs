@@ -150,6 +150,9 @@ namespace System.Data.Bindings
 		/// </summary>
 		public void Disconnect()
 		{
+			if (adaptor == null)
+				return;
+
 			foreach (MappedProperty mp in this)
 				mp.Disconnect();
 				
