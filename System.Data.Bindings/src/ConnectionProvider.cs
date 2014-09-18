@@ -760,7 +760,8 @@ namespace System.Data.Bindings
 				
 			bool res = false;
 			if (aProp.CanWrite == true) {
-				object no = System.Convert.ChangeType (aValue, aProp.PropertyType);
+				//object no = System.Convert.ChangeType (aValue, aProp.PropertyType); Возможно лишнее преобразование.
+				object no = aValue;
 				if (no is IComparable) {
 					object cval = aProp.GetValue (aObject, null);
 					if ((cval as IComparable).CompareTo(no) != 0) {
