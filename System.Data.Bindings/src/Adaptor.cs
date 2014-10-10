@@ -353,7 +353,7 @@ namespace System.Data.Bindings
 					if ((controlAdaptor.ControlIsWindow(Control) == false) && (controlAdaptor.GetParentOfControl(Control) != null) && (controlAdaptor.ParentWindow(Control) != null))
 						if (prevcheck.NeedsCheckup(IsValidMapping, FinalTarget, ItemsTarget) == true)
 							controlAdaptor.CheckControl();*/
-				if (Mappings != "")
+				if (target != null && Mappings != "")
 					Mappings = Mappings;
 			}
 		}

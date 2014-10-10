@@ -391,7 +391,7 @@ namespace System.Data.Bindings
 		}
 		
 		/// <summary>
-		// Returns validity of this Mapping
+		/// Returns validity of this Mapping
 		/// </summary>
 		public bool Valid {
 			get { 
@@ -861,8 +861,10 @@ namespace System.Data.Bindings
 			submappings = null;
 			masterItem = null;
 			if (Adaptor != null)
+			{
 				Adaptor.TargetChanged -= TargetChanged;
-			adaptor.Target = null;
+				adaptor.Target = null;
+			}
 			adaptor = null;
 		}
 

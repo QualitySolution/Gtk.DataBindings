@@ -86,6 +86,8 @@ namespace System.Data.Bindings
 			/// </returns>
 			public bool MoveNext()
 			{
+				if (master == null)
+					return false;
 				idx++;
 				return ((idx < master.MappingCount) ? true : false); 
 			}
@@ -156,8 +158,7 @@ namespace System.Data.Bindings
 			foreach (MappedProperty mp in this)
 				mp.Disconnect();
 				
-			if (adaptor != null)
-				adaptor.Target = null;
+			adaptor.Target = null;
 			adaptor = null;
 		}
 
