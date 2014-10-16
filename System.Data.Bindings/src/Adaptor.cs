@@ -835,7 +835,6 @@ namespace System.Data.Bindings
 								stateResolvingInheritedTarget = true;
 								Target = null;
 								stateResolvingInheritedTarget = false;
-								controlAdaptor.CheckControlState();
 							}
 						}
 

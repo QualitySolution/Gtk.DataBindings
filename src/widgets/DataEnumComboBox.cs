@@ -293,7 +293,6 @@ namespace Gtk.DataBindings
 		public DataEnumComboBox (object aDataSource, string aMappings)
 			: base()
 		{
-			Sensitive = false;
 			adaptor = new GtkControlAdaptor (this, true, aDataSource, aMappings);
 		}
 		

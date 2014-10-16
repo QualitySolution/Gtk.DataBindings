@@ -482,24 +482,6 @@ namespace System.Data.Bindings
 		}
 		
 		/// <summary>
-		/// Assigns data or disqualifies validity if needed
-		/// </summary>
-		public void CheckControlState()
-		{
-			bool canuse = adaptor.IsValidMapping;
-			if (canuse == false) {
-				//DebugAdaptor();
-				if (this.InheritedDataSource == true) {
-					InheritedDataSource = false;
-					InheritedDataSource = true;
-					canuse = adaptor.IsValidMapping;
-				}
-			}
-			if ((Control is IContainerControl) == false)
-				SetControlSensitivity (Control, canuse);
-		}
-
-		/// <summary>
 		/// Writes debug information about this adaptor
 		/// </summary>
 		public virtual void DebugAdaptor()
@@ -705,8 +687,6 @@ namespace System.Data.Bindings
 				return;
 			checkup = true;
 			bool canuse = adaptor.IsValidMapping;
-			
-			CheckControlState();
 			
 			IObserveable observer = null;
 			IObserveable boundaryobserver = null;

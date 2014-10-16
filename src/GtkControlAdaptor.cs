@@ -254,7 +254,6 @@ namespace Gtk.DataBindings
 		{
 			shown = true;
 			(Control as Gtk.Widget).ExposeEvent -= HandleExposeEvent;
-			CheckControlState();
 		}
 		
 		/// <summary>

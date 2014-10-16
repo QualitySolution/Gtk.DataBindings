@@ -268,8 +268,6 @@ namespace Gtk.DataBindings
 				CheckModelChain();
 				
 				ProcessTypeDescriptions();
-				if (Owner is IChangeableControl)
-					(Owner as IChangeableControl).Adaptor.CheckControlState();
 				check = null;
 				ResetWidgetModel();
 			}

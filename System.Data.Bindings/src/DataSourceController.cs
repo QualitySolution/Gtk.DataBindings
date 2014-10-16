@@ -120,30 +120,6 @@ namespace System.Data.Bindings
 		}
 		
 		/// <summary>
-		/// Rechecks all inherited controls for their state
-		/// </summary>
-		public static void RecheckStateOfInheritedControls()
-		{
-			int i;
-			if (AdaptorCount <= 0)
-				return;
-			// Separate boundary and non-boundary for speed
-			for (i=0; i<AdaptorCount; i++) {
-				if (adaptorList[i] == null)
-					continue;
-				if (((WeakReference) adaptorList[i]).Target == null)
-					continue;
-				if (TypeValidator.IsCompatible(((WeakReference) adaptorList[i]).Target.GetType(), typeof (Adaptor)) == false)
-					continue;
-				Adaptor adaptor = (Adaptor) ((WeakReference) adaptorList[i]).Target;
-				if (adaptor.Control != null)
-					if (adaptor.ControlAdaptor != null)
-						adaptor.ControlAdaptor.CheckControlState();
-				adaptor = null;
-			}
-		}
-
-		/// <summary>
 		/// Removes WeakReference for Adaptor from the list
 		/// </summary>
 		public static void RemoveAdaptor (IAdaptor aAdaptor)
