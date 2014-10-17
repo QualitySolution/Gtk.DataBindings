@@ -183,13 +183,7 @@ namespace Gtk.DataBindings
 		public override void InvokeControlAdapteeDataChange (IChangeableControl aControl, object aSender)
 		{
 			Gtk.Application.Invoke (delegate {
-				foreach (MappedProperty prop in Values)
-					if (prop.Valid == false) {
-						SetControlSensitivity(aControl, false);
-						return;
-					}
 				base.InvokeControlAdapteeDataChange (aControl, aSender);
-				SetControlSensitivity(aControl, true);
 			});
 		}
 		
