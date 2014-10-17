@@ -204,7 +204,7 @@ namespace Gtk.DataBindings
 		/// </param>
 		public virtual void GetDataFromDataSource (object aSender)
 		{
-			if ((bool) System.Convert.ToBoolean(adaptor.Value) != Active)
+			if (System.Convert.ToBoolean(adaptor.Value) != Active)
 				Active = (bool) adaptor.Value;
 		}
 

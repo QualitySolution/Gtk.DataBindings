@@ -137,7 +137,7 @@ namespace Gtk.DataBindings
 		{
 			if (adaptor.CanGet == true) {
 				object val = adaptor.Value;
-				double fval = (double) System.Convert.ToDouble(val); 
+				double fval = System.Convert.ToDouble(val); 
 				if (fval != Position)
 					Position = fval;
 			}

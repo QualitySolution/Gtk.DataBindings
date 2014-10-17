@@ -153,7 +153,7 @@ namespace Gtk.DataBindings
 		{
 			adaptor.DataChanged = false;
 			object val = adaptor.Value;
-			double fval = (double) System.Convert.ToDouble(val); 
+			double fval = System.Convert.ToDouble(val); 
 			if (fval != Value)
 				Value = fval;
 		}

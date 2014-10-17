@@ -136,7 +136,7 @@ namespace Gtk.DataBindings
 		public virtual void GetDataFromDataSource (object aSender)
 		{
 			object val = adaptor.Value;
-			double fval = (double) System.Convert.ToDouble(val); 
+			double fval = System.Convert.ToDouble(val); 
 			if (fval != Position)
 				Position = fval;
 		}
