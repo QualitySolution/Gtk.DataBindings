@@ -157,9 +157,6 @@ namespace System.Data.Bindings
 
 			foreach (MappedProperty mp in this)
 				mp.Disconnect();
-				
-			adaptor.Target = null;
-			adaptor = null;
 		}
 
 		/// <summary>

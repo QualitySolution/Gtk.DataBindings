@@ -320,9 +320,6 @@ namespace System.Data.Bindings
 				untouchedDataSource = false;
 				object prevtarget = target;
 
-/*				if (targetisinherited == false)
-					if ((target != null) && (InheritedTarget == true) && (destroyInProgress == false)) 
-						InheritedTarget = false;*/
 				if ((InheritedTarget == true) && (stateResolvingInheritedTarget == false))
 					if ((destroyInProgress == false) && (value != null))
 						throw new Exception ("Setting Adaptor.Target, but Target should be inherited\n" +
@@ -339,20 +336,15 @@ namespace System.Data.Bindings
 
 				// Set target and notify all Adaptors interested in this change
 				target = value;
-				finalTarget.Target = null;
-				
+
 				if (target != null) {
 					OnDataSourceConnect (target);
 					MSEventSupport.ConnectEvent (target);
 				}
 
-				if (prevtarget != target)
+				if (!destroyed && prevtarget != target)
 					OnTargetChanged (this);
-				prevtarget = null;
-/*				if ((controlAdaptor != null) && (IsBoundaryAdaptor == false))
-					if ((controlAdaptor.ControlIsWindow(Control) == false) && (controlAdaptor.GetParentOfControl(Control) != null) && (controlAdaptor.ParentWindow(Control) != null))
-						if (prevcheck.NeedsCheckup(IsValidMapping, FinalTarget, ItemsTarget) == true)
-							controlAdaptor.CheckControl();*/
+
 				if (target != null && Mappings != "")
 					Mappings = Mappings;
 			}
@@ -1479,12 +1471,6 @@ namespace System.Data.Bindings
 			targetChanged = null;
 			postRequested = null;
 			Target = null;
-			if (finalTarget != null)
-				finalTarget.Target = null;
-			finalTarget = null;
-			if (lastFinalTarget != null)
-				lastFinalTarget.Target = null;
-			lastFinalTarget = null;
 			controlAdaptor = null;
 			if (values != null) {
 				values.Disconnect();
