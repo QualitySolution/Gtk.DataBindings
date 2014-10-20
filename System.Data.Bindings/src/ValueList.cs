@@ -86,7 +86,7 @@ namespace System.Data.Bindings
 			/// </returns>
 			public bool MoveNext()
 			{
-				if (master == null)
+				if (master == null || master.Values == null)
 					return false;
 				idx++;
 				return ((idx < master.MappingCount) ? true : false); 
