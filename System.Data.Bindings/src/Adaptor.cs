@@ -1056,7 +1056,7 @@ namespace System.Data.Bindings
 		{
 			cachedMappings = false;
 			isValidated = false;
-			if (Control is IAdaptableControl)
+			if (Control is IAdaptableControl && (Control as IAdaptableControl).Adaptor != null)
 				if ((Control as IAdaptableControl).Mappings != "") {
 					mappings = "";
 					mappingList.Clear();
@@ -1498,6 +1498,22 @@ namespace System.Data.Bindings
 			DateTime dt = DateTime.Now;
 			Target = dt;
 			Target = null;
+		}
+
+		/// <summary>
+		/// Creates new adaptor with target
+		/// </summary>
+		public Adaptor(object target)
+		{
+			id = DataSourceController.AssignId();
+			CursorMode = true;
+			values = new ValueList (this);
+			isBoundary = false;
+			singleMappingOnly = false;
+			controlAdaptor = null;
+			isDataAdaptor = true;
+			DataSourceController.AddAdaptor (this);
+			Target = target;
 		}
 		
 		/// <summary>
