@@ -40,12 +40,12 @@ namespace System.Data.Bindings
 				throw new NotSupportedException ("GetEnumLayout is only supported by enumeration types");
 			bool icon = false;
 			foreach (FieldInfo fi in aEnum.GetFields()) {
-				Attribute[] attrs = (Attribute[]) fi.GetCustomAttributes (false);
-				foreach (Attribute attr in attrs)
-					if (TypeValidator.IsCompatible(attr.GetType(), typeof(ItemIconAttribute)) == true) {
-						icon = true;
-						break;
-					}
+				Attribute[] attrs = (Attribute[]) fi.GetCustomAttributes (typeof(ItemIconAttribute), false);
+				if(attrs.Length > 0)
+				{
+					icon = true;
+					break;
+				}
 			}
 			if (icon == true)
 				return (new string[2] {"icon", "title"});
