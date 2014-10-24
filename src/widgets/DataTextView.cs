@@ -165,7 +165,11 @@ namespace Gtk.DataBindings
 			adaptor.DataChanged = false;
 			ignore = true;
 			if (adaptor.Value != null)
-				Buffer.Text = adaptor.Value.ToString();
+			{
+				//FIXME Workaround, because we get event from us self
+				if(Buffer.Text != adaptor.Value.ToString())
+					Buffer.Text = adaptor.Value.ToString();
+			}
 			else
 				Buffer.Text = "";
 			ignore = false;
