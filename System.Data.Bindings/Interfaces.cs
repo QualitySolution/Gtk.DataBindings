@@ -197,12 +197,12 @@ namespace System.Data.Bindings
 	/// </summary>
 	public delegate void PostMethodEvent();
 
-	/// <summary>
-	/// Delegate method which notifies about change in list
-	/// </summary>
-	/// <param name="aList">
-	/// List being changed <see cref="IList"/>
-	/// </param>
+	// <summary>
+	// Delegate method which notifies about change in list
+	// </summary>
+	// <param name="aList">
+	// List being changed <see cref="IList"/>
+	// </param>
 //	public delegate void ListChangedEvent (IList aList);
 
 	/// <summary>
@@ -1367,6 +1367,15 @@ namespace System.Data.Bindings
 		/// Object to mapped property <see cref="MappedProperty"/>
 		/// </returns>
 		MappedProperty Mapping (int aIdx);
+
+		/// <summary>
+		/// Resolves Default MappedProperty
+		/// </summary>
+		/// <returns>
+		/// Default Mapped property <see cref="MappedProperty"/>
+		/// </returns>
+		MappedProperty GetDefaultProperty ();
+
 		/// <summary>
 		/// Specifies mapping type of specified mapping
 		/// </summary>
@@ -1377,6 +1386,7 @@ namespace System.Data.Bindings
 		/// Type of mapping <see cref="System.Type"/>
 		/// </returns>
 		System.Type MappingType (int aIdx);
+
 		/// <value>
 		/// Defines if adaptor has default mapping or not
 		/// </value>

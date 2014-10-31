@@ -279,9 +279,13 @@ namespace System.Data.Bindings
 			}
 			set { 
 				adaptor.Mappings = value;
-/*				if (checkup == false)
-					CheckControl();*/
-//				CheckControlState();
+			}
+		}
+
+		public System.Type ValueType
+		{
+			get {
+				return adaptor.GetDefaultProperty().GetMappedType ();
 			}
 		}
 		

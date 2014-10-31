@@ -281,7 +281,7 @@ namespace System.Data.Bindings.Cached
 				return (null);
 
 			if (IsProperty == true)
-				return (propInfo.GetType());
+				return (propInfo.PropertyType);
 			if (IsDataRowField == true)
 				return (propColumn.DataType);
 			if (IsVirtualProperty == true)

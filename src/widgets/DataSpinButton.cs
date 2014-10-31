@@ -181,7 +181,6 @@ namespace Gtk.DataBindings
 			double ival = System.Convert.ToDouble(val); 
 			if (ival != Value)
 				Value = ival;
-			val = null;
 		}
 		
 		/// <summary>
@@ -190,9 +189,38 @@ namespace Gtk.DataBindings
 		public virtual void PutDataToDataSource (object aSender)
 		{
 			adaptor.DataChanged = false;
-			adaptor.Value = (object) Value;
+			if (Convert.ToDouble (adaptor.Value) == Value)
+				return;
+
+			switch(adaptor.ValueType.Name)
+			{
+			case "Double":
+				adaptor.Value = (double)Value;
+				break;
+			case "Decimal":
+				adaptor.Value = (decimal)Value;
+				break;
+			case "Float":
+				adaptor.Value = (float)Value;
+				break;
+			case "Int16" :
+				adaptor.Value = (short)ValueAsInt;
+				break;
+			case "Int32": 
+				adaptor.Value = ValueAsInt;
+				break;
+			case "Int64" :
+				adaptor.Value = (long)Value;
+				break;
+			case "Byte" :
+				adaptor.Value = (byte)ValueAsInt;
+				break;
+			default:
+				Console.WriteLine ("Warning: type {0} can't be mapped for DataSpinButton.", adaptor.ValueType.Name);
+				break;
+			}
 		}
-		
+
 		/// <summary>
 		/// Overrides OnValueChanged to put data in DataSource if needed
 		/// </summary>
