@@ -262,16 +262,18 @@ namespace Gtk.DataBindings
 		private void _TargetChanged (IAdaptor aAdaptor)
 		{
 			Gtk.Application.Invoke (delegate {
-				if ((adaptor.Adaptor.FinalTarget == null) ||
-				    (adaptor.Values.Count == 0) || 
-				    (adaptor.Values[0].Name == "")) {
-					string cachedDefault = "";
-					if (adaptor.Adaptor.DataSourceType != null)
-						cachedDefault = adaptor.Values[0].ResolveTitle (adaptor.Adaptor.DataSourceType);
-					Label = cachedDefault;
-					return;
+				if (adaptor != null && adaptor.Adaptor != null) {
+					if ((adaptor.Adaptor.FinalTarget == null) ||
+					    (adaptor.Values.Count == 0) || 
+						(adaptor.Values[0].Name == "")) {
+						string cachedDefault = "";
+						if (adaptor.Adaptor.DataSourceType != null)
+							cachedDefault = adaptor.Values[0].ResolveTitle (adaptor.Adaptor.DataSourceType);
+						Label = cachedDefault;
+						return;
+					}
+					Label = adaptor.Values[0].Title;
 				}
-				Label = adaptor.Values[0].Title;
 			});
 		}
 		

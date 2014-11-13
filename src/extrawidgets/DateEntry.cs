@@ -1049,13 +1049,15 @@ namespace Gtk.DataBindings
 			foreach (DateText t in labels)
 				labelcontents.PackEnd (t, false);
 
-			clearimg = new DrawingCellActivePixbuf (theme.LoadIcon(Stock.Clear, width, 0));
+
+
+			clearimg = new DrawingCellActivePixbuf (this.RenderIcon(Stock.Clear, IconSize.Menu, ""));
 			clearimg.Activated += delegate {
 				OnClearData();
 			};
 			entrycontents.PackStart (clearimg, false);
 			
-			addimg = new DrawingCellActivePixbuf (theme.LoadIcon(Stock.Add, width, 0));
+			addimg = new DrawingCellActivePixbuf (this.RenderIcon(Stock.Add, IconSize.Menu, ""));
 			addimg.Activated += delegate {
 				OnStartCalculator();
 			};
