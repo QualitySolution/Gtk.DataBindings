@@ -29,7 +29,7 @@ namespace Gtk.DataBindings
 {
 	[ToolboxItem(true)]
 	[Category ("Extra Gtk Widgets")]
-	public class DateEntry : CellDrawingArea, IEditable, CellEditableImplementor
+	public class DateEntry : CellDrawingArea, CellEditableImplementor
 	{
 		/// <value>
 		/// Data parts

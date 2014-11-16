@@ -35,7 +35,7 @@ namespace Gtk.DataBindings
 	[ToolboxItem (true)]
 	[Category ("Databound Widgets")]
 	[GtkWidgetFactoryProvider ("text", "DefaultFactoryCreate")]
-	public class DataTextView : TextView, IAdaptableControl, ICustomDataEvents, IPostableControl, IEditable
+	public class DataTextView : TextView, IAdaptableControl, ICustomDataEvents, IPostableControl
 	{
 		public static IAdaptableControl DefaultFactoryCreate (FactoryInvocationArgs aArgs)
 		{

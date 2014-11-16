@@ -438,6 +438,7 @@ namespace System.Data.Bindings
 	/// <summary>
 	/// Specifies if widget is editable or not
 	/// </summary>
+	[ObsoleteAttribute("Perhaps will be removed, because it make problems for Static.")]
 	public interface IEditable
 	{
 		/// <value>

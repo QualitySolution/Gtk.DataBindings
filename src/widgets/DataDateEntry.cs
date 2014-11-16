@@ -29,7 +29,7 @@ namespace Gtk.DataBindings
 	[Category ("Databound Widgets")]
 	[GtkWidgetFactoryProvider ("date", "DefaultFactoryCreate")]
 	[GtkTypeWidgetFactoryProvider ("datehandler", "DefaultFactoryCreate", typeof(DateTime))]
-	public class DataDateEntry : DateEntry, IAdaptableControl, ICustomDataEvents, IPostableControl, IEditable
+	public class DataDateEntry : DateEntry, IAdaptableControl, ICustomDataEvents, IPostableControl
 	{
 		/// <summary>
 		/// Registered factory creation method

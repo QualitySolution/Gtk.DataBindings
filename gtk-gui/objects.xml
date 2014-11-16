@@ -12,7 +12,6 @@
         <property name="Mappings" />
         <property name="InheritedBoundaryDataSource" />
         <property name="BoundaryMappings" />
-        <property name="Editable" />
       </itemgroup>
     </itemgroups>
     <signals>
@@ -824,7 +823,6 @@
         <property name="Mappings" />
         <property name="InheritedBoundaryDataSource" />
         <property name="BoundaryMappings" />
-        <property name="Editable" />
       </itemgroup>
     </itemgroups>
     <signals>
@@ -880,7 +878,6 @@
         <property name="Mappings" />
         <property name="InheritedBoundaryDataSource" />
         <property name="BoundaryMappings" />
-        <property name="Editable" />
       </itemgroup>
     </itemgroups>
     <signals>

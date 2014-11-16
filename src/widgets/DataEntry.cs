@@ -37,7 +37,7 @@ namespace Gtk.DataBindings
 	[Description ("Adaptable Entry Widget")]
 	[GtkWidgetFactoryProvider ("string", "DefaultFactoryCreate")]
 	[GtkTypeWidgetFactoryProvider ("stringhandler", "DefaultFactoryCreate", typeof(string))]
-	public class DataEntry : Entry, IAdaptableControl, ICustomDataEvents, IPostableControl, IEditable
+	public class DataEntry : Entry, IAdaptableControl, ICustomDataEvents, IPostableControl
 	{
 		/// <summary>
 		/// Registered factory creation method

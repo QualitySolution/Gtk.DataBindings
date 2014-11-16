@@ -36,7 +36,7 @@ namespace Gtk.DataBindings
 	[Category ("Databound Widgets")]
 	[GtkWidgetFactoryProvider ("bool", "DefaultFactoryCreate")]
 	[GtkTypeWidgetFactoryProvider ("boolhandler", "DefaultFactoryCreate", typeof(bool))]
-	public class DataCheckButton : CheckButton, IAdaptableControl, IPostableControl, IEditable, IAutomaticTitle
+	public class DataCheckButton : CheckButton, IAdaptableControl, IPostableControl, IAutomaticTitle
 	{		
 		/// <summary>
 		/// Registered factory creation method
@@ -52,7 +52,7 @@ namespace Gtk.DataBindings
 			IAdaptableControl wdg = new DataCheckButton();
 			wdg.Mappings = aArgs.PropertyName;
 			if (aArgs.State == PropertyDefinition.ReadOnly)
-				(wdg as IEditable).Editable = false;
+				(wdg as DataCheckButton).Editable = false;
 			(wdg as DataCheckButton).AutomaticTitle = aArgs.ResolveTitle;
 			if ((wdg as DataCheckButton).AutomaticTitle == false)
 				(wdg as DataCheckButton).Label = aArgs.Title;
