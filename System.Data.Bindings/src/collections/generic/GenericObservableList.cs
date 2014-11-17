@@ -447,7 +447,7 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </returns>
 		int IList.IndexOf (object aObject)
 		{
-			if (aObject.GetType() != typeof(T))
+			if (!TypeValidator.IsCompatible(aObject.GetType(),  typeof(T)))
 				throw new ExceptionWrongGenericType (aObject.GetType(), typeof(T));
 			return (items.IndexOf((T) aObject));
 		}
