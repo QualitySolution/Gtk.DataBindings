@@ -360,16 +360,16 @@
     </MonoDevelop>
   </ProjectExtensions>
   <ItemGroup>
-    <ProjectReference Include="System.Data.Bindings\System.Data.Bindings.csproj">
-      <Project>{54F958F5-7E58-4C89-9A04-8835E63B97C3}</Project>
-      <Name>System.Data.Bindings</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="src\treemodels\" />
     <Folder Include="src\attributes\" />
     <Folder Include="src\other_usable_lgpl_widgets\" />
     <Folder Include="src\factory\" />
     <Folder Include="src\cellrenderers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="System.Data.Bindings\System.Data.Bindings.csproj">
+      <Project>{54F958F5-7E58-4C89-9A04-8835E63B97C3}</Project>
+      <Name>System.Data.Bindings</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
