@@ -87,19 +87,28 @@ namespace System.Data.Bindings
 		public static int CountDataSourceOwners (object aObject)
 		{
 			int i = 0;
+			//Collection were modified during enumeration, so I have to change foreach to for cycle.
 			lock (adaptorList)
 			{
-				foreach (WeakReference wr in adaptorList)
+				for (int j = 0; j < adaptorList.Count; j++)
+					if (adaptorList [j].Target != null)
+						if ((adaptorList [j].Target as IAdaptor)!= null && (adaptorList [j].Target as IAdaptor).Target == aObject)
+							i++;
+				/*foreach (WeakReference wr in adaptorList)
 					if (wr.Target != null)
 						if ((wr.Target as IAdaptor).Target == aObject)
-							i++;
+							i++;*/
 			}
 			lock (boundaryadaptorList)
 			{
-				foreach (WeakReference wr in boundaryadaptorList)
+				for (int j = 0; j < boundaryadaptorList.Count; j++)
+					if (boundaryadaptorList [j].Target != null)
+						if ((boundaryadaptorList [j].Target as IAdaptor)!= null && (boundaryadaptorList [j].Target as IAdaptor).Target == aObject)
+							i++;
+				/*foreach (WeakReference wr in boundaryadaptorList)
 					if (wr.Target != null)
 						if ((wr.Target as IAdaptor).Target == aObject)
-							i++;
+							i++;*/
 			}
 			return (i);
 		}
