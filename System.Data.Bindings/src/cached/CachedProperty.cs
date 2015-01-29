@@ -50,7 +50,7 @@ namespace System.Data.Bindings.Cached
 					return (null);
 				if (objectReference.Target != null)
 					return (objectReference.Target.GetType());
-				return (null); 
+				return (null);
 			}
 		}
 
@@ -209,7 +209,6 @@ namespace System.Data.Bindings.Cached
 			modified = true;
 			Clear();
 			objectReference = new WeakReference (aObject);
-//			objectReference.Target = aObject;
 		}
 
 		/// <summary>

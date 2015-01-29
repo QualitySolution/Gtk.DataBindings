@@ -89,14 +89,6 @@ namespace System.Data.Bindings
 			}
 		}
 		
-		/// <summary>
-		/// Returns System.Type of the mapped property
-		/// </summary>
-/*		private System.Type valuePropertyType;
-		public System.Type ValuePropertyType {
-			get { return (valuePropertyType); }
-		}*/
-		
 		private string name = "";
 		/// <summary>
 		/// Mapped Property name, uses caching and if needed resolves again

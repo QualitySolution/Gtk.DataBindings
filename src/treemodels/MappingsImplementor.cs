@@ -836,7 +836,6 @@ namespace Gtk.DataBindings
 				}
 				if (succ == false)
 					throw new ExceptionSpecialCellRendererNotFound (aProp.MappingTarget);
-				cr = null;
 			}
 			else
 				if (aType == typeof (bool)) {
@@ -963,13 +962,6 @@ namespace Gtk.DataBindings
 		{
 			(Owner as IconView).Clear();
 		}
-		
-/*		private void NullIconViewModel()
-		{
-			IconView tv = (Owner as IconView);
-			tv.Model = null;
-			modeladapter = null;
-		}*/
 		
 		private void ResetIconViewModel()
 		{
@@ -1488,12 +1480,12 @@ namespace Gtk.DataBindings
 								// if simple mapping was specified then resolving has to godifferent way
 								System.Type originalType;
 								if (simpleMapping == false) {
-									Type res = (Type) null;
+									Type res = null;
 									if (ListItemType != null)
 										res = TypeValidator.GetMappingType (ListItems, ListItemType, prop.Name);
 									else
 										throw new ExceptionDataSourceTypeWasNotSpecified (GetType(), ColumnAdaptor);
-									CachedProperty prp = (CachedProperty) null;
+									CachedProperty prp = null;
 									if (ListItemType != null)
 										prp = new CachedProperty (ListItemType, prop.Name);
 
@@ -1514,10 +1506,8 @@ namespace Gtk.DataBindings
 										multicolumns[j] = true;
 										types[j] = typeof (object);
 									}
-										
+									
 									propertyInfos[j] = prp;
-									prp = (CachedProperty) null;
-									res = (Type) null;
 								}
 								else {
 									// simple mapping resolving
@@ -1667,23 +1657,20 @@ namespace Gtk.DataBindings
 			if (aColumn > (Types.Length-1))
 				return;
 			object node = NodeFromIter (aIter);
-//			value = GLib.Value.Empty;
+
 			if (node == null)
 				return;
 
 			if (MultiColumns != null)
 				if ((MultiColumns[aColumn] == true) || (SimpleMapping == true)) {
 					value = new GLib.Value (node);
-//					value.Val = node;
 					return;
 				}
 			object o;
 			PropertyInfos[aColumn].SetObject (node);
 			PropertyInfos[aColumn].GetValue (out o, null);
 			if (o != null) {
-//				value.Dispose();
 				value = new GLib.Value (o);
-//				value.Val = o;
 			}
 			else {
 				System.Type type = ListItemType;
@@ -1803,7 +1790,6 @@ namespace Gtk.DataBindings
 				TreePath tp = new TreePath (aIdx);
 				TreeIter iter;
 				if (GetIter(out iter, tp) == true)
-//					ActiveModel.EmitRowsReordered (tp, iter);
 					ActiveModel.EmitRowsReordered (tp, iter, null);
 				tp.Dispose();
 			}

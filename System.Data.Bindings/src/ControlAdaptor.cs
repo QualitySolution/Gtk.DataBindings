@@ -386,7 +386,6 @@ namespace System.Data.Bindings
 		{
 			object DS = ConnectionProvider.ResolveTargetFor (Adaptor);
 			if ((Control == null) || (DS == null)) {
-				DS = null;
 				return;
 			}
 				
@@ -394,10 +393,8 @@ namespace System.Data.Bindings
 				if (mp != null)
 					if (mp.IsDefault == true) {
 						mp.AssignValueToObject (EDataDirection.FromControlToDataSource, DS, Control, aMapping);
-						DS = null;
 						return;
 					}
-			DS = null;
 		}
 		
 		/// <summary>
@@ -411,17 +408,14 @@ namespace System.Data.Bindings
 		{
 			object DS = ConnectionProvider.ResolveTargetFor (Adaptor);
 			if ((Control == null) || (DS == null)) {
-				DS = null;
 				return;
 			}
 			
 			foreach (MappedProperty mp in Values)
 				if (mp.IsDefault == true) {
 					mp.AssignValueToObject (EDataDirection.FromDataSourceToControl, DS, Control, aMapping);
-					DS = null;
 					return;
 				}
-			DS = null;
 		}
 		
 		/// <summary>

@@ -367,8 +367,6 @@ namespace Gtk.ExtraWidgets
 					}
 				}
 			}
-			switch (evnt.Key) {
-			}
 			return base.OnKeyReleaseEvent (evnt);
 		}
 		
