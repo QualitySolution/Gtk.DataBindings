@@ -258,6 +258,7 @@ namespace System.Data.Bindings
 				if (InheritedDataSource == true)
 					InheritedDataSource = false;
 
+
 				adaptor.Silence = true;
 				if (adaptor.Target != value)
 					adaptor.Target = value;
@@ -999,7 +1000,6 @@ namespace System.Data.Bindings
 			customPostData = null;
 			destroyed = true;
 			if (adaptor != null) {
-				DataSource = null;
 				adaptor.DestroyInProgress = true;
 				adaptor.Disconnect();
 				adaptor = null;
