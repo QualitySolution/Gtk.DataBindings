@@ -32,6 +32,7 @@ namespace Gtk.DataBindings
 	public class GtkControlAdaptor : ControlAdaptor
 	{
 		bool shown = false;
+		bool controlAdapteeDataChangeIsInvoked = false;
 		
 		/// <summary>
 		/// Validates type of the control if it is compatible with adaptor
@@ -182,7 +183,11 @@ namespace Gtk.DataBindings
 		/// </remarks>
 		public override void InvokeControlAdapteeDataChange (IChangeableControl aControl, object aSender)
 		{
+			if (controlAdapteeDataChangeIsInvoked)
+				return;
+			controlAdapteeDataChangeIsInvoked = true;
 			Gtk.Application.Invoke (delegate {
+				controlAdapteeDataChangeIsInvoked = false;
 				base.InvokeControlAdapteeDataChange (aControl, aSender);
 			});
 		}
