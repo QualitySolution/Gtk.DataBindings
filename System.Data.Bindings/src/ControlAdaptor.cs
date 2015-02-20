@@ -21,6 +21,7 @@
 using System;
 using System.Reflection;
 using System.Data.Bindings.DebugInformation;
+using System.Globalization;
 
 namespace System.Data.Bindings
 {
@@ -282,6 +283,10 @@ namespace System.Data.Bindings
 				adaptor.Mappings = value;
 			}
 		}
+			
+		public IValueConverter Converter { get; set; }
+		public CultureInfo ConverterCulture { get; set; }
+		public object ConverterParameter { get; set; }
 
 		public System.Type ValueType
 		{
@@ -297,12 +302,27 @@ namespace System.Data.Bindings
 			get {
 				if (adaptor == null)
 					throw new ExceptionAccessAdaptorInContainerControl();
-				return (adaptor.GetDefaultMappingValue()); 
+
+				if (Converter != null)
+					return Converter.Convert(adaptor.GetDefaultMappingValue(),
+					                         typeof(string), //FIXME Will make more flex
+					                         ConverterParameter,
+					                         CultureInfo.CurrentUICulture);
+				else
+					return (adaptor.GetDefaultMappingValue());
 			}
 			set { 
 				if (adaptor == null)
 					throw new ExceptionAccessAdaptorInContainerControl();
-				adaptor.SetDefaultMappingValue(value);
+				object convertedValue = value;
+				if (Converter != null)
+				{
+					convertedValue = Converter.ConvertBack(value,
+					                                       ValueType,
+					                                       ConverterParameter,
+					                                       CultureInfo.CurrentUICulture);
+				}
+				adaptor.SetDefaultMappingValue(convertedValue);
 			}
 		}
 		
