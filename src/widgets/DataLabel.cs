@@ -278,7 +278,6 @@ namespace Gtk.DataBindings
 		public DataLabel (object aDataSource, string aMappings)
 			: base("")
 		{
-			Xalign = 0;
 			adaptor = new GtkControlAdaptor (this, true, aDataSource, aMappings);
 		}
 		
