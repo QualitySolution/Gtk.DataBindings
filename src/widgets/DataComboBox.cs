@@ -209,30 +209,6 @@ namespace Gtk.DataBindings
 		}
 		
 		/// <summary>
-		/// Reacts on when selected object has being changed from the outside
-		/// </summary>
-		/// <param name="aSender">
-		/// Notification sender object <see cref="System.Object"/>
-		/// </param>
-/*		private void SelectedObjectChanged (object aSender)
-		{
-			object obj = CurrentSelection.FinalTarget;
-			if (obj == null)
-				return;
-			TreePath tp;
-			TreeViewColumn tv;
-			GetCursor (out tp, out tv);
-			if (tp == null)
-				return;
-				
-			TreeIter iter;
-			if (internalModel.GetIter(out iter, tp) == false)
-				return;
-			
-//			InsertValuesFromObjectToIter (obj, iter);
-		}*/
-		
-		/// <summary>
 		/// Calls ControlAdaptors method to transfer data, so it can be wrapped
 		/// into widget specific things and all checkups
 		/// </summary>
@@ -297,7 +273,6 @@ namespace Gtk.DataBindings
 		/// Overrides OnCursorChanged to handle changes
 		/// </summary>
 		protected override void OnChanged()
-//		protected override void OnCursorChanged()
 		{
 			base.OnChanged();
 			if (Model == null) {
@@ -312,22 +287,14 @@ namespace Gtk.DataBindings
 				}
 				
 			TreeIter iter;
-//			TreePath tp;
 
 			if (GetActiveIter(out iter) == true) {
 				object o = internalModel.NodeFromIter (iter);
-//				tp = internalModel.GetPath (iter);
-//				if (tp == null)
-//					throw new ExceptionResolvingPathFromTreeIterOnChanged (GetType());
 				if (ListItems != null) {
-//					IList lst = (IList) ListItems;
-//					object obj = HierarchicalList.Get (lst, tp.Indices);
 					if (TypeValidator.IsCompatible(o.GetType(), internalModel.ListItemType) == true) 
 						currentSelection.Target = o;
 					else
 						currentSelection.Target = null;
-					o = null;
-//					lst = null;
 				}
 				else
 					currentSelection.Target = null;
@@ -348,23 +315,6 @@ namespace Gtk.DataBindings
 			if (GetActiveIter(out iter) == true)
 				return (internalModel.NodeFromIter (iter));
 			return (null);
-//			if (ListItems == null)
-//				return null;
-				
-/*			TreeIter iter;
-			TreePath tp;
-			TreeViewColumn tv;
-			GetCursor (out tp, out tv);
-			if (tv != null) {
-				if (internalModel.GetIter (out iter, tp)) {
-					object obj = internalModel.NodeFromIter(iter);
-					return (obj);
-				}
-				else
-					return (null);
-			}
-			else
-				return (null);*/
 		}
 		
 		/// <summary>
@@ -396,20 +346,11 @@ namespace Gtk.DataBindings
 		{
 			// Allocate selection adaptor
 			currentSelection = new GtkAdaptor();
-//			currentSelection.OnDataChange += SelectedObjectChanged;
 			internalModel.ClearSelection += delegate() {
 				if (CurrentSelection != null)
 					CurrentSelection.Target = null;
 			};
-			
-			// Create and connect ListAdaptor with this TreeView
-/*			listadaptor = new GtkListAdaptor(false, null, this, false); 
-			listadaptor.OnListChanged += DSChanged;
-			listadaptor.OnElementAdded += DSElementAdded;
-			listadaptor.OnElementChanged += DSElementChanged;
-			listadaptor.OnElementRemoved += DSElementRemoved;
-			listadaptor.OnTargetChange += ListTargetChanged;*/
-//			listadaptor.OnTargetChange += ItemsTargetChanged;
+
 			// Create Adaptor
 			adaptor = new GtkControlAdaptor (this, false);
 			adaptor.DisableMappingsDataTransfer = true;
@@ -418,7 +359,6 @@ namespace Gtk.DataBindings
 				if (adaptor != null)
 					adaptor.CheckControl();
 			};			
-//			columnadaptor = new GtkAdaptor();
 		}
 
 		/// <summary>

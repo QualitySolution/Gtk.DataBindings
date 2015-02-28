@@ -93,13 +93,10 @@ namespace Gtk.DataBindings
 		
 		private bool FilterTreeModel (Gtk.TreeModel aModel, Gtk.TreeIter aIter)
 		{
-//System.Console.WriteLine("Filter: Model {0}", aModel);
-//System.Console.WriteLine("filter?" + NodeFromIter(aIter));
 			if (isVisibleInFilter != null) {
 				object o = NodeFromIter (aIter);
 				return (OnIsVisibleInFilter (o));
 			}
-//System.Console.WriteLine("seems visible");
 			return (true);
 		}
 		#endregion Filtering
