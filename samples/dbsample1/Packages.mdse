@@ -15,7 +15,7 @@
       </Builder>
     </Package>
     <Package name="Tarball">
-      <Builder rootEntry="dbsample1.mds" TargetDirectory="/home/matooo/Projects/gtk-databind/gtk-databind-lib/samples/dbsample1" DefaultConfiguration="Debug" ctype="TarballDeployTarget">
+      <Builder rootEntry="dbsample1.mds" TargetDirectory="../../../../../matooo/Projects/gtk-databind/gtk-databind-lib/samples/dbsample1" DefaultConfiguration="Debug" ctype="TarballDeployTarget">
         <ChildEntries>
           <Entry>dbsample1.mdp</Entry>
         </ChildEntries>

@@ -1,1 +1,6 @@
-<CombineEntry name="dbsample1Translation" fileversion="2.0" outputType="RelativeToOutput" ctype="TranslationProject" />
+<CombineEntry name="dbsample1Translation" fileversion="2.0" outputType="RelativeToOutput" ctype="TranslationProject">
+  <Configurations active="Debug">
+    <Configuration name="Debug" ctype="TranslationProjectConfiguration" />
+    <Configuration name="Release" ctype="TranslationProjectConfiguration" />
+  </Configurations>
+</CombineEntry>
