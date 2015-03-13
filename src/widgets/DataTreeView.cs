@@ -371,7 +371,7 @@ namespace Gtk.DataBindings
 			TreePath tp;
 			TreeViewColumn tv;
 			GetCursor (out tp, out tv);
-			if (tv != null) {
+			if (tv != null && tp != null) {
 				if (internalModel.GetIter (out iter, tp)) {
 					object obj = internalModel.NodeFromIter(iter);
 					return (obj);
