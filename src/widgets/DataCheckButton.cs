@@ -269,10 +269,12 @@ namespace Gtk.DataBindings
 						string cachedDefault = "";
 						if (adaptor.Adaptor.DataSourceType != null)
 							cachedDefault = adaptor.Values[0].ResolveTitle (adaptor.Adaptor.DataSourceType);
-						Label = cachedDefault;
+						if(AutomaticTitle)
+							Label = cachedDefault;
 						return;
 					}
-					Label = adaptor.Values[0].Title;
+					if(AutomaticTitle)
+						Label = adaptor.Values[0].Title;
 				}
 			});
 		}
