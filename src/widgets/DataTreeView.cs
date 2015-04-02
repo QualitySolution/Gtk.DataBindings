@@ -442,18 +442,6 @@ namespace Gtk.DataBindings
 		/// </summary>
 		public virtual void Disconnect()
 		{
-/*			lastItems = null;
-			UnsetDragFunctionality();
-			onListCellDescription = null;
-			if (listadaptor != null) {
-				listadaptor.OnListChanged -= DSChanged;
-				listadaptor.OnElementAdded -= DSElementAdded;
-				listadaptor.OnElementChanged -= DSElementChanged;
-				listadaptor.OnElementRemoved -= DSElementRemoved;
-				listadaptor.OnTargetChange -= ListTargetChanged;
-				listadaptor.Disconnect();
-				listadaptor = null;
-			}*/
 			if (CurrentSelection != null) {
 				CurrentSelection.Disconnect();
 				currentSelection = null;
@@ -464,7 +452,6 @@ namespace Gtk.DataBindings
 			}
 			internalModel.Disconnect();
 			internalModel = null;
-//			cachedItems = null;
 		}
 		
 		/// <summary>

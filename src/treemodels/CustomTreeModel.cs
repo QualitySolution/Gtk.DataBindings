@@ -49,7 +49,6 @@ namespace Gtk.DataBindings
 		{
 			if ((int) aIter.UserData == 0)
 				return (NullHandle);
-//				return (GCHandle.Alloc(null));
 			GCHandle gch = (GCHandle) aIter.UserData;
 			return (gch.Target);
 		}
