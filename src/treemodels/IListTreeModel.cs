@@ -51,6 +51,8 @@ namespace Gtk.DataBindings
 				return (null);
 			if (RespectHierarchy == true)
 				return (HierarchicalList.Get(Items, aPath.Indices));
+			if (aPath.Indices [0] < 0 || aPath.Indices [0] >= Items.Count)
+				return null;
 			return (Items[aPath.Indices[0]]);
 		}
 
