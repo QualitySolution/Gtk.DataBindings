@@ -15,7 +15,7 @@ namespace Gtk.DataBindings
 			set { hasDeletedItems = value; }
 		}
 		
-		private MappingsImplementor masterImplementor = null;
+		private MappingsImplementor masterImplementor;
 		/// <value>
 		/// Provides reference to master implementor
 		/// </value>
@@ -50,14 +50,6 @@ namespace Gtk.DataBindings
 		public virtual bool IsItemDeleted (object aObject)
 		{
 			return (false);
-		}
-		
-		/// <summary>
-		/// Disconnects references
-		/// </summary>
-		public virtual void Disconnect()
-		{
-			masterImplementor = null;
 		}
 		
 		private QueryImplementor()

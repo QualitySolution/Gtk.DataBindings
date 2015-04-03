@@ -19,7 +19,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data.Bindings.Collections.Generic;
+using System.Linq;
 
 namespace System.Data.Bindings.Collections
 {
@@ -28,11 +28,8 @@ namespace System.Data.Bindings.Collections
 	/// </summary>
 	public class ObservableFilterListView : BaseClientObservableListView, IObservableList, IFiltered
 	{
-		private List<bool> itemVisibility = new List<bool>();
-		private List<int> localIndex = new List<int>();
+		private List<object> filtredList;
 		
-		private bool unsynced = false;
-
 		#region IFiltered
 		
 		private StrictnessType strictness = StrictnessType.NonStrict;
@@ -54,14 +51,6 @@ namespace System.Data.Bindings.Collections
 				if (isFiltered == value)
 					return;
 				isFiltered = value;
-				if (isFiltered == false) {
-					localIndex.Clear();
-					unsynced = true;
-				}
-				else {
-					localIndex.Clear();
-					unsynced = true;
-				}
 			}
 		}
 		
@@ -98,10 +87,8 @@ namespace System.Data.Bindings.Collections
 				return (true);
 			bool res;
 			foreach (Delegate delegatemethod in isVisibleInFilter.GetInvocationList()) {
-//			foreach (IsVisibleInFilterEvent delegatemethod in isVisibleInFilter.GetInvocationList()) {
 				if (delegatemethod != null) {
 					res = (bool) delegatemethod.DynamicInvoke (new object[1] {aObject});
-//					res = delegatemethod (aObject);
 					if (res == false)
 						return (false);
 				}
@@ -114,18 +101,7 @@ namespace System.Data.Bindings.Collections
 		/// </summary>
 		public void FilterLess()
 		{
-			if (itemVisibility.Count != ParentView.Count) {
-				Refilter();
-				return;
-			}
-			for (int i=0; i<ParentView.Count; i++)
-				if (itemVisibility[i] == true) {
-					itemVisibility[i] = OnIsVisibleInFilter (ParentView[i]);
-					if (itemVisibility[i] == false) {
-						localIndex.Remove (i);
-						OnElementRemoved (new int[1] {i}, ParentView[i]);
-					}
-				}
+			filtredList.RemoveAll (o => !OnIsVisibleInFilter (o));
 		}
 		
 		/// <summary>
@@ -133,36 +109,18 @@ namespace System.Data.Bindings.Collections
 		/// </summary>
 		public void FilterMore()
 		{
-			if (itemVisibility.Count != ParentView.Count) {
-				Refilter();
-				return;
-			}
-			for (int i=0; i<ParentView.Count; i++)
-				if (itemVisibility[i] == true) {
-					itemVisibility[i] = OnIsVisibleInFilter (ParentView[i]);
-					if (itemVisibility[i] == false) {
-						localIndex.SortedAdd(i);
-						OnElementAdded (new int[1] {i});
-					}
-				}
+			Refilter();
 		}
 		
 		public void Refilter()
 		{
-			if (IsFiltered == false)
+			if (IsFiltered == false) {
+				filtredList = ParentView.Cast<object> ().ToList ();
 				return;
-			localIndex.Clear();
-			if (itemVisibility.Count != ParentView.Count) {
-				itemVisibility.Clear();
-				for (int i=0; i<ParentView.Count; i++)
-					itemVisibility.Add (false);
 			}
-			
-			for (int i=0; i<ParentView.Count; i++) {
-				bool b = OnIsVisibleInFilter (ParentView[i]);
-				itemVisibility[i] = b;
-				if (b == true)
-					localIndex.Add (i);
+			else
+			{
+				filtredList = ParentView.Cast<object> ().Where (OnIsVisibleInFilter).ToList ();
 			}
 			OnListChanged();
 		}
@@ -172,8 +130,8 @@ namespace System.Data.Bindings.Collections
 		/// </summary>
 		public override void ClearParent()
 		{
-			unsynced = true;
 			base.ClearParent();
+			Refilter ();
 		}
 		
 		/// <summary>
@@ -181,8 +139,8 @@ namespace System.Data.Bindings.Collections
 		/// </summary>
 		public override void ClearMaster()
 		{
-			unsynced = true;
 			base.ClearMaster();
+			Refilter ();
 		}
 
 		#endregion IFiltered
@@ -196,18 +154,7 @@ namespace System.Data.Bindings.Collections
 		/// </returns>
 		public IEnumerator GetEnumerator()
 		{
-			lock (this) {
-				lock (ParentView) {
-					if (IsFiltered == false) {
-						foreach (object o in ParentView)
-							yield return (o);
-					}
-					else {
-						for (int i=0; i<localIndex.Count; i++)
-							yield return (ParentView[localIndex[i]]);
-					}
-				}
-			}
+			return filtredList.GetEnumerator ();
 		}
 
 		#endregion IEnumerable
@@ -219,9 +166,7 @@ namespace System.Data.Bindings.Collections
 		/// </value>
 		public int Count {
 			get {
-				if (IsFiltered == true)
-					return (localIndex.Count);
-				return (ParentView.Count);
+				return (filtredList.Count);
 			}
 		}
 		
@@ -229,19 +174,13 @@ namespace System.Data.Bindings.Collections
 		/// Gets or sets item in list
 		/// </value>
 		public object this[int aIdx] {
-			get {
-				if (IsFiltered == false)
-					return (ParentView[aIdx]);
-				if ((aIdx < 0) || (aIdx >= Count))
-					throw new IndexOutOfRangeException (string.Format ("Index {0} is out of bounds. Count={1}", aIdx, Count));
-				return (ParentView[localIndex[aIdx]]);
+			get {if (aIdx < 0 || aIdx >= filtredList.Count)
+					return null;
+			else
+				return filtredList [aIdx];
 			}
 			set {
-				if (IsFiltered == false) {
-					ParentView[aIdx] = value;
-					return;
-				}
-				ParentView[localIndex[aIdx]] = value;
+				filtredList[aIdx] = value;
 			}
 		}
 		
@@ -283,8 +222,7 @@ namespace System.Data.Bindings.Collections
 			if (IsFiltered == true) {
 				if (Count == 0)
 					return;
-				for (int i=Count-1; i>=0; i--)
-					ParentView.RemoveAt (localIndex[i]);
+				filtredList.ForEach (ParentView.Remove);
 				return;
 			}
 			else
@@ -305,10 +243,7 @@ namespace System.Data.Bindings.Collections
 			if (IsFiltered == true) {
 				if (OnIsVisibleInFilter(value) == false)
 					return (false);
-				for (int i=0; i<Count; i++)
-					if (this[i] == value)
-						return (true);
-				return (false);
+				return filtredList.Contains (value);
 			}
 			return (ParentView.Contains(value));
 		}
@@ -324,13 +259,7 @@ namespace System.Data.Bindings.Collections
 		/// </returns>
 		public int IndexOf (object value)
 		{
-			if (IsFiltered == false)
-				return (ParentView.IndexOf (value));
-			
-			for (int i=0; i<Count; i++)
-				if (this[i] == value)
-					return (i);
-			return (-1);
+			return filtredList.IndexOf (value);
 		}
 		
 		/// <summary>
@@ -354,7 +283,7 @@ namespace System.Data.Bindings.Collections
 						throw new OutOfBoundsException ("Inserting object out of filter constraints");
 					}
 				}
-				ParentView.Insert (localIndex[aIndex], value);
+				ParentView.Insert (ParentView.IndexOf(filtredList[aIndex]), value);
 			}
 			else
 				ParentView.Insert (aIndex, value);
@@ -371,7 +300,7 @@ namespace System.Data.Bindings.Collections
 		public void RemoveAt (int aIdx)
 		{
 			if (IsFiltered == true)
-				ParentView.RemoveAt (localIndex[aIdx]);
+				ParentView.Remove (filtredList[aIdx]);
 			else
 				ParentView.RemoveAt (aIdx);
 		}
@@ -464,13 +393,11 @@ namespace System.Data.Bindings.Collections
 
 		protected override void MasterListChanged (object aList)
 		{
-			unsynced = true;
 			Refilter();
 		}
 
 		protected override void ElementsSortedInMaster (object aObject, int[] aIdx)
 		{
-			unsynced = true;
 			Refilter();
 		}
 
@@ -481,9 +408,10 @@ namespace System.Data.Bindings.Collections
 				OnPropertyChanged ("Count");
 				return;
 			}
-			
+
+			//FIXME rewirite or delete
 			// Correct local index
-			object obj = HierarchicalList.Get (ParentView, aIdx);
+/*			object obj = HierarchicalList.Get (ParentView, aIdx);
 			bool valid = OnIsVisibleInFilter (obj);
 			if (aIdx.Length == 1) {
 				itemVisibility.SafeInsert (aIdx[0], valid);
@@ -510,7 +438,7 @@ namespace System.Data.Bindings.Collections
 				OnPropertyChanged ("Count");
 			}
 			idx = null;
-		}
+*/		}
 
 		protected override void ElementChangedInMaster (object aList, int[] aIdx)
 		{
@@ -518,9 +446,10 @@ namespace System.Data.Bindings.Collections
 				OnElementChanged (aIdx);
 				return;
 			}
-			
+
+			//FIXME rewirite or delete
 			// Check if level is higher
-			if (aIdx.Length > 1) {
+/*			if (aIdx.Length > 1) {
 				if (itemVisibility[aIdx[0]] == false)
 					return;
 				int[] lidx = aIdx.CopyPath();
@@ -556,7 +485,7 @@ namespace System.Data.Bindings.Collections
 				OnElementRemoved (idx, obj);
 				OnPropertyChanged ("Count");
 			}
-			idx = null;
+			*/
 		}
 
 		protected override void ElementRemovedFromMaster (object aList, int[] aIdx, object aObject)
@@ -565,8 +494,9 @@ namespace System.Data.Bindings.Collections
 				OnElementRemoved (aIdx, aObject);
 				OnPropertyChanged ("Count");
 				return;
-			}
-			if (itemVisibility[aIdx[0]] == false) {
+			};
+			//FIXME rewirite or delete
+/*			if (itemVisibility[aIdx[0]] == false) {
 				for (int i=0; i<localIndex.Count; i++)
 					if (localIndex[i] >= aIdx[0])
 						localIndex[i]--;
@@ -585,13 +515,7 @@ namespace System.Data.Bindings.Collections
 				if (localIndex[i] >= aIdx[0])
 					localIndex[i]--;
 			OnElementRemoved (idx, aObject);
-			OnPropertyChanged ("Count");
-		}
-
-		public override void Disconnect ()
-		{
-			isVisibleInFilter = null;
-			base.Disconnect ();
+*/			OnPropertyChanged ("Count");
 		}
 
 		private ObservableFilterListView()

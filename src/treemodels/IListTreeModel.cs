@@ -9,13 +9,9 @@
 
 using System;
 using System.Data.Bindings;
-using System.Data.Bindings.Cached;
 using System.Data.Bindings.Collections;
-using GLib;
 using Gtk;
 using System.Collections;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 
 namespace Gtk.DataBindings
 {
@@ -36,6 +32,8 @@ namespace Gtk.DataBindings
 				return (null);
 			}
 		}
+
+		IEnumerator cachedEnumerator;
 
 		#region QUERY_IMPLEMENTOR
 		public override TreeModelFlags GetFlags()
@@ -75,21 +73,39 @@ namespace Gtk.DataBindings
 			return (tp);
 		}
 
+		private bool GetCacheNext(ref TreeIter iter)
+		{
+			if (cachedEnumerator.MoveNext ()) {
+				iter = IterFromNode (cachedEnumerator.Current);
+				return true;
+			} else {
+				cachedEnumerator = null;
+				return false;
+			}
+		}
+
 		public override bool IterNext (ref TreeIter aIter)
 		{
 			object node = NodeFromIter (aIter);
 			if ((node == null) || (Items == null) || (Items.Count == 0))
 				return (false);
 			if (RespectHierarchy == false) {
-				int idx = Items.IndexOf(node) + 1;
-				if ((idx < 0) || (idx >= Items.Count))
-					return (false);
-				
-				aIter = IterFromNode (Items[idx]);
-				return (true);
+				if (cachedEnumerator != null && cachedEnumerator.Current == node) 
+					return GetCacheNext (ref aIter);
+				else
+				{
+					cachedEnumerator = Items.GetEnumerator ();
+					while(cachedEnumerator.MoveNext())
+					{
+						if (node == cachedEnumerator.Current)
+							return GetCacheNext (ref aIter);
+					}
+					cachedEnumerator = null;
+					return false;
+				}
 			}
 			else {
-				int[] path = HierarchicalList.IndexOf(Items, node);
+				int[] path = HierarchicalList.IndexOf(Items, node); //FIXME Need optimaze access like RespectHierarchy == false
 				if (path == null)
 					return (false);
 				path[path.Length-1] += 1;
