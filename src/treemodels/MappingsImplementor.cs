@@ -20,8 +20,7 @@ namespace Gtk.DataBindings
 				
 		private bool[] modelActivity = new bool[3] {true, false, false};
 		private TreeModel[] models = new TreeModel[3] {null, null, null};
-		
-		private bool needsclearing = false;
+
 		private bool justcleared = false;
 		private GtkListAdaptor listadaptor = null; 
 		private object lastItems = null;
@@ -182,14 +181,12 @@ namespace Gtk.DataBindings
 		public string[] Names {
 			get { return (names); }
 		}
-		
-//		private System.Type listItemType = null;
+
 		public System.Type ListItemType {
 			get { 
 				if (ColumnAdaptor != null)
 					return (ColumnAdaptor.DataSourceType);
 				return (null);
-//				return (listItemType); 
 			}
 		}
 
@@ -198,9 +195,12 @@ namespace Gtk.DataBindings
 			get { return (simpleMapping); }
 		}
 		
-		private bool respectHierarchy = true;
+		private bool respectHierarchy = false;
 		public bool RespectHierarchy {
 			get { return ((respectHierarchy == true) && (SimpleMapping == false)); }
+			set {
+				respectHierarchy = value;
+			}
 		}
 		
 		private QueryImplementor query = null;
@@ -214,7 +214,6 @@ namespace Gtk.DataBindings
 			set { 
 				if (mappings == value)
 					return;
-				needsclearing = true;
 				_ClearTypeDescriptions();
 				mappings = value;
 				ColumnAdaptor.Mappings = value;
@@ -234,7 +233,6 @@ namespace Gtk.DataBindings
 					if (ObserveableList.IsValidListStore(check) == false)
 						if (ModelSelector.QueryModelExists (check.GetType()) == false)
 							throw new ExceptionWrongListType (this, value);
-				needsclearing = true;
 				PrepareWidget();
 				if (clearSelection != null)
 					clearSelection();
@@ -265,7 +263,6 @@ namespace Gtk.DataBindings
 				CheckModelChain();
 				
 				ProcessTypeDescriptions();
-				check = null;
 				ResetWidgetModel();
 			}
 		}
@@ -902,7 +899,7 @@ namespace Gtk.DataBindings
 							cell = txt;
 							if (aSubColumnIndex == -1)
 								if (aItemGroup == false) 
-									tv = new TreeViewColumn(aProp.ColumnName, txt, "text", wdg.Columns.Length);
+								tv = new TreeViewColumn(aProp.ColumnName, txt, "markup", wdg.Columns.Length); //FIXME Need to implement possibility to configure using markup or text. This is workaround.
 								else {
 									tv = new TreeViewColumn();
 									wdg.AppendColumn (tv);
@@ -1209,8 +1206,6 @@ namespace Gtk.DataBindings
 			if (justcleared == true)
 				return;
 			justcleared = true;
-			needsclearing = false;
-//			ResetWidget();
 			multicolumns = null;
 			if (PropertyInfos != null) {
 				foreach (CachedProperty prop in PropertyInfos)
