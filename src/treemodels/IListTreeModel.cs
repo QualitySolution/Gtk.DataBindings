@@ -27,8 +27,8 @@ namespace Gtk.DataBindings
 		public IList Items {
 			get { 
 				if (DataSource != null)
-					if (DataSource is IList)
-						return (DataSource as IList);
+				if (DataSource is IList)
+					return (DataSource as IList);
 				return (null);
 			}
 		}
@@ -36,13 +36,14 @@ namespace Gtk.DataBindings
 		IEnumerator cachedEnumerator;
 
 		#region QUERY_IMPLEMENTOR
-		public override TreeModelFlags GetFlags()
+
+		public override TreeModelFlags GetFlags ()
 		{
 			if (RespectHierarchy == true)
 				return (TreeModelFlags.ItersPersist);
 			return (TreeModelFlags.ListOnly);
 		}
-		
+
 		public override object GetNodeAtPath (TreePath aPath)
 		{
 			if (Items == null)
@@ -50,32 +51,32 @@ namespace Gtk.DataBindings
 			if (aPath.Indices.Length == 0)
 				return (null);
 			if (RespectHierarchy == true)
-				return (HierarchicalList.Get(Items, aPath.Indices));
+				return (HierarchicalList.Get (Items, aPath.Indices));
 			if (aPath.Indices [0] < 0 || aPath.Indices [0] >= Items.Count)
 				return null;
-			return (Items[aPath.Indices[0]]);
+			return (Items [aPath.Indices [0]]);
 		}
 
 		public override TreePath PathFromNode (object aNode)
 		{
-			TreePath tp = new TreePath();
+			TreePath tp = new TreePath ();
 			if ((aNode == null) || (Items == null) || (Items.Count == 0))
 				return (tp);
 
 			if (RespectHierarchy == false) {
-				int i = Items.IndexOf(aNode);
+				int i = Items.IndexOf (aNode);
 				if (i > -1)
 					tp.AppendIndex (i);
 				return (tp);
 			}
-			int[] idx = HierarchicalList.IndexOf(Items, aNode);
+			int[] idx = HierarchicalList.IndexOf (Items, aNode);
 			if (idx != null)
 				foreach (int j in idx)
 					tp.AppendIndex (j);
 			return (tp);
 		}
 
-		private bool GetCacheNext(ref TreeIter iter)
+		private bool GetCacheNext (ref TreeIter iter)
 		{
 			if (cachedEnumerator.MoveNext ()) {
 				iter = IterFromNode (cachedEnumerator.Current);
@@ -92,25 +93,29 @@ namespace Gtk.DataBindings
 			if ((node == null) || (Items == null) || (Items.Count == 0))
 				return (false);
 			if (RespectHierarchy == false) {
-				if (cachedEnumerator != null && cachedEnumerator.Current == node) 
+				object lastNode;
+				//Check for "Collection was modified" Exception
+				try { 
+					lastNode = cachedEnumerator != null ? cachedEnumerator.Current : null;
+				} catch (InvalidOperationException ex) {
+					lastNode = null;
+				}
+				if (lastNode == node)
 					return GetCacheNext (ref aIter);
-				else
-				{
+				else {
 					cachedEnumerator = Items.GetEnumerator ();
-					while(cachedEnumerator.MoveNext())
-					{
+					while (cachedEnumerator.MoveNext ()) {
 						if (node == cachedEnumerator.Current)
 							return GetCacheNext (ref aIter);
 					}
 					cachedEnumerator = null;
 					return false;
 				}
-			}
-			else {
-				int[] path = HierarchicalList.IndexOf(Items, node); //FIXME Need optimaze access like RespectHierarchy == false
+			} else {
+				int[] path = HierarchicalList.IndexOf (Items, node); //FIXME Need optimaze access like RespectHierarchy == false
 				if (path == null)
 					return (false);
-				path[path.Length-1] += 1;
+				path [path.Length - 1] += 1;
 				object o = HierarchicalList.Get (Items, path);
 				if (o == null)
 					return (false);
@@ -122,8 +127,8 @@ namespace Gtk.DataBindings
 		public override int ChildCount (object aNode)
 		{
 			if (RespectHierarchy == true)
-				if (aNode is IList)
-					return ((aNode as IList).Count);
+			if (aNode is IList)
+				return ((aNode as IList).Count);
 			return (0);
 		}
 
@@ -131,20 +136,20 @@ namespace Gtk.DataBindings
 		{
 			aChild = TreeIter.Zero;
 			if ((Items == null) || (Items.Count == 0))
-			    return (false);
+				return (false);
 			if (aParent.UserData == IntPtr.Zero) {
-				aChild = IterFromNode (Items[0]);
+				aChild = IterFromNode (Items [0]);
 				return (true);
 			}
 			object node = NodeFromIter (aParent);
-			if ((node == null) || (ChildCount(node) <= 0))
+			if ((node == null) || (ChildCount (node) <= 0))
 				return (false);
 			if (RespectHierarchy == true)
-				if (node is IList)
-			    	if ((node as IList).Count > 0) {
-						aChild = IterFromNode ((node as IList)[0]);
-						return (true);
-					}	                      
+			if (node is IList)
+			if ((node as IList).Count > 0) {
+				aChild = IterFromNode ((node as IList) [0]);
+				return (true);
+			}	                      
 				
 			return (false);
 		}
@@ -155,7 +160,7 @@ namespace Gtk.DataBindings
 				return (false);
 			
 			object node = NodeFromIter (aIter);
-			if ((node == null) || (Items == null) || (Items.Count == 0) || (ChildCount(node) <= 0))
+			if ((node == null) || (Items == null) || (Items.Count == 0) || (ChildCount (node) <= 0))
 				return (false);
 
 			return (true);
@@ -186,13 +191,13 @@ namespace Gtk.DataBindings
 			if (aParent.UserData == IntPtr.Zero) {
 				if (Items.Count <= n)
 					return (false);
-				aChild = IterFromNode (Items[n]);
+				aChild = IterFromNode (Items [n]);
 				return (true);
 			}
 			
 			if (RespectHierarchy == true) {
 				object node = NodeFromIter (aParent);
-				if ((node == null) || (ChildCount(node) <= n))
+				if ((node == null) || (ChildCount (node) <= n))
 					return (false);
 /*				if (node is IList)
 					if ((node as IList).Count < n) {
@@ -201,7 +206,7 @@ namespace Gtk.DataBindings
 					}*/
 				if (node is IList) {
 //					if ((node as IList).Count < n) {
-					aChild = IterFromNode ((node as IList)[n]);
+					aChild = IterFromNode ((node as IList) [n]);
 					return (true);
 				}
 			}
@@ -218,24 +223,25 @@ namespace Gtk.DataBindings
 				TreePath tp = PathFromNode (node);
 				if ((tp.Indices == null) || (tp.Indices.Length <= 1))
 					return (false);
-				if (tp.Up() == false)
+				if (tp.Up () == false)
 					return (false);
-				object o = HierarchicalList.Get(Items, tp.Indices);
+				object o = HierarchicalList.Get (Items, tp.Indices);
 				if (o != null) {
-					aParent = IterFromNode(o);
+					aParent = IterFromNode (o);
 					return (true);
 				}
 			}
 			return (false);
 		}
+
 		#endregion QUERY_IMPLEMENTOR
 
 		public IListTreeModel (MappingsImplementor aMasterImplementor)
 			: base (aMasterImplementor)
 		{
 			if (Items != null)
-				if (TypeValidator.IsCompatible(Items.GetType(), typeof(DbObservableList)) == true)
-					HasDeletedItems = true;
+			if (TypeValidator.IsCompatible (Items.GetType (), typeof(DbObservableList)) == true)
+				HasDeletedItems = true;
 		}
 	}
 }
