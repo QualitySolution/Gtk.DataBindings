@@ -212,6 +212,15 @@ namespace Gtk.DataBindings
 			case "Int64" :
 				adaptor.Value = (long)Value;
 				break;
+				case "UInt16" :
+					adaptor.Value = (ushort)ValueAsInt;
+					break;
+				case "UInt32": 
+					adaptor.Value = (uint)ValueAsInt;
+					break;
+				case "UInt64" :
+					adaptor.Value = (ulong)Value;
+					break;
 			case "Byte" :
 				adaptor.Value = (byte)ValueAsInt;
 				break;
