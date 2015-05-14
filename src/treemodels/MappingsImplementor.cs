@@ -6,7 +6,6 @@ using System.Data.Bindings;
 using System.Data.Bindings.DebugInformation;
 using System.Data.Bindings.Cached;
 using System.Data.Bindings.Collections;
-using System.Runtime.InteropServices;
 
 namespace Gtk.DataBindings
 {
@@ -357,20 +356,6 @@ namespace Gtk.DataBindings
 				activeModel = models[(int) ModelChainType.Normal];
 		}
 		
-/*		private void NullWidgetModel()
-		{
-			if (TypeValidator.IsCompatible(Owner.GetType(), typeof(TreeView)) == true)
-				NullTreeViewModel();
-			else if (TypeValidator.IsCompatible(Owner.GetType(), typeof(ComboBox)) == true)
-				NullComboBoxModel();
-			else if (TypeValidator.IsCompatible(Owner.GetType(), typeof(ComboBoxEntry)) == true)
-				NullComboBoxEntryModel();
-			else if (TypeValidator.IsCompatible(Owner.GetType(), typeof(IconView)) == true)
-				NullIconViewModel();
-			else
-				throw new Exception ("Widget type " + Owner.GetType() + " is not yet handled in MappingsImplementor");
-		}*/
-		
 		private void ResetWidgetModel()
 		{
 			if (TypeValidator.IsCompatible(Owner.GetType(), typeof(TreeView)) == true)
@@ -555,15 +540,10 @@ namespace Gtk.DataBindings
 						object obj = NodeFromIter (iter);
 						CachedProperty info = new CachedProperty (obj, cell.MappedTo);
 						if (info != null) 
-							if (info.CanWrite == true) {
+					if (info.CanWrite && !String.IsNullOrWhiteSpace(args.NewText)) {
 								try {
 									object newval = System.Convert.ChangeType (args.NewText, info.PropertyType);
 									info.SetValue (newval);
-/*									if (TypeValidator.IsNumeric(types[cell.ColumnIndex]) == true)
-										if (TypeValidator.IsFloat(types[cell.ColumnIndex]) == true)
-											SetValue (iter, cell.ColumnIndex, System.Convert.ToDouble(newval));
-										else
-											SetValue (iter, cell.ColumnIndex, System.Convert.ToInt32(newval));*/
 								}
 								catch (System.InvalidCastException) {
 									Debug.DevelInfo ("DataTreeView.NumericCellEdited()", "Trouble Converting Value");
@@ -574,9 +554,7 @@ namespace Gtk.DataBindings
 								DataSourceController.GetRequest (obj);
 							}
 						info.Disconnect();
-						info = null;
 					}
-					cell = null;
 					tp.Dispose();
 				}
 		}
@@ -611,9 +589,7 @@ namespace Gtk.DataBindings
 								DataSourceController.GetRequest (obj);
 							}
 						info.Disconnect();
-						info = null;
 					}
-					cell = null;
 					tp.Dispose();
 				}
 		}
@@ -660,9 +636,7 @@ namespace Gtk.DataBindings
 								DataSourceController.GetRequest (obj);
 							}
 						info.Disconnect();
-						info = null;
 					}
-					cell = null;
 					tp.Dispose();
 				}
 		}
@@ -694,12 +668,9 @@ namespace Gtk.DataBindings
 						args.RetVal = 0;
 					}
 					info.Disconnect();
-					info = null;
 				}
 				else
 					cellr.CancelEditing();
-			
-				cell = null;
 			}
 			else
 				cellr.CancelEditing();
@@ -715,13 +686,6 @@ namespace Gtk.DataBindings
 			while (tv.Columns.Length > 0)
 				tv.RemoveColumn(tv.Columns[0]);
 		}
-		
-/*		private void NullTreeViewModel()
-		{
-			TreeView tv = (Owner as TreeView);
-			tv.Model = null;
-			modeladapter = null;
-		}*/
 		
 		private void ResetTreeViewModel()
 		{
@@ -1032,13 +996,6 @@ namespace Gtk.DataBindings
 		{
 			(Owner as ComboBox).Clear();
 		}
-		
-/*		private void NullComboBoxModel()
-		{
-			ComboBox tv = (Owner as ComboBox);
-			tv.Model = null;
-			modeladapter = null;
-		}*/
 		
 		private void ResetComboBoxModel()
 		{

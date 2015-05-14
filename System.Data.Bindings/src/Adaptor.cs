@@ -1330,24 +1330,8 @@ namespace System.Data.Bindings
 			else
 				lastFinalTarget = new WeakReference (finalTarget.Target);
 			
-/*			if (CursorMode == true) {
-				if (Target is IAdaptor)
-					if ((Target as IAdaptor) != aSender) {
-					insideReparenting = false;
-					System.Console.WriteLine("Avoid non-parent cursor");
-					return;
-				}
-			}*/
-
 			if (targetChanged != null)
 				targetChanged (aSender);
-/*			if (controlAdaptor != null)
-				if (controlAdaptor.ControlIsContainer(Control) == true)
-					SendAdaptorMessage (Control, EActionType.RenewTargets);*/
-/*			if (Control == null) {
-				Notificator.NotifyObjectChanged (Target);
-				DataSourceController.RecheckStateOfInheritedControls();
-			}*/
 			insideReparenting = false;
 		}
 
