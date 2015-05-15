@@ -239,13 +239,6 @@ namespace Gtk.DataBindings
 				}
 			}
 		}
-		
-		protected override void OnShown ()
-		{
-			if (adaptor.Adaptor.FinalTarget == null)
-				Text = "";
-			base.OnShown ();
-		}
 
 		/// <summary>
 		/// Creates Widget 
