@@ -133,8 +133,6 @@ namespace Gtk.ExtraWidgets
 				day.Text = ci.DateTimeFormat.GetAbbreviatedDayName(weekDay);
 				PackEnd (day, false);
 				//day.XPos = 0.5;
-
-				DateTime dt = new DateTime (aDescriptor.CurrentYear, aDescriptor.CurrentMonth, 1);
 				
 				for (int i=0; i<7; i++)
 					PackEnd (new DayCell (aDescriptor), false);

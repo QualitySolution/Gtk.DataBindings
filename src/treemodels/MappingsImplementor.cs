@@ -663,19 +663,17 @@ namespace Gtk.DataBindings
 					object obj = NodeFromIter(iter);
 					CachedProperty info = new CachedProperty (obj, cell.MappedTo);
 					if (info == null) {
-						cellr.CancelEditing();
 						cellr.StopEditing(true);
 						args.RetVal = 0;
 					}
 					info.Disconnect();
 				}
 				else
-					cellr.CancelEditing();
+					cellr.StopEditing(true);
 			}
 			else
-				cellr.CancelEditing();
+				cellr.StopEditing(true);
 			tp.Dispose();
-			cellr = null;
 		}
 		#endregion CELL_EDITOR_METHODS
 

@@ -228,10 +228,9 @@ namespace Gtk.DataBindings
 			buttonStyle = Rc.GetStyle (ChameleonTemplates.Button);
 
 			if (widgets.Count > 0) {
-				Gtk.Requisition req, mainreq;
+				Gtk.Requisition req;
 				Gdk.Rectangle rect = evnt.Area;
 				int x,y,w,h = 0;
-				mainreq = SizeRequest();
 				evnt.Window.BeginPaintRect (evnt.Area);
 				ExposeWidget (false, false, rect, evnt);
 				if (Homogeneous == true) {
@@ -359,8 +358,7 @@ namespace Gtk.DataBindings
 				Hovered = -1;
 				return (false);
 			}
-
-			Gtk.Requisition mainreq = SizeRequest();
+				
 			if (Homogeneous == true) {
 				Hovered = (System.Convert.ToInt32(evnt.X) / (Allocation.Width / Count));
 				return (false);

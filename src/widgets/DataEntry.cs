@@ -22,7 +22,6 @@ using System;
 using System.ComponentModel;
 using System.Data.Bindings;
 using Gtk;
-using GLib;
 
 namespace Gtk.DataBindings
 {
@@ -199,14 +198,6 @@ namespace Gtk.DataBindings
 		{
 			base.OnChanged();
 			adaptor.DemandInstantPost();
-		}
-		
-		/// <summary>
-		/// Exposes OnOverwrite method
-		/// </summary>
-		public virtual void ToggleOverwrite()
-		{
-			OnToggleOverwrite();
 		}
 		
 		/// <summary>

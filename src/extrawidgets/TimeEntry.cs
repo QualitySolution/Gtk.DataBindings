@@ -675,7 +675,6 @@ namespace Gtk.ExtraWidgets
 			switch (evnt.Key) {
 			case Gdk.Key.Tab:
 				return (base.OnKeyPressEvent (evnt));
-				break;
 			}
 			if (Editable == false)
 				return (true);
@@ -766,7 +765,6 @@ namespace Gtk.ExtraWidgets
 			switch (evnt.Key) {
 			case Gdk.Key.Tab:
 				return (base.OnKeyReleaseEvent (evnt));
-				break;
 			}
 			if (Editable == false)
 				return (true);

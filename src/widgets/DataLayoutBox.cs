@@ -123,7 +123,6 @@ namespace Gtk.DataBindings
 				throw new NotSupportedException ("Simple mapping is not supported");
 
 			if (columnCnt > 0) {
-				int j=0;
 				for (uint i=0; i<ColumnAdaptor.MappingCount; i++) {
 					prop = ColumnAdaptor.Mapping ((int) i);
 					if (prop != null) {
@@ -134,7 +133,6 @@ namespace Gtk.DataBindings
 							DataTitleLabel title = new DataTitleLabel (prop.Name);
 							title.InheritedDataSource = true;
 							Attach (title, 0, 1, i, i+1);
-							IAdaptableContainer cont = null;
 						}
 					}
 				}

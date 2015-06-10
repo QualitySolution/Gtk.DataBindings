@@ -34,7 +34,6 @@ namespace Gtk.DataBindings
 	public class DataDialog : Dialog, IAdaptableContainer, IContainerControl
 	{
 		private ControlAdaptor adaptor = null;
-		private bool destroying = false;
 		
 		/// <summary>
 		/// Resolves ControlAdaptor in read-only mode
@@ -126,20 +125,6 @@ namespace Gtk.DataBindings
 		private void NotifyAdaptorsOnAdd (object o, AddedArgs a)
 		{
 			Adaptor.SendAdaptorMessage (null, EActionType.RenewTargets);
-		}
-		
-		/// <summary>
-		/// Notifies adaptors on closing this window
-		/// </summary>
-		/// <param name="o">
-		/// Same as OnDelete <see cref="System.Object"/>
-		/// </param>
-		/// <param name="a">
-		/// Same as OnDelete <see cref="AddedArgs"/>
-		/// </param>
-		private void StopAdaptorsOnDelete (object o, DeleteEventArgs a)
-		{
-			destroying = true;
 		}
 		
 		/// <summary>

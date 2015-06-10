@@ -100,7 +100,6 @@ namespace Gtk.ExtraWidgets
 				break;
 			default:
 				return (null);
-				break;
 			}
 			
 			width = aSurface.Width;
@@ -194,7 +193,6 @@ namespace Gtk.ExtraWidgets
 			
 			byte *src_pixels_orig = (byte *) src.Pixels;
 			byte *dest_pixels_orig = (byte *) dest.Pixels;
-			bool spec = false;
 			double b = (System.Convert.ToDouble(maxalpha)/255.0);
 			for (int i=0; i<src.Height; i++) {
 				byte *src_pixels = src_pixels_orig + i * src.Rowstride;
