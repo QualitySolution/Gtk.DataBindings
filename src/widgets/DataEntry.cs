@@ -188,7 +188,7 @@ namespace Gtk.DataBindings
 		public virtual void PutDataToDataSource (object aSender)
 		{
 			adaptor.DataChanged = false;
-			if (adaptor.Value != null)
+			if (adaptor.Value != null && (string)adaptor.Value != Text)
 				adaptor.Value = Text;
 		}
 		
