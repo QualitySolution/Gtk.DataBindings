@@ -707,6 +707,11 @@ namespace System.Data.Bindings.Collections.Generic
 			items = aList;
 			if (items == null)
 				throw new ExceptionObserveableListCreatedWithNullListParameter();
+
+			foreach(var item in items)
+			{
+				ConnectToObject (item);
+			}
 		}
 		
 		/// <summary>
