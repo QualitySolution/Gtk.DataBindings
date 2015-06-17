@@ -19,15 +19,9 @@
 // Boston, MA 02111-1307, USA.
 
 using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Data.Bindings.DebugInformation;
-using System.Reflection;
-using System.Text.RegularExpressions;
 using System.Data.Bindings;
-using System.Data.Bindings.Cached;
-using System.Data.Bindings.Collections;
+using System.Linq;
 using Gtk;
 
 namespace Gtk.DataBindings
@@ -381,6 +375,15 @@ namespace Gtk.DataBindings
 			}
 			else
 				return (null);
+		}
+
+		public TreeViewColumn GetColumnByMappedProp(string propertyName)
+		{
+			int columnId = Array.IndexOf (internalModel.Names, propertyName);
+			if (columnId < 0)
+				return null;
+			else
+				return Columns[columnId];
 		}
 		
 		/// <summary>
