@@ -515,6 +515,22 @@ namespace Gtk.DataBindings
 					cellDescription (aColumn, NodeFromIter(aIter), aCell);
 			}*/
 		}
+
+		private void RenderNumericColumnFunc (Gtk.TreeViewColumn aColumn, Gtk.CellRenderer aCell, 
+			Gtk.TreeModel aModel, Gtk.TreeIter aIter)
+		{
+			var cell = aCell as MappedCellRendererSpin;
+			if (cell != null) {
+				
+				object node = NodeFromIter (aIter);
+				CachedProperty info = new CachedProperty (node, cell.MappedTo);
+				object propValue;
+				info.GetValue (out propValue);
+
+				cell.Text = String.Format ("{0:" + String.Format ("F{0}", cell.Digits) + "}", propValue);
+			}
+
+		}
 		
 		/// <summary>
 		/// Generic editing function of String data
@@ -530,8 +546,8 @@ namespace Gtk.DataBindings
 			Gtk.TreeIter iter;
 
 			if (o is IMappedColumnItem)
-				if (o is MappedCellRendererText) {
-					MappedCellRendererText cell = (MappedCellRendererText) o;
+				if (o is MappedCellRendererSpin) {
+				MappedCellRendererSpin cell = (MappedCellRendererSpin) o;
 					
 					// Resolve path as it was passed in the arguments
 					Gtk.TreePath tp = new Gtk.TreePath (args.Path);
@@ -675,6 +691,26 @@ namespace Gtk.DataBindings
 				cellr.StopEditing(true);
 			tp.Dispose();
 		}
+
+		private void OnNumbericCellEditingStarted (object o, Gtk.EditingStartedArgs args)
+		{
+			CellOnEditingStarted (o, args);
+			var cell = o as MappedCellRendererSpin;
+			if(cell != null)
+			{
+				object obj = GetNodeAtPath (new TreePath(args.Path));
+				CachedProperty info = new CachedProperty (obj, cell.MappedTo);
+				if (info != null) {
+					object propValue;
+					if(info.GetValue (out propValue))
+					{
+						//WORKAROUND to fix GTK bug that CellRendererSpin start editing only with integer number
+						cell.Adjustment.Value = Convert.ToDouble (propValue);
+					}
+				}
+			}
+		}
+
 		#endregion CELL_EDITOR_METHODS
 
 		#region TREEVIEW_WIDGET_SPECIFICS
@@ -738,6 +774,8 @@ namespace Gtk.DataBindings
 			
 			TreeViewColumn tv = null;
 			CellRenderer cell = null;
+
+			bool isCellDataFuncSet = false;
 			
 			// Column is already created
 			if (aSubColumnIndex != -1)
@@ -834,12 +872,15 @@ namespace Gtk.DataBindings
 					}
 					else
 						if (TypeValidator.IsNumeric(aType) == true) {
-							MappedCellRendererText rndr = new MappedCellRendererText();
+							MappedCellRendererSpin rndr = new MappedCellRendererSpin();
 							cell = rndr;
 							rndr.Xalign = 1;
-							if (aSubColumnIndex == -1)
-								if (aItemGroup == false)
-									tv = new TreeViewColumn(aProp.ColumnName, rndr, "text", wdg.Columns.Length);
+						if (aSubColumnIndex == -1)
+							if (aItemGroup == false) {
+								tv = new TreeViewColumn (aProp.ColumnName, rndr);
+								tv.SetCellDataFunc (rndr, RenderNumericColumnFunc);
+								isCellDataFuncSet = true;
+							}
 								else {
 									tv = new TreeViewColumn();
 									wdg.AppendColumn (tv);
@@ -851,10 +892,11 @@ namespace Gtk.DataBindings
 
 							if ((aProp.OriginalRWFlags == EReadWrite.ReadWrite) && (EditingIsPossible == true)) {
 								rndr.Editable = true;
+								rndr.Digits = 2;
+								rndr.Adjustment = new Adjustment(0,0,100000000,1,1000,0);
 								rndr.Edited += NumericCellEdited;
-								rndr.EditingStarted += CellOnEditingStarted;
+								rndr.EditingStarted += OnNumbericCellEditingStarted;
 							}
-							rndr = null;
 						}
 						else {
 							MappedCellRendererText txt = new MappedCellRendererText();
@@ -887,11 +929,11 @@ namespace Gtk.DataBindings
 						(cell as IMappedItem).MappedTo = "";
 					else {
 					System.Console.WriteLine("Set data func");
-						if (tv != null)
+					if (tv != null && !isCellDataFuncSet)
 							if (aItemGroup == true)
 								// Istead of AddAttribute this is where cell insertion happens
 								tv.SetCellDataFunc (cell, new Gtk.TreeCellDataFunc (RenderColumnFuncWithData));
-							else
+					else
 								tv.SetCellDataFunc (cell, new Gtk.TreeCellDataFunc (RenderColumnFunc));
 						(cell as IMappedItem).MappedTo = aProp.Name;
 					}
@@ -1501,21 +1543,6 @@ namespace Gtk.DataBindings
 
 					if (resetModel != null)
 						resetModel();
-//					if (internalTreeStore == null) {
-//						internalTreeStore = new AdaptableTreeStore(types);
-//					if (internalModel == null) {
-//						internalModel = new AdaptableTreeStore(types);
-//						if (ListItems != null)
-//							DSChanged (ListItems);
-/*						if (listadaptor.Target is ObserveableList)
-							Reorderable = (listadaptor.Target as ObserveableList).IsReorderable;
-						if ((Reorderable == true) || ((ListItems is IObserveableList) && ((ListItems as ObserveableList).GUIDragDrop == true))) {
-							UnsetDragFunctionality();
-							SetDragFunctionality();
-						}
-						else
-							UnsetDragFunctionality();*/
-//					}
 				}
 			}
 			return (true);
