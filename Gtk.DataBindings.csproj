@@ -10,31 +10,31 @@
     <AssemblyName>gtk-databind-lib</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Debug</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <ConsolePause>false</ConsolePause>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <ConsolePause>False</ConsolePause>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
     <Execution>
       <Execution clr-version="Net_2_0" />
     </Execution>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <ConsolePause>false</ConsolePause>
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <ConsolePause>False</ConsolePause>
     <Execution>
       <Execution clr-version="Net_2_0" />
     </Execution>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
     <DocumentationFile>bin\Release\gtk-databind-lib.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
@@ -204,6 +204,11 @@
     <Compile Include="src\cellrenderers\MappedCellRendererSimpleColor.cs" />
     <Compile Include="src\cellrenderers\CellRendererExtensionMethods.cs" />
     <Compile Include="src\cellrenderers\MappedCellRendererIp.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\IColumnMapping.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\MappingConfigure.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\NumberColumnMapping.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\IMappingConfigure.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\ColumnMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pixmaps\button.png">
@@ -365,6 +370,7 @@
     <Folder Include="src\other_usable_lgpl_widgets\" />
     <Folder Include="src\factory\" />
     <Folder Include="src\cellrenderers\" />
+    <Folder Include="src\treemodels\ColumnMappings\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="System.Data.Bindings\System.Data.Bindings.csproj">

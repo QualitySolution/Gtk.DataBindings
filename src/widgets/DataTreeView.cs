@@ -98,6 +98,15 @@ namespace Gtk.DataBindings
 			get { return (internalModel.Mappings); }
 			set { internalModel.Mappings = value; }
 		}
+
+		/// <summary>
+		/// Fluent column mapping config
+		/// </summary>
+		[Category ("Data Binding"), Description ("Fluent column mapping config")]
+		public IMappingConfigure ColumnMappingConfig { 
+			get { return (internalModel.ColumnMappingConfig); }
+			set { internalModel.ColumnMappingConfig = value; }
+		}
 			
 		/// <summary>
 		/// Defines if DataSource is inherited fom parent controls or not

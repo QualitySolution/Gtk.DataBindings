@@ -7,9 +7,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>System.Data.Bindings</RootNamespace>
     <AssemblyName>System.Data.Bindings</AssemblyName>
-    <ProductVersion>8.0.30703</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
-    <ReleaseVersion>1.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -178,6 +175,7 @@
     <Compile Include="src\collections\generic\GenericObservableSortListView.cs" />
     <Compile Include="src\attributes\ColumnViewAttribute.cs" />
     <Compile Include="src\IValueConverter.cs" />
+    <Compile Include="src\utilities\PropertyUtil.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />

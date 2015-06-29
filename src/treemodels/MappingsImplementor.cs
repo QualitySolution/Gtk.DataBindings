@@ -220,6 +220,17 @@ namespace Gtk.DataBindings
 			}
 		}
 
+		IMappingConfigure columnMappingConfig;
+
+		public IMappingConfigure ColumnMappingConfig { 
+			get { return (columnMappingConfig); }
+			set { if (columnMappingConfig == value)
+					return;
+				columnMappingConfig = value;
+				Mappings = columnMappingConfig.GetColumnMappingString ();
+			}
+		}
+
 		/// <summary>
 		/// DataSource object control is connected to
 		/// </summary>
