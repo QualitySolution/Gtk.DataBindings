@@ -21,7 +21,6 @@
 using System;
 using System.ComponentModel;
 using System.Data.Bindings;
-using System.Linq;
 using Gtk;
 
 namespace Gtk.DataBindings
@@ -234,30 +233,6 @@ namespace Gtk.DataBindings
 		}
 		
 		/// <summary>
-		/// Reacts on when selected object has being changed from the outside
-		/// </summary>
-		/// <param name="aSender">
-		/// Notification sender object <see cref="System.Object"/>
-		/// </param>
-/*		private void SelectedObjectChanged (object aSender)
-		{
-			object obj = CurrentSelection.FinalTarget;
-			if (obj == null)
-				return;
-			TreePath tp;
-			TreeViewColumn tv;
-			GetCursor (out tp, out tv);
-			if (tp == null)
-				return;
-				
-			TreeIter iter;
-			if (internalModel.GetIter(out iter, tp) == false)
-				return;
-			
-//			InsertValuesFromObjectToIter (obj, iter);
-		}*/
-		
-		/// <summary>
 		/// Calls ControlAdaptors method to transfer data, so it can be wrapped
 		/// into widget specific things and all checkups
 		/// </summary>
@@ -331,9 +306,6 @@ namespace Gtk.DataBindings
 			TreeIter iter;
 			GetCursor (out tp, out tv);
 			if ((tp != null ) && (tv != null)) {
-//				if (ListItems != null) {
-//					IList lst = ListItems;
-//					object obj = HierarchicalList.Get (lst, tp.Indices);
 				if (internalModel.GetIter(out iter, tp) == true) {
 					object obj = internalModel.NodeFromIter(iter);
 					if ((TypeValidator.IsCompatible(obj.GetType(), internalModel.ListItemType) == true) || (CursorPointsEveryType == true)) 
@@ -341,7 +313,6 @@ namespace Gtk.DataBindings
 					else
 						currentSelection.Target = null;
 					obj = null;
-//					lst = null;
 				}
 				else
 					currentSelection.Target = null;
@@ -358,9 +329,6 @@ namespace Gtk.DataBindings
 		/// </summary>
 		public object GetCurrentObject()
 		{
-//			if (ListItems == null)
-//				return null;
-				
 			TreeIter iter;
 			TreePath tp;
 			TreeViewColumn tv;
@@ -387,48 +355,17 @@ namespace Gtk.DataBindings
 		}
 		
 		/// <summary>
-		/// Called when ItemsDataSource changes
-		/// </summary>
-/*		private void ListTargetChanged (IAdaptor aAdaptor)
-		{
-			cachedItems = null;
-			if (ItemsDataSource == null)
-				CurrentSelection.Target = null;
-			else {
-//				if ((ItemsDataSource is IAdaptor) == false)
-//					return;
-				object check = ConnectionProvider.ResolveTargetForObject(ItemsDataSource);
-				if (check != lastItems) {
-					lastItems = check;
-					check = ItemsDataSource;
-					ItemsDataSource = null;
-					ItemsDataSource = check;
-				}
-			}
-			Adaptor.CheckControl();
-		}*/
-		
-		/// <summary>
 		/// Creates adaptors associated with this IconView
 		/// </summary>
 		internal virtual void CreateAdaptors()
 		{
 			// Allocate selection adaptor
 			currentSelection = new GtkAdaptor();
-//			currentSelection.OnDataChange += SelectedObjectChanged;
 			internalModel.ClearSelection += delegate() {
 				if (CurrentSelection != null)
 					CurrentSelection.Target = null;
 			};
-			
-			// Create and connect ListAdaptor with this TreeView
-/*			listadaptor = new GtkListAdaptor(false, null, this, false); 
-			listadaptor.OnListChanged += DSChanged;
-			listadaptor.OnElementAdded += DSElementAdded;
-			listadaptor.OnElementChanged += DSElementChanged;
-			listadaptor.OnElementRemoved += DSElementRemoved;
-			listadaptor.OnTargetChange += ListTargetChanged;*/
-//			listadaptor.OnTargetChange += ItemsTargetChanged;
+
 			// Create Adaptor
 			adaptor = new GtkControlAdaptor (this, false);
 			adaptor.DisableMappingsDataTransfer = true;
@@ -437,7 +374,6 @@ namespace Gtk.DataBindings
 				if (adaptor != null)
 					adaptor.CheckControl();
 			};			
-//			columnadaptor = new GtkAdaptor();
 		}
 
 		/// <summary>
