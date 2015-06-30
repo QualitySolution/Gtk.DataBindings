@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Gtk.DataBindings
 {
-	public class MappingConfigure<TNode> : IMappingConfigure
+	public class MappingConfig<TNode> : IMappingConfig
 	{
 
 		List<ColumnMapping<TNode>> Columns = new List<ColumnMapping<TNode>>();
 
-		public MappingConfigure ()
+		public MappingConfig ()
 		{
 		}
 
@@ -26,9 +26,9 @@ namespace Gtk.DataBindings
 			return map.ToString ();
 		}
 
-		public static MappingConfigure<TNode> Create()
+		public static MappingConfig<TNode> Create()
 		{
-			return new MappingConfigure<TNode> ();
+			return new MappingConfig<TNode> ();
 		}
 
 		public ColumnMapping<TNode> AddColumn(string title)
@@ -38,7 +38,7 @@ namespace Gtk.DataBindings
 			return column;
 		}
 
-		public IMappingConfigure Finish()
+		public IMappingConfig Finish()
 		{
 			return this;
 		}

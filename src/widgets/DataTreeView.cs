@@ -103,7 +103,7 @@ namespace Gtk.DataBindings
 		/// Fluent column mapping config
 		/// </summary>
 		[Category ("Data Binding"), Description ("Fluent column mapping config")]
-		public IMappingConfigure ColumnMappingConfig { 
+		public IMappingConfig ColumnMappingConfig { 
 			get { return (internalModel.ColumnMappingConfig); }
 			set { internalModel.ColumnMappingConfig = value; }
 		}

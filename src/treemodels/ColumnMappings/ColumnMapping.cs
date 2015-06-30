@@ -6,7 +6,7 @@ namespace Gtk.DataBindings
 {
 	public class ColumnMapping<TNode> : IColumnMapping
 	{
-		MappingConfigure<TNode> myConfig;
+		MappingConfig<TNode> myConfig;
 
 		public string Title { get; set;}
 
@@ -14,7 +14,7 @@ namespace Gtk.DataBindings
 
 		public bool IsEditable { get; set;}
 
-		public ColumnMapping (MappingConfigure<TNode> parentConfig, string title)
+		public ColumnMapping (MappingConfig<TNode> parentConfig, string title)
 		{
 			this.myConfig = parentConfig;
 			Title = title;
@@ -42,7 +42,7 @@ namespace Gtk.DataBindings
 			return myConfig.AddColumn (title);
 		}
 
-		public IMappingConfigure Finish()
+		public IMappingConfig Finish()
 		{
 			return myConfig.Finish ();
 		}

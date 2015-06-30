@@ -2,7 +2,7 @@
 
 namespace Gtk.DataBindings
 {
-	public interface IMappingConfigure
+	public interface IMappingConfig
 	{
 		string GetColumnMappingString();
 	}
