@@ -220,9 +220,9 @@ namespace Gtk.DataBindings
 			}
 		}
 
-		IMappingConfigure columnMappingConfig;
+		IMappingConfig columnMappingConfig;
 
-		public IMappingConfigure ColumnMappingConfig { 
+		public IMappingConfig ColumnMappingConfig { 
 			get { return (columnMappingConfig); }
 			set { if (columnMappingConfig == value)
 					return;
@@ -1431,6 +1431,11 @@ namespace Gtk.DataBindings
 			}
 			return (true);
 		}
+
+		bool RemapTreeViewFluentConfig ()
+		{
+			throw new NotImplementedException ();
+		}
 		
 		/// <summary>
 		/// Introducing new mapping columns for TreeView
@@ -1563,8 +1568,12 @@ namespace Gtk.DataBindings
 		{
 			_ClearTypeDescriptions();
 			justcleared = false;
-			if (TypeValidator.IsCompatible(Owner.GetType(), typeof(TreeView)) == true)
-				return (RemapTreeView());
+			if (TypeValidator.IsCompatible (Owner.GetType (), typeof(TreeView)) == true) {
+				if(ColumnMappingConfig != null)
+					return RemapTreeViewFluentConfig ();
+				else
+					return RemapTreeView (); //old config function
+			}
 			else if (TypeValidator.IsCompatible(Owner.GetType(), typeof(ComboBox)) == true)
 				return (RemapComboBox(false));
 			else if (TypeValidator.IsCompatible(Owner.GetType(), typeof(ComboBoxEntry)) == true)
