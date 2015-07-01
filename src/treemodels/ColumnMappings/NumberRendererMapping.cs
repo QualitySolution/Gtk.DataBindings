@@ -9,7 +9,7 @@ namespace Gtk.DataBindings
 	{
 		List<Action<NodeCellRendererSpin<TNode>, TNode>> LambdaSetters = new List<Action<NodeCellRendererSpin<TNode>, TNode>>();
 
-		public uint Digits { get; set;}
+		public uint DigitsValue { get; set;}
 		public bool IsEditable { get; set;}
 		public string DataPropertyName { get; set;}
 		public Adjustment Adjustment { get; set;}
@@ -34,7 +34,7 @@ namespace Gtk.DataBindings
 			var cell = new NodeCellRendererSpin<TNode> ();
 			cell.DataPropertyName = DataPropertyName;
 			cell.LambdaSetters = LambdaSetters;
-			cell.Digits = Digits;
+			cell.Digits = DigitsValue;
 			cell.Adjustment = Adjustment;
 			cell.Editable = IsEditable;
 			return cell;
@@ -48,9 +48,9 @@ namespace Gtk.DataBindings
 			return this;
 		}
 
-		public NumberRendererMapping<TNode> WithDigits(uint digits)
+		public NumberRendererMapping<TNode> Digits(uint digits)
 		{
-			this.Digits = digits;
+			this.DigitsValue = digits;
 			return this;
 		}
 
