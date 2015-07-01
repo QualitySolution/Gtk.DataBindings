@@ -7,6 +7,8 @@ namespace Gtk.DataBindings
 	{
 		ColumnMapping<TNode> myColumn;
 
+		public bool IsExpand { get; set;}
+
 		protected RendererMappingBase (ColumnMapping<TNode> parentColumn)
 		{
 			myColumn = parentColumn;
@@ -26,9 +28,9 @@ namespace Gtk.DataBindings
 
 		#region Renderers
 
-		public TextRendererMapping<TNode> AddTextRenderer(Expression<Func<TNode, string>> dataProperty)
+		public TextRendererMapping<TNode> AddTextRenderer(Expression<Func<TNode, string>> dataProperty, bool expand = true)
 		{
-			return myColumn.AddTextRenderer (dataProperty);
+			return myColumn.AddTextRenderer (dataProperty, expand);
 		}
 
 		public TextRendererMapping<TNode> AddTextRenderer()
@@ -36,9 +38,9 @@ namespace Gtk.DataBindings
 			return myColumn.AddTextRenderer ();
 		}
 
-		public NumberRendererMapping<TNode> AddNumericRenderer(Expression<Func<TNode, object>> dataProperty)
+		public NumberRendererMapping<TNode> AddNumericRenderer(Expression<Func<TNode, object>> dataProperty, bool expand = true)
 		{
-			return myColumn.AddNumericRenderer (dataProperty);
+			return myColumn.AddNumericRenderer (dataProperty, expand);
 		}
 
 		#endregion

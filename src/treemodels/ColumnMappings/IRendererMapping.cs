@@ -5,6 +5,7 @@ namespace Gtk.DataBindings
 	public interface IRendererMapping
 	{
 		INodeCellRenderer GetRenderer();
+		bool IsExpand { get;}
 	}
 
 	public interface INodeCellRenderer

@@ -1483,7 +1483,7 @@ namespace Gtk.DataBindings
 						(cell as CellRendererSpin).EditingStarted += OnNumbericCellEditingStarted;
 						(cell as CellRendererSpin).Edited += NumericNodeCellEdited;
 					}
-					tvc.PackStart (cell, false);
+					tvc.PackStart (cell, render.IsExpand);
 					tvc.SetCellDataFunc (cell, NodeRenderColumnFunc);
 				}
 				wdg.AppendColumn (tvc);

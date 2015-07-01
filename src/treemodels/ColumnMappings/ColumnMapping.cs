@@ -56,9 +56,10 @@ namespace Gtk.DataBindings
 
 		#region Renderers
 
-		public TextRendererMapping<TNode> AddTextRenderer(Expression<Func<TNode, string>> dataProperty)
+		public TextRendererMapping<TNode> AddTextRenderer(Expression<Func<TNode, string>> dataProperty, bool expand = true)
 		{
 			var render = new TextRendererMapping<TNode> (this, dataProperty);
+			render.IsExpand = expand;
 			Renderers.Add (render);
 			return render;
 		}
@@ -70,9 +71,10 @@ namespace Gtk.DataBindings
 			return render;
 		}
 
-		public NumberRendererMapping<TNode> AddNumericRenderer(Expression<Func<TNode, object>> dataProperty)
+		public NumberRendererMapping<TNode> AddNumericRenderer(Expression<Func<TNode, object>> dataProperty, bool expand = true)
 		{
 			var render = new NumberRendererMapping<TNode> (this, dataProperty);
+			render.IsExpand = expand;
 			Renderers.Add (render);
 			return render;
 		}
