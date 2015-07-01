@@ -7,18 +7,15 @@ namespace Gtk.DataBindings
 {
 	public class NumberRendererMapping<TNode> : RendererMappingBase<TNode>
 	{
-		List<Action<NodeCellRendererSpin<TNode>, TNode>> LambdaSetters = new List<Action<NodeCellRendererSpin<TNode>, TNode>>();
+		//List<Action<NodeCellRendererSpin<TNode>, TNode>> LambdaSetters = new List<Action<NodeCellRendererSpin<TNode>, TNode>>();
 
-		public uint DigitsValue { get; set;}
-		public bool IsEditable { get; set;}
-		public string DataPropertyName { get; set;}
-		public Adjustment Adjustment { get; set;}
+		private NodeCellRendererSpin<TNode> cellRenderer = new NodeCellRendererSpin<TNode>();
 
 		public NumberRendererMapping (ColumnMapping<TNode> column, Expression<Func<TNode, object>> dataProperty)
 			: base(column)
 		{
-			DataPropertyName = PropertyUtil.GetName<TNode> (dataProperty);
-			LambdaSetters.Add ((c, n) => c.Text = String.Format ("{0:" + String.Format ("F{0}", c.Digits) + "}", dataProperty.Compile ().Invoke (n)));
+			cellRenderer.DataPropertyName = PropertyUtil.GetName<TNode> (dataProperty);
+			cellRenderer.LambdaSetters.Add ((c, n) => c.Text = String.Format ("{0:" + String.Format ("F{0}", c.Digits) + "}", dataProperty.Compile ().Invoke (n)));
 		}
 
 		public NumberRendererMapping (ColumnMapping<TNode> column)
@@ -31,41 +28,40 @@ namespace Gtk.DataBindings
 
 		public override INodeCellRenderer GetRenderer ()
 		{
-			var cell = new NodeCellRendererSpin<TNode> ();
-			cell.DataPropertyName = DataPropertyName;
-			cell.LambdaSetters = LambdaSetters;
-			cell.Digits = DigitsValue;
-			cell.Adjustment = Adjustment;
-			cell.Editable = IsEditable;
-			return cell;
+			return cellRenderer;
 		}
 
 		#endregion
 
 		public NumberRendererMapping<TNode> AddSetter(Action<NodeCellRendererSpin<TNode>, TNode> setter)
 		{
-			LambdaSetters.Add (setter);
+			cellRenderer.LambdaSetters.Add (setter);
 			return this;
 		}
 
 		public NumberRendererMapping<TNode> Digits(uint digits)
 		{
-			this.DigitsValue = digits;
+			cellRenderer.Digits = digits;
 			return this;
 		}
 
-		public NumberRendererMapping<TNode> WithAdjustment(Adjustment adjustment)
+		public NumberRendererMapping<TNode> Adjustment(Adjustment adjustment)
 		{
-			this.Adjustment = adjustment;
+			cellRenderer.Adjustment = adjustment;
 			return this;
 		}
 
-		public NumberRendererMapping<TNode> Editing ()
+		public NumberRendererMapping<TNode> Editing (bool on = true)
 		{
-			IsEditable = true;
+			cellRenderer.Editable = on;
 			return this;
 		}
 
+		public NumberRendererMapping<TNode> WidthChars(int widthChars)
+		{
+			cellRenderer.WidthChars = widthChars;
+			return this;
+		}
 	}
 }
 

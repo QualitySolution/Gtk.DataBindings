@@ -5,7 +5,7 @@ namespace Gtk.DataBindings
 {
 	public class NodeCellRendererSpin<TNode> : CellRendererSpin, INodeCellRenderer
 	{
-		public List<Action<NodeCellRendererSpin<TNode>, TNode>> LambdaSetters;
+		public List<Action<NodeCellRendererSpin<TNode>, TNode>> LambdaSetters = new List<Action<NodeCellRendererSpin<TNode>, TNode>>();
 
 		public string DataPropertyName { get; set;}
 
