@@ -10,7 +10,7 @@ namespace Gtk.DataBindings
 	public interface INodeCellRenderer
 	{
 		void RenderNode(object node);
-
+		string DataPropertyName { get;}
 	}
 
 }

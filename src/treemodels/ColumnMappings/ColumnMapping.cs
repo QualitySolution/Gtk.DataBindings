@@ -70,6 +70,12 @@ namespace Gtk.DataBindings
 			return render;
 		}
 
+		public NumberRendererMapping<TNode> AddNumericRenderer(Expression<Func<TNode, object>> dataProperty)
+		{
+			var render = new NumberRendererMapping<TNode> (this, dataProperty);
+			Renderers.Add (render);
+			return render;
+		}
 
 		#endregion
 	}

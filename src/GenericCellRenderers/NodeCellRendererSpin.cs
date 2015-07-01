@@ -3,26 +3,24 @@ using System.Collections.Generic;
 
 namespace Gtk.DataBindings
 {
-	public class NodeCellRendererText<TNode> : CellRendererText, INodeCellRenderer
+	public class NodeCellRendererSpin<TNode> : CellRendererSpin, INodeCellRenderer
 	{
-		public List<Action<NodeCellRendererText<TNode>, TNode>> LambdaSetters;
+		public List<Action<NodeCellRendererSpin<TNode>, TNode>> LambdaSetters;
 
 		public string DataPropertyName { get; set;}
 
-		public NodeCellRendererText ()
+		public NodeCellRendererSpin ()
 		{
 		}
 
 		public void RenderNode(object node)
 		{
-			
 			if(node is TNode)
 			{
 				var typpedNode = (TNode)node;
 				LambdaSetters.ForEach (a => a.Invoke (this, typpedNode));
 			}
 		}
-
 	}
 }
 

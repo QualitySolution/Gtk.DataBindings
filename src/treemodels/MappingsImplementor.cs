@@ -594,6 +594,41 @@ namespace Gtk.DataBindings
 					tp.Dispose();
 				}
 		}
+
+
+		private void NumericNodeCellEdited (object o, Gtk.EditedArgs args)
+		{
+			Gtk.TreeIter iter;
+
+			INodeCellRenderer cell =  o as INodeCellRenderer;
+			//CellRendererSpin cellSpin =  o as CellRendererSpin;
+
+			if (cell != null) {
+				// Resolve path as it was passed in the arguments
+				Gtk.TreePath tp = new Gtk.TreePath (args.Path);
+				// Change value in the original object
+				if (GetIter (out iter, tp)) {
+					object obj = NodeFromIter (iter);
+					CachedProperty info = new CachedProperty (obj, cell.DataPropertyName);
+					if (info != null) 
+					if (info.CanWrite && !String.IsNullOrWhiteSpace(args.NewText)) {
+						try {
+							object newval = System.Convert.ChangeType (args.NewText, info.PropertyType);
+							info.SetValue (newval);
+						}
+						catch (System.InvalidCastException) {
+							Debug.DevelInfo ("DataTreeView.NumericCellEdited()", "Trouble Converting Value");
+						}
+						catch (System.OverflowException) {
+							Debug.DevelInfo ("DataTreeView.NumericCellEdited()", "Trouble Converting Value");
+						}
+						DataSourceController.GetRequest (obj);
+					}
+					info.Disconnect();
+				}
+				tp.Dispose();
+			}
+		}
 		
 		/// <summary>
 		/// Generic editing function of Text data
@@ -912,7 +947,6 @@ namespace Gtk.DataBindings
 
 							if ((aProp.OriginalRWFlags == EReadWrite.ReadWrite) && (EditingIsPossible == true)) {
 								rndr.Editable = true;
-								rndr.Digits = 2;
 								rndr.Adjustment = new Adjustment(0,0,100000000,1,1000,0);
 								rndr.Edited += NumericCellEdited;
 								rndr.EditingStarted += OnNumbericCellEditingStarted;
@@ -1139,13 +1173,6 @@ namespace Gtk.DataBindings
 		{
 			(Owner as ComboBoxEntry).Clear();
 		}
-		
-/*		private void NullComboBoxEntryModel()
-		{
-			ComboBoxEntry tv = (Owner as ComboBoxEntry);
-			tv.Model = null;
-			modeladapter = null;
-		}*/
 		
 		private void ResetComboBoxEntryModel()
 		{
@@ -1451,6 +1478,11 @@ namespace Gtk.DataBindings
 				foreach(var render in col.ConfiguredRenderers)
 				{
 					var cell = render.GetRenderer () as CellRenderer;
+					if(cell is CellRendererSpin)
+					{
+						(cell as CellRendererSpin).EditingStarted += OnNumbericCellEditingStarted;
+						(cell as CellRendererSpin).Edited += NumericNodeCellEdited;
+					}
 					tvc.PackStart (cell, false);
 					tvc.SetCellDataFunc (cell, NodeRenderColumnFunc);
 				}

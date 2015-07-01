@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace Gtk.DataBindings
 {
@@ -22,6 +23,25 @@ namespace Gtk.DataBindings
 		{
 			return myColumn.Finish ();
 		}
+
+		#region Renderers
+
+		public TextRendererMapping<TNode> AddTextRenderer(Expression<Func<TNode, string>> dataProperty)
+		{
+			return myColumn.AddTextRenderer (dataProperty);
+		}
+
+		public TextRendererMapping<TNode> AddTextRenderer()
+		{
+			return myColumn.AddTextRenderer ();
+		}
+
+		public NumberRendererMapping<TNode> AddNumericRenderer(Expression<Func<TNode, object>> dataProperty)
+		{
+			return myColumn.AddNumericRenderer (dataProperty);
+		}
+
+		#endregion
 	}
 }
 
