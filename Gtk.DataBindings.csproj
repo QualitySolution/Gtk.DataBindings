@@ -205,10 +205,13 @@
     <Compile Include="src\cellrenderers\CellRendererExtensionMethods.cs" />
     <Compile Include="src\cellrenderers\MappedCellRendererIp.cs" />
     <Compile Include="src\treemodels\ColumnMappings\IColumnMapping.cs" />
-    <Compile Include="src\treemodels\ColumnMappings\NumberColumnMapping.cs" />
     <Compile Include="src\treemodels\ColumnMappings\ColumnMapping.cs" />
     <Compile Include="src\treemodels\ColumnMappings\MappingConfig.cs" />
     <Compile Include="src\treemodels\ColumnMappings\IMappingConfig.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\IRendererMapping.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\RendererMappingBase.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\TextRendererMapping.cs" />
+    <Compile Include="src\GenericCellRenderers\NodeCellRendererText.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pixmaps\button.png">
@@ -371,11 +374,15 @@
     <Folder Include="src\factory\" />
     <Folder Include="src\cellrenderers\" />
     <Folder Include="src\treemodels\ColumnMappings\" />
+    <Folder Include="src\GenericCellRenderers\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="System.Data.Bindings\System.Data.Bindings.csproj">
       <Project>{54F958F5-7E58-4C89-9A04-8835E63B97C3}</Project>
       <Name>System.Data.Bindings</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\treemodels\ColumnMappings\NumberRendererMapping.cs" />
   </ItemGroup>
 </Project>

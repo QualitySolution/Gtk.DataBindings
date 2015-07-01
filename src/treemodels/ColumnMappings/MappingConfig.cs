@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Gtk.DataBindings
 {
@@ -8,6 +9,10 @@ namespace Gtk.DataBindings
 	{
 
 		List<ColumnMapping<TNode>> Columns = new List<ColumnMapping<TNode>>();
+
+		public IEnumerable<IColumnMapping> ConfiguredColumns {
+			get { return Columns.OfType<IColumnMapping> ();	}
+		}
 
 		public MappingConfig ()
 		{

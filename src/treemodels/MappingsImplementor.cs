@@ -527,6 +527,15 @@ namespace Gtk.DataBindings
 			}*/
 		}
 
+		private void NodeRenderColumnFunc (Gtk.TreeViewColumn aColumn, Gtk.CellRenderer aCell, 
+			Gtk.TreeModel aModel, Gtk.TreeIter aIter)
+		{
+			object node = NodeFromIter (aIter);
+			var nodeCell = aCell as INodeCellRenderer;
+			if (nodeCell != null)
+				nodeCell.RenderNode (node);
+		}
+
 		private void RenderNumericColumnFunc (Gtk.TreeViewColumn aColumn, Gtk.CellRenderer aCell, 
 			Gtk.TreeModel aModel, Gtk.TreeIter aIter)
 		{
@@ -1434,7 +1443,21 @@ namespace Gtk.DataBindings
 
 		bool RemapTreeViewFluentConfig ()
 		{
-			throw new NotImplementedException ();
+			foreach (var col in ColumnMappingConfig.ConfiguredColumns)
+			{
+				TreeView wdg = (Owner as TreeView);
+				TreeViewColumn tvc = new TreeViewColumn ();
+				tvc.Title = col.Title;
+				foreach(var render in col.ConfiguredRenderers)
+				{
+					var cell = render.GetRenderer () as CellRenderer;
+					tvc.PackStart (cell, false);
+					tvc.SetCellDataFunc (cell, NodeRenderColumnFunc);
+				}
+				wdg.AppendColumn (tvc);
+			}
+
+			return true;
 		}
 		
 		/// <summary>

@@ -1,0 +1,41 @@
+﻿using System;
+using System.Linq.Expressions;
+using System.Collections.Generic;
+
+namespace Gtk.DataBindings
+{
+	public class TextRendererMapping<TNode> : RendererMappingBase<TNode>
+	{
+		List<Action<NodeCellRendererText<TNode>, TNode>> LambdaSetters = new List<Action<NodeCellRendererText<TNode>, TNode>>();
+
+		public TextRendererMapping (ColumnMapping<TNode> column, Expression<Func<TNode, string>> dataProperty)
+			: base(column)
+		{
+			LambdaSetters.Add ((c, n) => c.Text = dataProperty.Compile ().Invoke (n));
+		}
+
+		public TextRendererMapping (ColumnMapping<TNode> column)
+			: base(column)
+		{
+			
+		}
+
+		#region implemented abstract members of RendererMappingBase
+
+		public override INodeCellRenderer GetRenderer ()
+		{
+			var cell = new NodeCellRendererText<TNode> ();
+			cell.LambdaSetters = LambdaSetters;
+			return cell;
+		}
+
+		#endregion
+
+		public TextRendererMapping<TNode> AddSetter(Action<NodeCellRendererText<TNode>, TNode> setter)
+		{
+			LambdaSetters.Add (setter);
+			return this;
+		}
+	}
+}
+

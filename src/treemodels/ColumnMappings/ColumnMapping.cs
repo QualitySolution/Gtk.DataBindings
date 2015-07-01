@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Data.Bindings.Utilities;
+using System.Collections.Generic;
 
 namespace Gtk.DataBindings
 {
@@ -13,6 +14,12 @@ namespace Gtk.DataBindings
 		public string DataPropertyName { get; set;}
 
 		public bool IsEditable { get; set;}
+
+		private List<IRendererMapping> Renderers = new List<IRendererMapping> ();
+
+		public IEnumerable<IRendererMapping> ConfiguredRenderers {
+			get { return Renderers;	}
+		}
 
 		public ColumnMapping (MappingConfig<TNode> parentConfig, string title)
 		{
@@ -46,6 +53,25 @@ namespace Gtk.DataBindings
 		{
 			return myConfig.Finish ();
 		}
+
+		#region Renderers
+
+		public TextRendererMapping<TNode> AddTextRenderer(Expression<Func<TNode, string>> dataProperty)
+		{
+			var render = new TextRendererMapping<TNode> (this, dataProperty);
+			Renderers.Add (render);
+			return render;
+		}
+
+		public TextRendererMapping<TNode> AddTextRenderer()
+		{
+			var render = new TextRendererMapping<TNode> (this);
+			Renderers.Add (render);
+			return render;
+		}
+
+
+		#endregion
 	}
 }
 

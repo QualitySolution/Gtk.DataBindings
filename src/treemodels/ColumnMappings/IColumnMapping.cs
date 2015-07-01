@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Gtk.DataBindings
 {
@@ -9,6 +10,8 @@ namespace Gtk.DataBindings
 		bool IsEditable { get;}
 
 		string DataPropertyName { get;}
+
+		IEnumerable<IRendererMapping> ConfiguredRenderers { get;}
 	}
 }
 
