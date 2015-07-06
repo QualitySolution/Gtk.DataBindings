@@ -766,6 +766,25 @@ namespace Gtk.DataBindings
 			}
 		}
 
+		private void OnNumbericNodeCellEditingStarted (object o, Gtk.EditingStartedArgs args)
+		{
+			var cell = o as INodeCellRenderer;
+			if(cell != null)
+			{
+				object obj = GetNodeAtPath (new TreePath(args.Path));
+				CachedProperty info = new CachedProperty (obj, cell.DataPropertyName);
+				if (info != null) {
+					object propValue;
+					var spin = o as CellRendererSpin;
+					if(info.GetValue (out propValue) && spin != null)
+					{
+						//WORKAROUND to fix GTK bug that CellRendererSpin start editing only with integer number
+						spin.Adjustment.Value = Convert.ToDouble (propValue);
+					}
+				}
+			}
+		}
+
 		#endregion CELL_EDITOR_METHODS
 
 		#region TREEVIEW_WIDGET_SPECIFICS
@@ -1480,7 +1499,7 @@ namespace Gtk.DataBindings
 					var cell = render.GetRenderer () as CellRenderer;
 					if(cell is CellRendererSpin)
 					{
-						(cell as CellRendererSpin).EditingStarted += OnNumbericCellEditingStarted;
+						(cell as CellRendererSpin).EditingStarted += OnNumbericNodeCellEditingStarted;
 						(cell as CellRendererSpin).Edited += NumericNodeCellEdited;
 					}
 					tvc.PackStart (cell, render.IsExpand);

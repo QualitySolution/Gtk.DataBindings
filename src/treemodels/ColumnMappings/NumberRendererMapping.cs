@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Data.Bindings.Utilities;
 
@@ -7,8 +6,6 @@ namespace Gtk.DataBindings
 {
 	public class NumberRendererMapping<TNode> : RendererMappingBase<TNode>
 	{
-		//List<Action<NodeCellRendererSpin<TNode>, TNode>> LambdaSetters = new List<Action<NodeCellRendererSpin<TNode>, TNode>>();
-
 		private NodeCellRendererSpin<TNode> cellRenderer = new NodeCellRendererSpin<TNode>();
 
 		public NumberRendererMapping (ColumnMapping<TNode> column, Expression<Func<TNode, object>> dataProperty)
