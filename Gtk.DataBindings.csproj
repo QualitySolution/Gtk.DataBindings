@@ -206,7 +206,6 @@
     <Compile Include="src\cellrenderers\MappedCellRendererIp.cs" />
     <Compile Include="src\treemodels\ColumnMappings\IColumnMapping.cs" />
     <Compile Include="src\treemodels\ColumnMappings\ColumnMapping.cs" />
-    <Compile Include="src\treemodels\ColumnMappings\MappingConfig.cs" />
     <Compile Include="src\treemodels\ColumnMappings\IMappingConfig.cs" />
     <Compile Include="src\treemodels\ColumnMappings\IRendererMapping.cs" />
     <Compile Include="src\treemodels\ColumnMappings\RendererMappingBase.cs" />
@@ -214,6 +213,7 @@
     <Compile Include="src\GenericCellRenderers\NodeCellRendererText.cs" />
     <Compile Include="src\GenericCellRenderers\NodeCellRendererSpin.cs" />
     <Compile Include="src\treemodels\ColumnMappings\NumberRendererMapping.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\FluentMappingConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pixmaps\button.png">

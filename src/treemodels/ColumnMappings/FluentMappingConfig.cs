@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Gtk.DataBindings
 {
-	public class MappingConfig<TNode> : IMappingConfig
+	public class FluentMappingConfig<TNode> : IMappingConfig
 	{
 
 		List<ColumnMapping<TNode>> Columns = new List<ColumnMapping<TNode>>();
@@ -14,7 +14,7 @@ namespace Gtk.DataBindings
 			get { return Columns.OfType<IColumnMapping> ();	}
 		}
 
-		public MappingConfig ()
+		public FluentMappingConfig ()
 		{
 		}
 
@@ -31,9 +31,9 @@ namespace Gtk.DataBindings
 			return map.ToString ();
 		}
 
-		public static MappingConfig<TNode> Create()
+		public static FluentMappingConfig<TNode> Create()
 		{
-			return new MappingConfig<TNode> ();
+			return new FluentMappingConfig<TNode> ();
 		}
 
 		public ColumnMapping<TNode> AddColumn(string title)

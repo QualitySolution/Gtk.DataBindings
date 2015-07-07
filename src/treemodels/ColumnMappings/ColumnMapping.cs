@@ -7,7 +7,7 @@ namespace Gtk.DataBindings
 {
 	public class ColumnMapping<TNode> : IColumnMapping
 	{
-		MappingConfig<TNode> myConfig;
+		FluentMappingConfig<TNode> myConfig;
 
 		public string Title { get; set;}
 
@@ -21,7 +21,7 @@ namespace Gtk.DataBindings
 			get { return Renderers;	}
 		}
 
-		public ColumnMapping (MappingConfig<TNode> parentConfig, string title)
+		public ColumnMapping (FluentMappingConfig<TNode> parentConfig, string title)
 		{
 			this.myConfig = parentConfig;
 			Title = title;
