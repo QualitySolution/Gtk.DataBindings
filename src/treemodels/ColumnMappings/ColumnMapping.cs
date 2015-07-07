@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Data.Bindings.Utilities;
 using System.Collections.Generic;
+using System.Data.Bindings;
 
 namespace Gtk.DataBindings
 {
@@ -35,8 +36,25 @@ namespace Gtk.DataBindings
 		public ColumnMapping<TNode> SetDataProperty (Expression<Func<TNode, object>> propertyRefExpr)
 		{
 			DataPropertyName = PropertyUtil.GetName (propertyRefExpr);
+			Type properyType = typeof(TNode).GetProperty (DataPropertyName).PropertyType;
+			if(TypeValidator.IsNumeric(properyType))
+			{
+				AddNumericRenderer (propertyRefExpr);
+			}
+			else 
+			{
+				throw new NotSupportedException (String.Format ("Type {0} isn't supports.", properyType));
+			}
 			return this;
 		}
+
+		public ColumnMapping<TNode> SetDataProperty (Expression<Func<TNode, string>> propertyRefExpr)
+		{
+			//DataPropertyName = PropertyUtil.GetName (propertyRefExpr);
+			AddTextRenderer (propertyRefExpr);
+			return this;
+		}
+
 
 		public ColumnMapping<TNode> Editing ()
 		{
