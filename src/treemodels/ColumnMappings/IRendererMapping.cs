@@ -8,6 +8,11 @@ namespace Gtk.DataBindings
 		bool IsExpand { get;}
 	}
 
+	public interface IRendererMappingGeneric<TNode> : IRendererMapping
+	{
+		void SetCommonSetter<TCellRenderer>(Action<TCellRenderer, TNode> commonSet) where TCellRenderer : class;
+	}
+
 	public interface INodeCellRenderer
 	{
 		void RenderNode(object node);

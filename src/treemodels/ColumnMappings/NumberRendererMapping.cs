@@ -4,7 +4,7 @@ using System.Data.Bindings.Utilities;
 
 namespace Gtk.DataBindings
 {
-	public class NumberRendererMapping<TNode> : RendererMappingBase<TNode>
+	public class NumberRendererMapping<TNode> : RendererMappingBase<NodeCellRendererSpin<TNode>, TNode>
 	{
 		private NodeCellRendererSpin<TNode> cellRenderer = new NodeCellRendererSpin<TNode>();
 
@@ -26,6 +26,11 @@ namespace Gtk.DataBindings
 		public override INodeCellRenderer GetRenderer ()
 		{
 			return cellRenderer;
+		}
+
+		protected override void SetSetterSilent (Action<NodeCellRendererSpin<TNode>, TNode> commonSet)
+		{
+			AddSetter (commonSet);
 		}
 
 		#endregion

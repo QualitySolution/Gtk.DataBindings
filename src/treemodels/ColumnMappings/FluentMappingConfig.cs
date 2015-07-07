@@ -10,6 +10,8 @@ namespace Gtk.DataBindings
 
 		List<ColumnMapping<TNode>> Columns = new List<ColumnMapping<TNode>>();
 
+		RowMapping<TNode> row;
+
 		public IEnumerable<IColumnMapping> ConfiguredColumns {
 			get { return Columns.OfType<IColumnMapping> ();	}
 		}
@@ -41,6 +43,12 @@ namespace Gtk.DataBindings
 			var column = new ColumnMapping<TNode> (this, title);
 			Columns.Add (column);
 			return column;
+		}
+
+		public RowMapping<TNode> RowCells()
+		{
+			row = new RowMapping<TNode> (this);
+			return row;
 		}
 
 		public IMappingConfig Finish()

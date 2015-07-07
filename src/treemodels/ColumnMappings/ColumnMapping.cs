@@ -16,9 +16,13 @@ namespace Gtk.DataBindings
 
 		public bool IsEditable { get; set;}
 
-		private List<IRendererMapping> Renderers = new List<IRendererMapping> ();
+		private readonly List<IRendererMappingGeneric<TNode>> Renderers = new List<IRendererMappingGeneric<TNode>> ();
 
 		public IEnumerable<IRendererMapping> ConfiguredRenderers {
+			get { return Renderers;	}
+		}
+
+		public IEnumerable<IRendererMappingGeneric<TNode>> ConfiguredRenderersGeneric {
 			get { return Renderers;	}
 		}
 
@@ -65,6 +69,11 @@ namespace Gtk.DataBindings
 		public ColumnMapping<TNode> AddColumn(string title)
 		{
 			return myConfig.AddColumn (title);
+		}
+
+		public RowMapping<TNode> RowCells()
+		{
+			return myConfig.RowCells ();
 		}
 
 		public IMappingConfig Finish()

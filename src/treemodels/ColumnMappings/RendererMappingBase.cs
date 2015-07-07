@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 namespace Gtk.DataBindings
 {
-	public abstract class RendererMappingBase<TNode> : IRendererMapping
+	public abstract class RendererMappingBase<TCellRenderer, TNode> : IRendererMappingGeneric<TNode>
 	{
 		ColumnMapping<TNode> myColumn;
 
@@ -16,9 +16,24 @@ namespace Gtk.DataBindings
 			
 		public abstract INodeCellRenderer GetRenderer ();
 
+		protected abstract void SetSetterSilent(Action<TCellRenderer, TNode> commonSet);
+
+		public void SetCommonSetter<TActionCellRenderer>(Action<TActionCellRenderer, TNode> commonSet) where TActionCellRenderer : class
+		{
+			if(typeof(TActionCellRenderer).IsAssignableFrom (typeof(TCellRenderer)))
+			{
+				SetSetterSilent ((c, n) => commonSet(c as TActionCellRenderer, n));
+			}
+		}
+
 		public ColumnMapping<TNode> AddColumn(string title)
 		{
 			return myColumn.AddColumn (title);
+		}
+
+		public RowMapping<TNode> RowCells()
+		{
+			return myColumn.RowCells ();
 		}
 
 		public IMappingConfig Finish()

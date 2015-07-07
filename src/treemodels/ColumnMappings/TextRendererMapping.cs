@@ -5,7 +5,7 @@ using System.Data.Bindings.Utilities;
 
 namespace Gtk.DataBindings
 {
-	public class TextRendererMapping<TNode> : RendererMappingBase<TNode>
+	public class TextRendererMapping<TNode> : RendererMappingBase<NodeCellRendererText<TNode>, TNode>
 	{
 		List<Action<NodeCellRendererText<TNode>, TNode>> LambdaSetters = new List<Action<NodeCellRendererText<TNode>, TNode>>();
 		public string DataPropertyName { get; set;}
@@ -33,6 +33,11 @@ namespace Gtk.DataBindings
 			return cell;
 		}
 
+		protected override void SetSetterSilent (Action<NodeCellRendererText<TNode>, TNode> commonSet)
+		{
+			AddSetter (commonSet);
+		}
+			
 		#endregion
 
 		public TextRendererMapping<TNode> AddSetter(Action<NodeCellRendererText<TNode>, TNode> setter)
