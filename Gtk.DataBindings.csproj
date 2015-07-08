@@ -214,6 +214,7 @@
     <Compile Include="src\GenericCellRenderers\NodeCellRendererSpin.cs" />
     <Compile Include="src\treemodels\ColumnMappings\NumberRendererMapping.cs" />
     <Compile Include="src\treemodels\ColumnMappings\FluentMappingConfig.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\RowMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pixmaps\button.png">
