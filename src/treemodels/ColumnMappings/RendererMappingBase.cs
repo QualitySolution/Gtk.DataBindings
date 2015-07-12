@@ -58,6 +58,11 @@ namespace Gtk.DataBindings
 			return myColumn.AddNumericRenderer (dataProperty, expand);
 		}
 
+		public ToggleRendererMapping<TNode> AddToggleRenderer(Expression<Func<TNode, bool>> dataProperty, bool expand = true)
+		{
+			return myColumn.AddToggleRenderer (dataProperty, expand);
+		}
+
 		#endregion
 	}
 }

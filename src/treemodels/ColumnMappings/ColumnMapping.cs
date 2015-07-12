@@ -59,6 +59,12 @@ namespace Gtk.DataBindings
 			return this;
 		}
 
+		public ColumnMapping<TNode> SetDataProperty (Expression<Func<TNode, bool>> propertyRefExpr)
+		{
+			//DataPropertyName = PropertyUtil.GetName (propertyRefExpr);
+			AddToggleRenderer (propertyRefExpr);
+			return this;
+		}
 
 		public ColumnMapping<TNode> Editing ()
 		{
@@ -101,6 +107,14 @@ namespace Gtk.DataBindings
 		public NumberRendererMapping<TNode> AddNumericRenderer(Expression<Func<TNode, object>> dataProperty, bool expand = true)
 		{
 			var render = new NumberRendererMapping<TNode> (this, dataProperty);
+			render.IsExpand = expand;
+			Renderers.Add (render);
+			return render;
+		}
+
+		public ToggleRendererMapping<TNode> AddToggleRenderer(Expression<Func<TNode, bool>> dataProperty, bool expand = true)
+		{
+			var render = new ToggleRendererMapping<TNode> (this, dataProperty);
 			render.IsExpand = expand;
 			Renderers.Add (render);
 			return render;

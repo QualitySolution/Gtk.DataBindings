@@ -215,6 +215,8 @@
     <Compile Include="src\treemodels\ColumnMappings\NumberRendererMapping.cs" />
     <Compile Include="src\treemodels\ColumnMappings\FluentMappingConfig.cs" />
     <Compile Include="src\treemodels\ColumnMappings\RowMapping.cs" />
+    <Compile Include="src\GenericCellRenderers\NodeCellRendererToggle.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\ToggleRendererMapping.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pixmaps\button.png">
