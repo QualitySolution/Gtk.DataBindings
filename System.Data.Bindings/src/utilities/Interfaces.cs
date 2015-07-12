@@ -52,19 +52,4 @@ namespace System.Data.Bindings
 		/// </summary>
 		Server
 	}
-	
-	/// <summary>
-	/// Defines objects can load/save
-	/// </summary>
-	public interface ISaveable
-	{
-		/// <summary>
-		/// Loads specific object
-		/// </summary>
-		void Load();
-		/// <summary>
-		/// Saves specific object
-		/// </summary>
-		void Save();
-	}
 }
