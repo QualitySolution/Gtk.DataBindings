@@ -120,6 +120,14 @@ namespace Gtk.DataBindings
 			return render;
 		}
 
+		public EnumRendererMapping<TNode> AddEnumRenderer(Expression<Func<TNode, object>> dataProperty, bool expand = true)
+		{
+			var render = new EnumRendererMapping<TNode> (this, dataProperty);
+			render.IsExpand = expand;
+			Renderers.Add (render);
+			return render;
+		}
+
 		#endregion
 	}
 }

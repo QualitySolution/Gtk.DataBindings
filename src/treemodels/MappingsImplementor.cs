@@ -595,6 +595,45 @@ namespace Gtk.DataBindings
 				}
 		}
 
+		private void ComboNodeCellEdited (object o, Gtk.EditedArgs args)
+		{
+			Gtk.TreeIter iter;
+
+			INodeCellRenderer cell =  o as INodeCellRenderer;
+			CellRendererCombo combo = o as CellRendererCombo;
+
+			if (cell != null) {
+				// Resolve path as it was passed in the arguments
+				Gtk.TreePath tp = new Gtk.TreePath (args.Path);
+				// Change value in the original object
+				if (GetIter (out iter, tp)) {
+					object obj = NodeFromIter (iter);
+					CachedProperty info = new CachedProperty (obj, cell.DataPropertyName);
+					if (info != null) 
+					if (info.CanWrite && !String.IsNullOrWhiteSpace(args.NewText)) {
+						try {
+							foreach (object[] row in (ListStore)combo.Model)
+							{
+								if((string)row[(int)NodeCellRendererColumns.title] == args.NewText)
+								{
+									info.SetValue (row[(int)NodeCellRendererColumns.value]);
+									break;
+								}
+							}
+						}
+						catch (System.InvalidCastException) {
+							Debug.DevelInfo ("DataTreeView.NumericCellEdited()", "Trouble Converting Value");
+						}
+						catch (System.OverflowException) {
+							Debug.DevelInfo ("DataTreeView.NumericCellEdited()", "Trouble Converting Value");
+						}
+						DataSourceController.GetRequest (obj);
+					}
+					info.Disconnect();
+				}
+				tp.Dispose();
+			}
+		}
 
 		private void NumericNodeCellEdited (object o, Gtk.EditedArgs args)
 		{
@@ -1501,6 +1540,10 @@ namespace Gtk.DataBindings
 					{
 						(cell as CellRendererSpin).EditingStarted += OnNumbericNodeCellEditingStarted;
 						(cell as CellRendererSpin).Edited += NumericNodeCellEdited;
+					}
+					if(cell is CellRendererCombo)
+					{
+						(cell as CellRendererCombo).Edited += ComboNodeCellEdited;
 					}
 					tvc.PackStart (cell, render.IsExpand);
 					tvc.SetCellDataFunc (cell, NodeRenderColumnFunc);
