@@ -82,8 +82,6 @@ namespace Gtk.DataBindings
 
 		private void FillRendererByEnum(Type enumType)
 		{
-			this.enumType = enumType;
-
 			ListStore comboListStore = new ListStore (enumType, typeof(string));
 
 			foreach (FieldInfo info in enumType.GetFields()) {
@@ -98,4 +96,3 @@ namespace Gtk.DataBindings
 		}
 	}
 }
-
