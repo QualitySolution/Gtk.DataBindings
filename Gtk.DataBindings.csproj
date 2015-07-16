@@ -217,6 +217,8 @@
     <Compile Include="src\treemodels\ColumnMappings\RowMapping.cs" />
     <Compile Include="src\GenericCellRenderers\NodeCellRendererToggle.cs" />
     <Compile Include="src\treemodels\ColumnMappings\ToggleRendererMapping.cs" />
+    <Compile Include="src\treemodels\ColumnMappings\EnumRendererMapping.cs" />
+    <Compile Include="src\GenericCellRenderers\NodeCellRendererCombo.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="pixmaps\button.png">
