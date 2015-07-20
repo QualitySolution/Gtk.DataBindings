@@ -128,6 +128,14 @@ namespace Gtk.DataBindings
 			return render;
 		}
 
+		public ComboRendererMapping<TNode> AddComboRenderer(Expression<Func<TNode, object>> dataProperty, bool expand = true)
+		{
+			var render = new ComboRendererMapping<TNode> (this, dataProperty);
+			render.IsExpand = expand;
+			Renderers.Add (render);
+			return render;
+		}
+
 		#endregion
 	}
 }

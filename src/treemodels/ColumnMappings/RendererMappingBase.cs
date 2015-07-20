@@ -63,6 +63,11 @@ namespace Gtk.DataBindings
 			return myColumn.AddEnumRenderer (dataProperty, expand);
 		}
 
+		public ComboRendererMapping<TNode> AddComboRenderer(Expression<Func<TNode, object>> dataProperty, bool expand = true)
+		{
+			return myColumn.AddComboRenderer (dataProperty, expand);
+		}
+
 		public ToggleRendererMapping<TNode> AddToggleRenderer(Expression<Func<TNode, bool>> dataProperty, bool expand = true)
 		{
 			return myColumn.AddToggleRenderer (dataProperty, expand);

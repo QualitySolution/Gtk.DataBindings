@@ -1,16 +1,16 @@
 ﻿using System;
-using System.Data.Bindings;
 using System.Data.Bindings.Utilities;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Collections.Generic;
 
 namespace Gtk.DataBindings
 {
-	public class EnumRendererMapping<TNode> : RendererMappingBase<NodeCellRendererCombo<TNode>, TNode>
+	public class ComboRendererMapping<TNode> : RendererMappingBase<NodeCellRendererCombo<TNode>, TNode>
 	{
 		private NodeCellRendererCombo<TNode> cellRenderer = new NodeCellRendererCombo<TNode>();
 
-		public EnumRendererMapping (ColumnMapping<TNode> column, Expression<Func<TNode, object>> dataProperty)
+		public ComboRendererMapping (ColumnMapping<TNode> column, Expression<Func<TNode, object>> dataProperty)
 			: base(column)
 		{
 			cellRenderer.DataPropertyName = PropertyUtil.GetName<TNode> (dataProperty);
@@ -26,17 +26,13 @@ namespace Gtk.DataBindings
 
 			var prop = memberExpr.Member as PropertyInfo;
 
-			if(prop == null || !prop.PropertyType.IsEnum)
+			if(prop == null)
 				throw new InvalidProgramException ();
 
 			cellRenderer.DataPropertyInfo = prop;
-
-			FillRendererByEnum (prop.PropertyType);
-
-			cellRenderer.DisplayFunc = e => ((Enum)e).GetEnumTitle ();
 		}
 
-		public EnumRendererMapping (ColumnMapping<TNode> column)
+		public ComboRendererMapping (ColumnMapping<TNode> column)
 			: base(column)
 		{
 
@@ -56,37 +52,49 @@ namespace Gtk.DataBindings
 
 		#endregion
 
-		public EnumRendererMapping<TNode> AddSetter(Action<NodeCellRendererCombo<TNode>, TNode> setter)
+		public ComboRendererMapping<TNode> AddSetter(Action<NodeCellRendererCombo<TNode>, TNode> setter)
 		{
 			cellRenderer.LambdaSetters.Add (setter);
 			return this;
 		}
+
+		public ComboRendererMapping<TNode> SetDisplayFunc(Func<object, string> displayFunc)
+		{
+			cellRenderer.DisplayFunc = displayFunc;
+			return this;
+		}
 			
-		public EnumRendererMapping<TNode> Editing (bool on = true)
+		public ComboRendererMapping<TNode> Editing (bool on = true)
 		{
 			cellRenderer.Editable = on;
 			return this;
 		}
 
-		public EnumRendererMapping<TNode> HasEntry (bool on = true)
+		public ComboRendererMapping<TNode> HasEntry (bool on = true)
 		{
 			cellRenderer.HasEntry = on;
 			return this;
 		}
 
-		private void FillRendererByEnum(Type enumType)
+		public ComboRendererMapping<TNode> FillItems<TProperty>(IList<TProperty> itemsList)
 		{
-			ListStore comboListStore = new ListStore (enumType, typeof(string));
+			FillRendererByList (itemsList);
+			return this;
+		}
 
-			foreach (FieldInfo info in enumType.GetFields()) {
-				if (info.Name.Equals("value__"))
-					continue;
-				string title = info.GetEnumTitle ();
-				comboListStore.AppendValues (info.GetValue (null), title);
+		private void FillRendererByList<TProperty>(IList<TProperty> itemsList)
+		{
+			ListStore comboListStore = new ListStore (typeof(TProperty), typeof(string));
+
+			foreach (var item in itemsList) {
+				if(cellRenderer.DisplayFunc == null)
+					comboListStore.AppendValues (item, item.ToString ());
+				else
+					comboListStore.AppendValues (item, cellRenderer.DisplayFunc(item));
 			}
-				
-			cellRenderer.Model = comboListStore;
+
 			cellRenderer.TextColumn = (int)NodeCellRendererColumns.title;
+			cellRenderer.Model = comboListStore;
 		}
 	}
 }

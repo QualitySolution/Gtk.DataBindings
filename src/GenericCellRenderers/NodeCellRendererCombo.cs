@@ -12,6 +12,8 @@ namespace Gtk.DataBindings
 
 		public PropertyInfo DataPropertyInfo { get; set;}
 
+		public Func<object, string> DisplayFunc { get; set;}
+
 		public NodeCellRendererCombo ()
 		{
 			HasEntry = false;
@@ -21,6 +23,12 @@ namespace Gtk.DataBindings
 		{
 			if(node is TNode)
 			{
+				var propValue = DataPropertyInfo.GetValue (node, null);
+				if (propValue != null)
+					Text = DisplayFunc == null ? propValue.ToString () : DisplayFunc (propValue);
+				else
+					Text = String.Empty;
+
 				var typpedNode = (TNode)node;
 				LambdaSetters.ForEach (a => a.Invoke (this, typpedNode));
 			}
