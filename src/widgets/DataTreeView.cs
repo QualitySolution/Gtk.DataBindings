@@ -76,7 +76,7 @@ namespace Gtk.DataBindings
 		/// DataSource object control is connected to
 		/// </summary>
 		[Browsable (false), Category ("Data Binding")]
-		public object ItemsDataSource {
+		public virtual object ItemsDataSource {
 			get { return (internalModel.ItemsDataSource); }
 			set { internalModel.ItemsDataSource = value; }
 		}
@@ -239,6 +239,15 @@ namespace Gtk.DataBindings
 					rows[i] = null;
 			}
 			return (rows);
+		}
+
+		public object GetSelectedObject()
+		{
+			TreeIter iter;
+			if (Selection.GetSelected (out iter))
+				return internalModel.NodeFromIter (iter);
+			else
+				return null;
 		}
 		
 		/// <summary>
