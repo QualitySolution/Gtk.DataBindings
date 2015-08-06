@@ -28,7 +28,7 @@ namespace System.Data.Bindings.Collections.Generic
 	public class GenericObservableList<T> : IList<T>, IObservableList, INotifyPropertyChanged, IListEvents
 	{
 		private IList<T> items = null;
-		
+
 		/// <summary>
 		/// PropertyChanged delegate as specified in INotifyPropertyChanged
 		/// </summary>
@@ -44,10 +44,11 @@ namespace System.Data.Bindings.Collections.Generic
 		public virtual void OnPropertyChanged (string aPropertyName)
 		{
 			if (PropertyChanged != null)
-				PropertyChanged (this, new PropertyChangedEventArgs(aPropertyName));
+				PropertyChanged (this, new PropertyChangedEventArgs (aPropertyName));
 		}
 
 		private EListReorderable isreorderable = EListReorderable.None;
+
 		/// <summary>
 		/// Returns is this list can be rearranged by controls and such
 		/// </summary>
@@ -60,43 +61,52 @@ namespace System.Data.Bindings.Collections.Generic
 					isreorderable = EListReorderable.None;
 			}
 		}
-		
+
 		/// <summary>
 		// Return items count
 		/// </summary>
 		public int Count {
 			get { return (items.Count); }
 		}
-		
+
 		/// <summary>
 		// IList interface needs
 		/// </summary>
 		public object SyncRoot {
 			get { return (items); }
 		}
-		
+
 		/// <summary>
 		// IList interface needs
 		/// </summary>
 		public bool IsFixedSize {
 			get { return (false); }
 		}
-		
+
 		/// <summary>
 		// IList interface needs
 		/// </summary>
 		public bool IsReadOnly {
 			get { return (items.IsReadOnly); }
 		}
-		
+
 		/// <summary>
 		// IList interface needs
 		/// </summary>
 		public bool IsSynchronized {
 			get { return (false); }
 		}
-		
+
+		public event EventHandler ListContentChanged;
+
+		protected void OnChanged ()
+		{
+			if (ListContentChanged != null)
+				ListContentChanged (this, null);
+		}
+
 		private event ListChangedEvent listChanged = null;
+
 		/// <summary>
 		/// OnListChanged event is crossconnecting this List and objects connected to this event
 		/// </summary>
@@ -105,13 +115,14 @@ namespace System.Data.Bindings.Collections.Generic
 			remove { listChanged -= value; }
 		}
 
-		protected void OnListChanged()
+		protected void OnListChanged ()
 		{
 			if (listChanged != null)
-				listChanged(this);
+				listChanged (this);
 		}
-		
+
 		private event ElementAddedInListObjectEvent elementAdded = null;
+
 		/// <summary>
 		/// OnElementAdded event is crossconnecting this List and objects connected to this event
 		/// </summary>
@@ -124,9 +135,11 @@ namespace System.Data.Bindings.Collections.Generic
 		{
 			if (elementAdded != null)
 				elementAdded (this, aIdx);
+			OnChanged ();
 		}
-		
+
 		private event ElementChangedInListObjectEvent elementChanged = null;
+
 		/// <summary>
 		/// OnElementChanged event is crossconnecting this List and objects connected to this event
 		/// </summary>
@@ -139,9 +152,11 @@ namespace System.Data.Bindings.Collections.Generic
 		{
 			if (elementChanged != null)
 				elementChanged (this, aIdx);
+			OnChanged ();
 		}
-		
+
 		private event ElementRemovedFromListObjectEvent elementRemoved = null;
+
 		/// <summary>
 		/// OnElementRemoved event is crossconnecting this List and objects connected to this event
 		/// </summary>
@@ -154,9 +169,11 @@ namespace System.Data.Bindings.Collections.Generic
 		{
 			if (elementRemoved != null)
 				elementRemoved (this, aIdx, aObject);
+			OnChanged ();
 		}
-		
+
 		private event ElementsInListSortedEvent elementsSorted = null;
+
 		/// <summary>
 		/// Message handling the event of list or any of its children sorted
 		/// </summary>
@@ -170,32 +187,32 @@ namespace System.Data.Bindings.Collections.Generic
 			if (elementsSorted != null)
 				elementsSorted (this, aIdx);
 		}
-		
+
 		internal void ListItemsPropertyChanged (object aSender, PropertyChangedEventArgs e)
 		{
 			if (aSender == null)
 				return;
-			int i = IndexOf((T) aSender);
+			int i = IndexOf ((T)aSender);
 			if (i != -1) {
 				int[] Idx = new int [1];
-				Idx[0] = i;
+				Idx [0] = i;
 				OnElementChanged (Idx);
 			}
 		}
 
 		internal PropertyChangedEventHandler ListItemPropertyChangedMethod = null;
-		
+
 		/// <summary>
 		/// Returns default NotifyPropertyChanged handler method
 		/// </summary>
 		/// <returns>
 		/// Default handler method <see cref="PropertyChangedEventHandler"/>
 		/// </returns>
-		public PropertyChangedEventHandler GetDefaultNotifyPropertyChangedHandler()
+		public PropertyChangedEventHandler GetDefaultNotifyPropertyChangedHandler ()
 		{
 			return (ListItemPropertyChangedMethod);
 		}
-		
+
 		/// <summary>
 		/// Responsible for creating of new list class based on its own needs
 		/// </summary>
@@ -206,9 +223,9 @@ namespace System.Data.Bindings.Collections.Generic
 		/// Throws exception since this is template class and does not specify
 		/// list object type
 		/// </remarks>
-		public virtual IList CreateList()
+		public virtual IList CreateList ()
 		{
-			return ((IList) new List<T>());
+			return ((IList)new List<T> ());
 		}
 
 		/// <summary>
@@ -217,86 +234,92 @@ namespace System.Data.Bindings.Collections.Generic
 		/// <returns>
 		/// Returns enumerator object <see cref="IEnumerator"/>
 		/// </returns>
-		public IEnumerator GetEnumerator()
+		public IEnumerator GetEnumerator ()
 		{
-			return (items.GetEnumerator());
+			return (items.GetEnumerator ());
 		}
-		
+
 		/// <summary>
 		/// IList enumeration needs
 		/// </summary>
 		/// <returns>
 		/// Returns enumerator object <see cref="IEnumerator"/>
 		/// </returns>
-		IEnumerator<T> IEnumerable<T>.GetEnumerator()
+		IEnumerator<T> IEnumerable<T>.GetEnumerator ()
 		{
-			return (items.GetEnumerator());
+			return (items.GetEnumerator ());
 		}
 
 		protected event ListChangedEvent internalListChanged = null;
-		protected void ListChangedMethod(object aList)
+
+		protected void ListChangedMethod (object aList)
 		{
-			OnListChanged();
+			OnListChanged ();
 		}
-				
+
 		protected event ElementAddedInListObjectEvent internalElementAdded = null;
-		protected void ElementAddedMethod(object aList, int[] aIdx)
+
+		protected void ElementAddedMethod (object aList, int[] aIdx)
 		{
-			int pos = IndexOf((T) aList);
+			int pos = IndexOf ((T)aList);
 			if (pos < 0)
 				return;
-			int[] idx = new int[aIdx.Length+1];
-			idx[0] = pos;
-			for (int i=0; i<aIdx.Length; i++)
-				idx[i+1] = aIdx[i];
-			OnElementAdded(idx);
+			int[] idx = new int[aIdx.Length + 1];
+			idx [0] = pos;
+			for (int i = 0; i < aIdx.Length; i++)
+				idx [i + 1] = aIdx [i];
+			OnElementAdded (idx);
 		}
-				
+
 		protected event ElementChangedInListObjectEvent internalElementChanged = null;
-		protected void ElementChangedMethod(object aList, int[] aIdx)
+
+		protected void ElementChangedMethod (object aList, int[] aIdx)
 		{
-			int pos = IndexOf((T) aList);
+			int pos = IndexOf ((T)aList);
 			if (pos < 0)
 				return;
-			int[] idx = new int[aIdx.Length+1];
-			idx[0] = pos;
-			for (int i=0; i<aIdx.Length; i++)
-				idx[i+1] = aIdx[i];
-			OnElementChanged(idx);
+			int[] idx = new int[aIdx.Length + 1];
+			idx [0] = pos;
+			for (int i = 0; i < aIdx.Length; i++)
+				idx [i + 1] = aIdx [i];
+			OnElementChanged (idx);
 		}
-				
+
 		protected event ElementRemovedFromListObjectEvent internalElementRemoved = null;
-		protected void ElementRemovedMethod(object aList, int[] aIdx, object aObject)
+
+		protected void ElementRemovedMethod (object aList, int[] aIdx, object aObject)
 		{
-			int pos = IndexOf((T) aList);
+			int pos = IndexOf ((T)aList);
 			if (pos < 0)
 				return;
-			int[] idx = new int[aIdx.Length+1];
-			idx[0] = pos;
-			for (int i=0; i<aIdx.Length; i++)
-				idx[i+1] = aIdx[i];
-			OnElementRemoved(idx, aObject);
+			int[] idx = new int[aIdx.Length + 1];
+			idx [0] = pos;
+			for (int i = 0; i < aIdx.Length; i++)
+				idx [i + 1] = aIdx [i];
+			OnElementRemoved (idx, aObject);
 		}
-				
+
 		protected event ElementsInListSortedEvent internalElementsSorted = null;
-		protected void ElementsSortedMethod(object aList, int[] aIdx)
+
+		protected void ElementsSortedMethod (object aList, int[] aIdx)
 		{
-			int pos = IndexOf((T) aList);
+			int pos = IndexOf ((T)aList);
 			if (pos < 0)
 				return;
-			int[] idx = new int[aIdx.Length+1];
-			idx[0] = pos;
-			for (int i=0; i<aIdx.Length; i++)
-				idx[i+1] = aIdx[i];
-			OnElementsSorted(idx);
+			int[] idx = new int[aIdx.Length + 1];
+			idx [0] = pos;
+			for (int i = 0; i < aIdx.Length; i++)
+				idx [i + 1] = aIdx [i];
+			OnElementsSorted (idx);
 		}
-				
+
 		protected event ListChangedEventHandler internalBindingListChanged = null;
-		protected void BindingListChangedMethod(object aList, ListChangedEventArgs e)
+
+		protected void BindingListChangedMethod (object aList, ListChangedEventArgs e)
 		{
-			OnListChanged();
+			OnListChanged ();
 		}
-				
+
 		protected void ConnectToObject (object aObject)
 		{
 			if (aObject is IListEvents) {
@@ -305,14 +328,12 @@ namespace System.Data.Bindings.Collections.Generic
 				(aObject as IListEvents).ElementChanged += internalElementChanged;
 				(aObject as IListEvents).ElementRemoved += internalElementRemoved;
 				(aObject as IListEvents).ElementsSorted += internalElementsSorted;
-			}
-			else if (aObject is IBindingList) {
+			} else if (aObject is IBindingList) {
 				(aObject as IBindingList).ListChanged += internalBindingListChanged;
-			}
-			else
+			} else
 				MSEventSupport.ConnectEventToIObservableList (this, aObject);
 		}
-		
+
 		protected void DisconnectFromObject (object aObject)
 		{
 			if (aObject is IListEvents) {
@@ -321,14 +342,12 @@ namespace System.Data.Bindings.Collections.Generic
 				(aObject as IListEvents).ElementChanged -= internalElementChanged;
 				(aObject as IListEvents).ElementRemoved -= internalElementRemoved;
 				(aObject as IListEvents).ElementsSorted -= internalElementsSorted;
-			}
-			else if (aObject is IBindingList) {
+			} else if (aObject is IBindingList) {
 				(aObject as IBindingList).ListChanged -= internalBindingListChanged;
-			}
-			else
+			} else
 				MSEventSupport.DisconnectEventFromIObservableList (this, aObject);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -340,20 +359,20 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </returns>
 		int IList.Add (object aObject)
 		{
-			if (aObject.GetType() != typeof(T))
-				throw new ExceptionWrongGenericType (aObject.GetType(), typeof(T));
-			items.Add ((T) aObject);
-			int i = IndexOf((T) aObject);
+			if (aObject.GetType () != typeof(T))
+				throw new ExceptionWrongGenericType (aObject.GetType (), typeof(T));
+			items.Add ((T)aObject);
+			int i = IndexOf ((T)aObject);
 			if (i >= 0) {
 				ConnectToObject (aObject);
 				OnPropertyChanged ("Items");
 				int[] idx = new int[1];
-				idx[0] = i;
-				OnElementAdded(idx);
+				idx [0] = i;
+				OnElementAdded (idx);
 			}
 			return (i);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -367,7 +386,7 @@ namespace System.Data.Bindings.Collections.Generic
 		{
 			AddWithReturn (aObject);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -380,32 +399,32 @@ namespace System.Data.Bindings.Collections.Generic
 		public int AddWithReturn (T aObject)
 		{
 			items.Add (aObject);
-			int i = IndexOf(aObject);
+			int i = IndexOf (aObject);
 			if (i >= 0) {
 				ConnectToObject (aObject);
 				OnPropertyChanged ("Items");
 				int[] idx = new int[1];
-				idx[0] = i;
-				OnElementAdded(idx);
+				idx [0] = i;
+				OnElementAdded (idx);
 			}
 			return (i);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
-		public void Clear()
+		public void Clear ()
 		{
 			foreach (object o in this)
 				DisconnectFromObject (o);
 				
 			if (Count < 1)
 				return;
-			items.Clear();
-			OnListChanged();
-			OnPropertyChanged("Items");
+			items.Clear ();
+			OnListChanged ();
+			OnPropertyChanged ("Items");
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -417,11 +436,11 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </returns>
 		bool IList.Contains (object aObject)
 		{
-			if (aObject.GetType() != typeof(T))
-				throw new ExceptionWrongGenericType (aObject.GetType(), typeof(T));
-			return (items.Contains((T) aObject));
+			if (aObject.GetType () != typeof(T))
+				throw new ExceptionWrongGenericType (aObject.GetType (), typeof(T));
+			return (items.Contains ((T)aObject));
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -433,9 +452,9 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </returns>
 		public bool Contains (T aObject)
 		{
-			return (items.Contains(aObject));
+			return (items.Contains (aObject));
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -447,11 +466,11 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </returns>
 		int IList.IndexOf (object aObject)
 		{
-			if (!TypeValidator.IsCompatible(aObject.GetType(),  typeof(T)))
-				throw new ExceptionWrongGenericType (aObject.GetType(), typeof(T));
-			return (items.IndexOf((T) aObject));
+			if (!TypeValidator.IsCompatible (aObject.GetType (), typeof(T)))
+				throw new ExceptionWrongGenericType (aObject.GetType (), typeof(T));
+			return (items.IndexOf ((T)aObject));
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -463,9 +482,9 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </returns>
 		public int IndexOf (T aObject)
 		{
-			return (items.IndexOf(aObject));
+			return (items.IndexOf (aObject));
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -477,9 +496,9 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </param>
 		public void CopyTo (System.Array aArray, int aIndex)
 		{
-			items.CopyTo ((T[]) aArray, aIndex);
+			items.CopyTo ((T[])aArray, aIndex);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -493,7 +512,7 @@ namespace System.Data.Bindings.Collections.Generic
 		{
 			items.CopyTo (aArray, aIndex);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -502,11 +521,11 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </param>
 		void IList.Remove (object aObject)
 		{
-			int i = IndexOf ((T) aObject);
+			int i = IndexOf ((T)aObject);
 			if (i > -1)
 				RemoveAt (i);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -521,7 +540,7 @@ namespace System.Data.Bindings.Collections.Generic
 				RemoveAt (i);
 			return (Count != c);
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -531,18 +550,18 @@ namespace System.Data.Bindings.Collections.Generic
 		public void RemoveAt (int aIndex)
 		{
 			if ((aIndex > -1) && (aIndex < Count)) {
-				DisconnectFromObject (items[aIndex]);
+				DisconnectFromObject (items [aIndex]);
 
 				int[] idx = new int [1];
-				idx[0] = aIndex;
-				object o = this[idx];				
+				idx [0] = aIndex;
+				object o = this [idx];				
 				items.RemoveAt (aIndex);
 				OnElementRemoved (idx, o);
 				idx = null;
-				OnPropertyChanged("Items");
+				OnPropertyChanged ("Items");
 			}
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -554,23 +573,23 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </param>
 		void IList.Insert (int aIndex, object aObject)
 		{
-			if (aObject.GetType() != typeof(T))
-				throw new ExceptionWrongGenericType (aObject.GetType(), typeof(T));
+			if (aObject.GetType () != typeof(T))
+				throw new ExceptionWrongGenericType (aObject.GetType (), typeof(T));
 			if ((aIndex > -1) && (aIndex < Count)) {
 				int c = Count;
-				items.Insert (aIndex, (T) aObject);
+				items.Insert (aIndex, (T)aObject);
 				if (c != Count) {
 					ConnectToObject (aObject);
 					
 					int[] idx = new int [1];
-					idx[0] = aIndex;
+					idx [0] = aIndex;
 					OnElementAdded (idx);
-					OnPropertyChanged("Items");
+					OnPropertyChanged ("Items");
 					idx = null;
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// IList interface needs
 		/// </summary>
@@ -589,14 +608,14 @@ namespace System.Data.Bindings.Collections.Generic
 					ConnectToObject (aObject);
 					
 					int[] idx = new int [1];
-					idx[0] = aIndex;
+					idx [0] = aIndex;
 					OnElementAdded (idx);
-					OnPropertyChanged("Items");
+					OnPropertyChanged ("Items");
 					idx = null;
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// Resolves object in this list only, does not support hierarchy
 		/// </summary>
@@ -604,23 +623,23 @@ namespace System.Data.Bindings.Collections.Generic
 		/// Index of requested object <see cref="System.Int32"/>
 		/// </param>
 		object IList.this [int aIdx] {
-			get { return (items[aIdx]); }
+			get { return (items [aIdx]); }
 			set {
-				if (value.GetType() != typeof(T))
-					throw new ExceptionWrongGenericType (value.GetType(), typeof(T));
-				if (items[aIdx].Equals(value))
+				if (value.GetType () != typeof(T))
+					throw new ExceptionWrongGenericType (value.GetType (), typeof(T));
+				if (items [aIdx].Equals (value))
 					return;
-				DisconnectFromObject (items[aIdx]);
-				items[aIdx] = (T) value; 
+				DisconnectFromObject (items [aIdx]);
+				items [aIdx] = (T)value; 
 				ConnectToObject (value);
 				
 				int[] idx = new int [1];
-				idx[0] = aIdx;
+				idx [0] = aIdx;
 				OnElementChanged (idx);
 				idx = null;
 			}
 		}
-		
+
 		/// <summary>
 		/// Resolves object in this list only, does not support hierarchy
 		/// </summary>
@@ -628,21 +647,21 @@ namespace System.Data.Bindings.Collections.Generic
 		/// Index of requested object <see cref="System.Int32"/>
 		/// </param>
 		public T this [int aIdx] {
-			get { return (items[aIdx]); }
+			get { return (items [aIdx]); }
 			set {
-				if (items[aIdx].Equals(value))
+				if (items [aIdx].Equals (value))
 					return;
-				DisconnectFromObject (items[aIdx]);
-				items[aIdx] = value; 
+				DisconnectFromObject (items [aIdx]);
+				items [aIdx] = value; 
 				ConnectToObject (value);
 				
 				int[] idx = new int [1];
-				idx[0] = aIdx;
+				idx [0] = aIdx;
 				OnElementChanged (idx);
 				idx = null;
 			}
 		}
-		
+
 		/// <summary>
 		/// Resolves any object in this list, supports hierarchy
 		/// </summary>
@@ -652,7 +671,7 @@ namespace System.Data.Bindings.Collections.Generic
 		public object this [int[] aIdx] {
 			get { return (HierarchicalList.Get (this, aIdx)); }
 		}
-/*
+		/*
 		/// <summary>
 		/// Checks if list is valid type to be wrapped around with ObserveableList
 		/// </summary>
@@ -675,7 +694,7 @@ namespace System.Data.Bindings.Collections.Generic
 		/// <summary>
 		/// Creates ObserveableList
 		/// </summary>
-		public GenericObservableList()
+		public GenericObservableList ()
 			: base ()
 		{
 			internalListChanged += ListChangedMethod;
@@ -684,9 +703,9 @@ namespace System.Data.Bindings.Collections.Generic
 			internalElementRemoved += ElementRemovedMethod;
 			internalBindingListChanged += BindingListChangedMethod;
 			ListItemPropertyChangedMethod = new PropertyChangedEventHandler (ListItemsPropertyChanged);
-			items = (IList<T>) CreateList();
+			items = (IList<T>)CreateList ();
 			if (items == null)
-				throw new ExceptionObserveableListCreatedWithNullList();
+				throw new ExceptionObserveableListCreatedWithNullList ();
 		}
 
 		/// <summary>
@@ -706,20 +725,19 @@ namespace System.Data.Bindings.Collections.Generic
 			ListItemPropertyChangedMethod = new PropertyChangedEventHandler (ListItemsPropertyChanged);
 			items = aList;
 			if (items == null)
-				throw new ExceptionObserveableListCreatedWithNullListParameter();
+				throw new ExceptionObserveableListCreatedWithNullListParameter ();
 
-			foreach(var item in items)
-			{
+			foreach (var item in items) {
 				ConnectToObject (item);
 			}
 		}
-		
+
 		/// <summary>
 		/// Destroys ObserveableList 
 		/// </summary>
-		~GenericObservableList()
+		~GenericObservableList ()
 		{
-			items.Clear();
+			items.Clear ();
 			items = null;
 		}
 	}
