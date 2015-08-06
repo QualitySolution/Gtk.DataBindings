@@ -39,7 +39,7 @@ namespace Gtk.DataBindings
 	{
 		private ControlAdaptor adaptor = null;
 		private MappingsImplementor internalModel = null;
-		
+
 		/// <summary>
 		/// Resolves ControlAdaptor in read-only mode
 		/// </summary>
@@ -47,7 +47,7 @@ namespace Gtk.DataBindings
 		public ControlAdaptor Adaptor {
 			get { return (adaptor); }
 		}
-		
+
 		/// <summary>
 		/// Defines if DataSource is inherited fom parent controls or not
 		/// </summary>
@@ -56,7 +56,7 @@ namespace Gtk.DataBindings
 			get { return (adaptor.InheritedDataSource); }
 			set { adaptor.InheritedDataSource = value; }
 		}
-		
+
 		/// <summary>
 		/// DataSource object control is connected to
 		/// </summary>
@@ -67,6 +67,7 @@ namespace Gtk.DataBindings
 		}
 
 		private bool cursorPointsEveryType = true;
+
 		/// <summary>
 		/// Defines if CurrentSelection adaptor should point every type of object
 		/// if false then pointing is limited to defualt type
@@ -84,7 +85,7 @@ namespace Gtk.DataBindings
 			get { return (internalModel.ItemsDataSource); }
 			set { internalModel.ItemsDataSource = value; }
 		}
-		
+
 		/// <summary>
 		/// Link to Mappings in connected Adaptor 
 		/// </summary>
@@ -93,7 +94,7 @@ namespace Gtk.DataBindings
 			get { return (adaptor.Mappings); }
 			set { adaptor.Mappings = value; }
 		}
-		
+
 		/// <summary>
 		/// Link to Column Mappings in connected Adaptor 
 		/// </summary>
@@ -102,7 +103,7 @@ namespace Gtk.DataBindings
 			get { return (internalModel.Mappings); }
 			set { internalModel.Mappings = value; }
 		}
-			
+
 		/// <summary>
 		/// Defines if DataSource is inherited fom parent controls or not
 		/// </summary>
@@ -111,7 +112,7 @@ namespace Gtk.DataBindings
 			get { return (adaptor.InheritedBoundaryDataSource); }
 			set { adaptor.InheritedBoundaryDataSource = value; }
 		}
-		
+
 		/// <summary>
 		/// DataSource object control is connected to
 		/// </summary>
@@ -120,7 +121,7 @@ namespace Gtk.DataBindings
 			get { return (adaptor.BoundaryDataSource); }
 			set { adaptor.BoundaryDataSource = value; }
 		}
-		
+
 		/// <summary>
 		/// Link to Mappings in connected Adaptor 
 		/// </summary>
@@ -129,7 +130,7 @@ namespace Gtk.DataBindings
 			get { return (adaptor.BoundaryMappings); }
 			set { adaptor.BoundaryMappings = value; }
 		}
-		
+
 		/// <summary>
 		/// Overrides basic Get data behaviour
 		///
@@ -145,7 +146,7 @@ namespace Gtk.DataBindings
 			add { adaptor.CustomGetData += value; }
 			remove { adaptor.CustomGetData -= value; }
 		}
-		
+
 		/// <summary>
 		/// Overrides basic Post data behaviour
 		///
@@ -161,7 +162,7 @@ namespace Gtk.DataBindings
 			add { adaptor.CustomPostData += value; }
 			remove { adaptor.CustomPostData -= value; }
 		}
-		
+
 		/// <summary>
 		/// Overrides basic Get data behaviour
 		///
@@ -174,6 +175,7 @@ namespace Gtk.DataBindings
 		///     public delegate void UserGetDataEvent (ControlAdaptor Adaptor);
 		/// </summary>
 		private Adaptor currentSelection = null;
+
 		/// <summary>
 		/// Allows controls to bind on the selection in this TreeView
 		/// </summary>
@@ -189,7 +191,7 @@ namespace Gtk.DataBindings
 		public object ListItems {
 			get { return (internalModel.ListItems); }
 		}
-		
+
 		/// <summary>
 		/// Gets activated on every cell to set user parameters on how to draw this cell.
 		/// Difference between classic render column is that here arguments passed are not 
@@ -207,7 +209,7 @@ namespace Gtk.DataBindings
 			add { internalModel.CellLayoutDescription += value; }
 			remove { internalModel.CellLayoutDescription -= value; }
 		}
-		
+
 		/// <summary>
 		/// Calls ControlAdaptors method to transfer data, so it can be wrapped
 		/// into widget specific things and all checkups
@@ -219,7 +221,7 @@ namespace Gtk.DataBindings
 		{
 			Adaptor.InvokeAdapteeDataChange (this, aSender);
 		}
-		
+
 		/// <summary>
 		/// Notification method activated from Adaptor 
 		/// </summary>
@@ -230,97 +232,94 @@ namespace Gtk.DataBindings
 		{
 			adaptor.DataChanged = false;
 			TreeIter iter;
-			if (adaptor.Value == null)
-			{
+			if (adaptor.Value == null) {
 				this.Active = -1;
 				return;
 			}
-			iter = internalModel.IterFromNode(adaptor.Value);
-			SetActiveIter(iter);
+			iter = internalModel.IterFromNode (adaptor.Value);
+			SetActiveIter (iter);
 		}
-		
+
 		/// <summary>
 		/// Updates parent object to DataSource object
 		/// </summary>
 		public virtual void PutDataToDataSource (object aSender)
 		{
 			adaptor.DataChanged = false;
-			adaptor.Value = GetCurrentObject();
+			adaptor.Value = GetCurrentObject ();
 		}
-		
+
 		protected override bool OnFocusInEvent (Gdk.EventFocus evnt)
 		{
 			bool res = base.OnFocusInEvent (evnt);
-			OnChanged();
+			OnChanged ();
 			return (res);
 		}
 
 		protected override bool OnFocusOutEvent (Gdk.EventFocus evnt)
 		{
 			bool res = base.OnFocusOutEvent (evnt);
-			OnChanged();
+			OnChanged ();
 			return (res);
 		}
-		
+
 		protected override bool OnFocused (DirectionType direction)
 		{
 			bool res = base.OnFocused (direction);
-			OnChanged();
+			OnChanged ();
 			return (res);
 		}
-		
+
 		/// <summary>
 		/// Overrides OnCursorChanged to handle changes
 		/// </summary>
-		protected override void OnChanged()
+		protected override void OnChanged ()
 		{
-			base.OnChanged();
+			base.OnChanged ();
 			if (Model == null) {
 				currentSelection.Target = null;
 				return;
 			}
 			if (currentSelection.Target != null)
-				if (ListItems == null) {
-					adaptor.DemandInstantPost();
-					currentSelection.Target = null;
-					return;
-				}
+			if (ListItems == null) {
+				adaptor.DemandInstantPost ();
+				currentSelection.Target = null;
+				return;
+			}
 				
 			TreeIter iter;
 
-			if (GetActiveIter(out iter) == true) {
+			if (GetActiveIter (out iter) == true) {
 				object o = internalModel.NodeFromIter (iter);
 				if (ListItems != null) {
-					if (TypeValidator.IsCompatible(o.GetType(), internalModel.ListItemType) == true) 
+					if (TypeValidator.IsCompatible (o.GetType (), internalModel.ListItemType) == true)
 						currentSelection.Target = o;
 					else
 						currentSelection.Target = null;
-				}
-				else
+				} else
 					currentSelection.Target = null;
-			}
-			else
+			} else
 				currentSelection.Target = null;
 
-			adaptor.DemandInstantPost();
+			adaptor.DemandInstantPost ();
 		}
-		
+
 		/// <summary>
 		/// Function returns the same result as CurrentSelection, except
 		/// CurrentSelection only returns default type or null
 		/// </summary>
-		public object GetCurrentObject()
+		public object GetCurrentObject ()
 		{
 			TreeIter iter;
-			if (GetActiveIter(out iter) == true)
+			if (GetActiveIter (out iter) == true)
 				return (internalModel.NodeFromIter (iter));
 			return (null);
 		}
-		
+
 		/// <summary>
 		/// Called when ItemsDataSource changes
 		/// </summary>
-/*		private void ListTargetChanged (IAdaptor aAdaptor)
+		/*		private void ListTargetChanged (IAdaptor aAdaptor)
 		{
 			cachedItems = null;
 			if (ItemsDataSource == null)
@@ -342,10 +341,10 @@ namespace Gtk.DataBindings
 		/// <summary>
 		/// Creates adaptors associated with this IconView
 		/// </summary>
-		internal virtual void CreateAdaptors()
+		internal virtual void CreateAdaptors ()
 		{
 			// Allocate selection adaptor
-			currentSelection = new GtkAdaptor();
+			currentSelection = new GtkAdaptor ();
 			internalModel.ClearSelection += delegate() {
 				if (CurrentSelection != null)
 					CurrentSelection.Target = null;
@@ -357,51 +356,50 @@ namespace Gtk.DataBindings
 
 			internalModel.CheckControl += delegate() {
 				if (adaptor != null)
-					adaptor.CheckControl();
+					adaptor.CheckControl ();
 			};			
 		}
 
 		/// <summary>
 		/// Disconnects everything inside this class
 		/// </summary>
-		public virtual void Disconnect()
+		public virtual void Disconnect ()
 		{
 			if (CurrentSelection != null) {
-				CurrentSelection.Disconnect();
+				CurrentSelection.Disconnect ();
 				currentSelection = null;
 			}
 			if (adaptor != null) {
-				adaptor.Disconnect();
+				adaptor.Disconnect ();
 				adaptor = null;
 			}
-			internalModel.Disconnect();
+			internalModel.Disconnect ();
 			internalModel = null;
 		}
-		
+
 		/// <summary>
 		/// Creates Widget 
 		/// </summary>
-		public DataComboBox()
-			: base()
+		public DataComboBox ()
+			: base ()
 		{
 			internalModel = new MappingsImplementor (this);
-			CreateAdaptors();
+			internalModel.RespectHierarchy = true;
+			//FIXME: Make possibility to use false value. Now it leads to no items in combo. 
+			CreateAdaptors ();
 		}
-		
+
 		/// <summary>
 		/// Creates Widget 
 		/// </summary>
 		/// <param name="aMappings">
 		/// Mappings with this widget <see cref="System.String"/>
 		/// </param>
-		public DataComboBox (string aMappings)
-			: base()
+		public DataComboBox (string aMappings) : this ()
 		{
-			internalModel = new MappingsImplementor (this);
-			CreateAdaptors();
 			Mappings = aMappings;
 		}
-		
+
 		/// <summary>
 		/// Creates Widget 
 		/// </summary>
@@ -411,21 +409,17 @@ namespace Gtk.DataBindings
 		/// <param name="aMappings">
 		/// Mappings with this widget <see cref="System.String"/>
 		/// </param>
-		public DataComboBox (object aDataSource, string aMappings)
-			: base()
+		public DataComboBox (object aDataSource, string aMappings) : this (aMappings)
 		{
-			internalModel = new MappingsImplementor (this);
-			CreateAdaptors();
 			DataSource = aDataSource;
-			Mappings = aMappings;
 		}
-		
+
 		/// <summary>
 		/// Destroys and disconnects Widget
 		/// </summary>
-		~DataComboBox()
+		~DataComboBox ()
 		{
-			Disconnect();
+			Disconnect ();
 		}
 	}
 }
