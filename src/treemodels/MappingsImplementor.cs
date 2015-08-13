@@ -533,7 +533,20 @@ namespace Gtk.DataBindings
 			object node = NodeFromIter (aIter);
 			var nodeCell = aCell as INodeCellRenderer;
 			if (nodeCell != null)
-				nodeCell.RenderNode (node);
+			{
+				try
+				{
+					nodeCell.RenderNode (node);
+				}
+				catch(Exception ex)
+				{
+					throw new InvalidProgramException (
+						String.Format ("Exception inside rendering column {0}.", aColumn.Title),
+						ex
+					);
+				}
+			}
+				
 		}
 
 		private void RenderNumericColumnFunc (Gtk.TreeViewColumn aColumn, Gtk.CellRenderer aCell, 
