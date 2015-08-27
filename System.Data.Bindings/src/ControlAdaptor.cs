@@ -103,7 +103,7 @@ namespace System.Data.Bindings
 		/// true if CheckControl is in progress
 		/// </value>
 		public bool ControlCheckup {
-			get { return (ControlCheckup); }
+			get { return (checkup); }
 		}
 
 		private WeakReference control = null;
