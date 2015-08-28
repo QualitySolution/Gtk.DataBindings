@@ -764,22 +764,20 @@ namespace System.Data.Bindings
 				object no = aValue;
 				if (no is IComparable) {
 					object cval = aProp.GetValue (aObject, null);
-					if ((cval as IComparable).CompareTo(no) != 0) {
+					if (cval == null || (cval as IComparable).CompareTo (no) != 0) {
 						aProp.SetValue (aObject, no, null);
 						res = true;
 					}
-				}
-				else {
+				} else {
 					res = true;
 					aProp.SetValue (aObject, no, null);
 				}
 				no = null;
-			}
-			else
-				throw new ExceptionAssigningReadOnlyProperty();
+			} else
+				throw new ExceptionAssigningReadOnlyProperty ();
 			return (res);
 		}
-		
+
 		/// <summary>
 		/// Gets value from referenced Target
 		/// </summary>
