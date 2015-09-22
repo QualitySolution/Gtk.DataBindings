@@ -764,7 +764,7 @@ namespace System.Data.Bindings
 				object no = aValue;
 				if (no is IComparable) {
 					object cval = aProp.GetValue (aObject, null);
-					if (cval == null || (cval as IComparable).CompareTo (no) != 0) {
+					if (cval == null || !(cval is IComparable) || (cval as IComparable).CompareTo (no) != 0) {
 						aProp.SetValue (aObject, no, null);
 						res = true;
 					}
