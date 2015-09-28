@@ -14,7 +14,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("LGPL Lesser GNU General Public License")]
 [assembly: AssemblyTrademark("mm")]
-[assembly: AssemblyCulture("neutral")]
+[assembly: AssemblyCulture("")]
 
 // The assembly version has following format :
 //

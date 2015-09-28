@@ -6,8 +6,10 @@
     <ProjectGuid>{8D85E430-325A-4532-A123-BF28F9644DB4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Gtk.DataBindings</RootNamespace>
-    <ApplicationIcon>.</ApplicationIcon>
     <AssemblyName>gtk-databind-lib</AssemblyName>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>

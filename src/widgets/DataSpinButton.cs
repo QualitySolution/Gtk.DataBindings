@@ -251,7 +251,7 @@ namespace Gtk.DataBindings
 		/// <param name="aStep">
 		/// Step value for scale <see cref="System.Int32"/>
 		/// </param>
-		public DataSpinButton (int aMin, int aMax, int aStep)
+		public DataSpinButton (double aMin, double aMax, double aStep)
 			: base(aMin, aMax, aStep)
 		{
 			adaptor = new GtkControlAdaptor (this, true);
