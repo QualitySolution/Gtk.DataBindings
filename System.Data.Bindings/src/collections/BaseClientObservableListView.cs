@@ -261,7 +261,7 @@ namespace System.Data.Bindings.Collections
 		/// </remarks>
 		public virtual void Disconnect ()
 		{
-			if (TypeValidator.IsCompatible(parentView.GetType(), typeof(IListEvents)) == true) {
+			if (parentView != null && TypeValidator.IsCompatible(parentView.GetType(), typeof(IListEvents)) == true) {
 				(parentView as IListEvents).ElementAdded -= myAddedMethod;
 				(parentView as IListEvents).ElementChanged -= myChangedMethod;
 				(parentView as IListEvents).ElementRemoved -= myRemovedMethod;
