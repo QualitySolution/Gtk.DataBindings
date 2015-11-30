@@ -363,6 +363,12 @@ namespace Gtk.DataBindings
 				return (null);
 		}
 
+		public void SelectObject(object item)
+		{
+			TreeIter iter = internalModel.IterFromNode (item);
+			Selection.SelectIter (iter);
+		}
+
 		public TreeViewColumn GetColumnByMappedProp(string propertyName)
 		{
 			int columnId = Array.IndexOf (internalModel.Names, propertyName);
