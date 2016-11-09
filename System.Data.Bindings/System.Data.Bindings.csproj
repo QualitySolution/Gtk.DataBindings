@@ -7,6 +7,9 @@
     <OutputType>Library</OutputType>
     <RootNamespace>System.Data.Bindings</RootNamespace>
     <AssemblyName>System.Data.Bindings</AssemblyName>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ReleaseVersion>1.0</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

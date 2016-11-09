@@ -731,14 +731,5 @@ namespace System.Data.Bindings.Collections.Generic
 				ConnectToObject (item);
 			}
 		}
-
-		/// <summary>
-		/// Destroys ObserveableList 
-		/// </summary>
-		~GenericObservableList ()
-		{
-			items.Clear ();
-			items = null;
-		}
 	}
 }

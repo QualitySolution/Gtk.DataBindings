@@ -5,7 +5,7 @@
     <target-gtk-version>2.12</target-gtk-version>
   </configuration>
   <import>
-    <widget-library name="../bin/Release/gtk-databind-lib.dll" internal="true" />
+    <widget-library name="../bin/Debug/gtk-databind-lib.dll" internal="true" />
   </import>
   <widget class="Gtk.Window" id="Gtk.ExtraWidgets.DatePickerWindow" design-size="279 231">
     <property name="MemberName" />
