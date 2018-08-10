@@ -35,6 +35,11 @@ namespace System.Data.Bindings.Collections.Generic
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		/// <summary>
+		/// Occurs when property of element changed.
+		/// </summary>
+		public event PropertyChangedEventHandler PropertyOfElementChanged;
+
+		/// <summary>
 		/// Method calls PropertyChanged if it is not null, but it allows external
 		/// objects to access this one for convinience
 		/// </summary>
@@ -197,6 +202,7 @@ namespace System.Data.Bindings.Collections.Generic
 				int[] Idx = new int [1];
 				Idx [0] = i;
 				OnElementChanged (Idx);
+				PropertyOfElementChanged?.Invoke(aSender, e);
 			}
 		}
 
