@@ -581,7 +581,7 @@ namespace System.Data.Bindings.Collections.Generic
 		{
 			if (aObject.GetType () != typeof(T))
 				throw new ExceptionWrongGenericType (aObject.GetType (), typeof(T));
-			if ((aIndex > -1) && (aIndex < Count)) {
+			if ((aIndex > -1) && (aIndex <= Count)) {
 				int c = Count;
 				items.Insert (aIndex, (T)aObject);
 				if (c != Count) {
@@ -607,7 +607,7 @@ namespace System.Data.Bindings.Collections.Generic
 		/// </param>
 		public void Insert (int aIndex, T aObject)
 		{
-			if ((aIndex > -1) && (aIndex < Count)) {
+			if ((aIndex > -1) && (aIndex <= Count)) {
 				int c = Count;
 				items.Insert (aIndex, aObject);
 				if (c != Count) {
