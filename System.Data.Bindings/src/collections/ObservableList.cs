@@ -444,7 +444,7 @@ namespace System.Data.Bindings.Collections
 		/// </param>
 		public void Insert (int aIndex, object aObject)
 		{
-			if ((aIndex > -1) && (aIndex < Count)) {
+			if ((aIndex > -1) && (aIndex <= Count)) {
 				int c = Count;
 				items.Insert (aIndex, aObject);
 				if (c != Count) {
