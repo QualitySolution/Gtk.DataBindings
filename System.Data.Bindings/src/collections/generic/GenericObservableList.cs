@@ -25,7 +25,7 @@ namespace System.Data.Bindings.Collections.Generic
 	/// <summary>
 	/// Observable
 	/// </summary>	
-	public class GenericObservableList<T> : IList<T>, IObservableList, INotifyPropertyChanged, IListEvents
+	public class GenericObservableList<T> : IList<T>, IObservableList, INotifyPropertyChanged, ICovarianceList<T>
 	{
 		private IList<T> items = null;
 
@@ -445,6 +445,16 @@ namespace System.Data.Bindings.Collections.Generic
 			if (aObject.GetType () != typeof(T))
 				throw new ExceptionWrongGenericType (aObject.GetType (), typeof(T));
 			return (items.Contains ((T)aObject));
+		}
+		
+		bool ICovarianceList<T>.Contains(object aObject)
+		{
+			if(aObject is T item)
+			{
+				return items.Contains(item);
+			}
+			
+			throw new ExceptionWrongGenericType (aObject.GetType(), typeof(T));
 		}
 
 		/// <summary>
