@@ -454,7 +454,7 @@ namespace System.Data.Bindings.Collections.Generic
 				return items.Contains(item);
 			}
 			
-			throw new ExceptionWrongGenericType (aObject.GetType(), typeof(T));
+			throw new ExceptionWrongGenericType(aObject.GetType(), typeof(T));
 		}
 
 		/// <summary>
