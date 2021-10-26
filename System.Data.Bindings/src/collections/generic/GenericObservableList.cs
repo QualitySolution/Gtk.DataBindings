@@ -240,7 +240,7 @@ namespace System.Data.Bindings.Collections.Generic
 		/// <returns>
 		/// Returns enumerator object <see cref="IEnumerator"/>
 		/// </returns>
-		public IEnumerator GetEnumerator ()
+		IEnumerator IEnumerable.GetEnumerator ()
 		{
 			return (items.GetEnumerator ());
 		}
@@ -251,7 +251,7 @@ namespace System.Data.Bindings.Collections.Generic
 		/// <returns>
 		/// Returns enumerator object <see cref="IEnumerator"/>
 		/// </returns>
-		IEnumerator<T> IEnumerable<T>.GetEnumerator ()
+		public IEnumerator<T> GetEnumerator ()
 		{
 			return (items.GetEnumerator ());
 		}
