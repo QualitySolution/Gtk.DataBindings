@@ -737,5 +737,36 @@ namespace System.Data.Bindings.Collections.Generic
 				ConnectToObject (item);
 			}
 		}
+
+		public GenericObservableList<T> ReconnectToObject(IList<T> aList)
+		{
+			if(ReferenceEquals(items, aList))
+			{
+				return this;
+			}
+
+			foreach(var item in items)
+			{
+				DisconnectFromObject(item);
+			}
+
+			items = aList;
+
+			foreach(var item in items)
+			{
+				ConnectToObject(item);
+			}
+
+			return this;
+		}
+		
+		public void Reconnect()
+		{
+			foreach(var item in items)
+			{
+				DisconnectFromObject(item);
+				ConnectToObject(item);
+			}
+		}
 	}
 }
