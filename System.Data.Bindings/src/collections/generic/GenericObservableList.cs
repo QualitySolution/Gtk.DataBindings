@@ -1,4 +1,4 @@
-//  
+﻿//  
 //  Copyright (C) 2009 matooo
 // 
 //  This program is free software: you can redistribute it and/or modify
@@ -758,6 +758,15 @@ namespace System.Data.Bindings.Collections.Generic
 			}
 
 			return this;
+		}
+		
+		public void Reconnect()
+		{
+			foreach(var item in items)
+			{
+				DisconnectFromObject(item);
+				ConnectToObject(item);
+			}
 		}
 	}
 }
